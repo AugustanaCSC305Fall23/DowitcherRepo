@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0">
          <top>
@@ -23,14 +29,46 @@
                     <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
          </top>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="eventFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Event" />
+                  <Button fx:id="subCategoryFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sub-Category" />
+                  <Button fx:id="levelFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Level" />
+                  <Button fx:id="genderFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Gender" />
+                  <Button fx:id="equipmentFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Equipment" />
+                  <HBox>
+                     <children>
+                        <BorderPane prefHeight="0.0" prefWidth="1000.0">
+                           <left>
+                              <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <Button fx:id="applyFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" BorderPane.alignment="CENTER" />
+                           </right>
+                        </BorderPane>
+                     </children>
+                  </HBox>
+                  <TextField fx:id="filterSearchField" />
+                  <ListView fx:id="cardImageView" minHeight="384.0" minWidth="165.0" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox alignment="TOP_CENTER" minWidth="1000.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" text="Lesson Plan #1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="addEventButton" mnemonicParsing="false" text="Add Event &gt;" />
+               </children>
+            </VBox>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
