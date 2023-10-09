@@ -2,11 +2,10 @@ package edu.augustana;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class EditingPageController {
     @FXML
@@ -17,6 +16,7 @@ public class EditingPageController {
 
     @FXML
     private ListView<Image> cardImageView;
+
 
     @FXML
     private Button clearFilterButton;
@@ -37,12 +37,32 @@ public class EditingPageController {
     private Label lessonPlanTitle;
 
     @FXML
+    private VBox lessonPlanVBox;
+
+    @FXML
     private Button levelFilterButton;
 
     @FXML
+    private ScrollPane planeScrollPane;
+
+    @FXML
+    private AnchorPane scrollAnchorPane;
+
+    @FXML
     private Button subCategoryFilterButton;
+
+    @FXML
+    private Button tempButton;
+    @FXML
+    public void initialize() {
+        System.out.println("Is this thing on");
+        planeScrollPane.pannableProperty().set(true);
+        planeScrollPane.fitToWidthProperty().set(true);
+    }
     @FXML
     private void switchToEditingPage() throws IOException {
-        App.setRoot("editingPage");
+        App.setRoot("editingPage.fxml");
     }
+
+
 }
