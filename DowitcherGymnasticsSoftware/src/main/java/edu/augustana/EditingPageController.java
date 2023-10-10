@@ -55,9 +55,6 @@ public class EditingPageController {
     private Button tempButton;
     @FXML
     public void initialize() {
-        System.out.println("Is this thing on");
-        planeScrollPane.pannableProperty().set(true);
-        planeScrollPane.fitToWidthProperty().set(true);
     }
     @FXML
     private void switchToEditingPage() throws IOException {
