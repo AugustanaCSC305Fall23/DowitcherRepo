@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -34,7 +33,7 @@
       </MenuBar>
    </top>
    <left>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="eventFilterButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Event" />
             <Button fx:id="subCategoryFilterButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sub-Category" />
@@ -62,24 +61,23 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fx:id="planeScrollPane" maxWidth="1.7976931348623157E308" minWidth="1000.0" pannable="true" prefWidth="1000.0" BorderPane.alignment="TOP_CENTER">
-        <content>
-          <AnchorPane fx:id="scrollAnchorPane" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="1000.0" prefHeight="200.0" prefWidth="1000.0">
+      <ScrollPane fx:id="planeScrollPane" fitToWidth="true" maxWidth="1.7976931348623157E308" minHeight="0.0" scaleShape="false" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="lessonPlanVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="1000.0" prefWidth="1000.0">
                <children>
-                  <VBox fx:id="lessonPlanVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="1000.0" prefWidth="1000.0">
-                     <children>
-                        <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" text="Lesson Plan #1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="addEventButton" mnemonicParsing="false" text="Add Event &gt;" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" />
-                     </children>
-                  </VBox>
+                  <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" text="Lesson Plan #1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="addEventButton" mnemonicParsing="false" text="Add Event &gt;" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" />
                </children>
-            </AnchorPane>
-        </content>
+            </VBox>
+         </content>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </ScrollPane>
    </center>
 </BorderPane>

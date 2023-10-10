@@ -60,10 +60,6 @@ public class EditingPageController {
     private Menu fileMenu;
     @FXML
     public void initialize() {
-        System.out.println("Is this thing on");
-        planeScrollPane.pannableProperty().set(true);
-        planeScrollPane.fitToWidthProperty().set(true);
-
 
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
