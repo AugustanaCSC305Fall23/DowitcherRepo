@@ -10,7 +10,16 @@ public class CreateImportPageController {
     @FXML private Button Create;
 
     @FXML
-    private void switchToCreatePopup() throws IOException {
-        App.setRoot("EditingPage"); 
+    private void switchToEditingPage() throws IOException {
+        App.setRoot("EditingPage");
+    }
+    @FXML
+    private void handleCreateButtonClick() {
+        try {
+            switchToEditingPage();
+        } catch (IOException e) {
+            // Handle IOException, e.g., show an error message
+            e.printStackTrace();
+        }
     }
 }
