@@ -15,9 +15,9 @@
    <top>
       <VBox prefHeight="85.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar>
+            <MenuBar >
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="File" >
                   <items>
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>

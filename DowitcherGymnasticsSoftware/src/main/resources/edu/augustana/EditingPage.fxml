@@ -15,14 +15,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <top>
-      <MenuBar maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      <MenuBar maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" fx:id="menuBar">
          <menus>
-            <Menu mnemonicParsing="false" text="File">
+            <Menu mnemonicParsing="false" text="File" fx:id="fileMenu">
                <items>
                   <MenuItem mnemonicParsing="false" text="Close" />
                </items>
+
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                <items>
