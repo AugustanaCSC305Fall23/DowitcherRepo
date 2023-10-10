@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana; 
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +46,9 @@ public class App extends Application {
     }
     public static void switchToEditingPage() {
         switchToView("EditingPage.fxml");
+    }
+    public static void switchToCreateImportPage(){
+        switchToView("CreateImportPage.fxml");
     }
 
     public static void main(String[] args) {

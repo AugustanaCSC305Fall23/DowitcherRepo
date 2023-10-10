@@ -10,7 +10,7 @@ public class LandingPageController {
 
     @FXML
     private void switchToCreatePopup() throws IOException {
-        App.switchToEditingPage();
+        App.switchToCreateImportPage();
 
     }
 
