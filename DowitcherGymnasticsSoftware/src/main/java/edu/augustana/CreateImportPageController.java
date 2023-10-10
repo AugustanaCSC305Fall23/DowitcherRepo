@@ -11,7 +11,6 @@ public class CreateImportPageController {
 
     @FXML
     private void switchToCreatePopup() throws IOException {
-        App.setRoot("EditingPage");
+        App.setRoot("EditingPage"); 
     }
-
 }
