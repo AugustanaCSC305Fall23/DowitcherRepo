@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class CardLibrary {
     private static int numCards;
-    public static ArrayList<String> cardList;
+    public static ArrayList<Card> cardList;
 
     public CardLibrary() {
-        cardList = new ArrayList<String>();
+        cardList = new ArrayList<Card>();
         numCards = 0;
     }
 
@@ -39,7 +39,9 @@ public class CardLibrary {
                 String[] keywords = nextLine[10].split(",");
 
                 System.out.println(String.format("CODE: %s, EVENT: %s, CATEGORY: %s, TITLE: %s, PACK FOLDER: %s, IMAGE: %s, GENDER: %s, MODEL SEX: %s, LEVEL: %s, EQUIPMENT: %s, KEYWORDS: %s", code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords));
-
+                Card card = new Card(code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords);
+                addCard(card);
+                System.out.println(card);
             }
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
@@ -48,5 +50,10 @@ public class CardLibrary {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void addCard(Card card) {
+        cardList.add(card);
+        numCards++;
     }
 }
