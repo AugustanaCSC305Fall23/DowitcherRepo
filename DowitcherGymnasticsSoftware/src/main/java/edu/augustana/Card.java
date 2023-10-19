@@ -1,5 +1,9 @@
 package edu.augustana;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+
 public class Card {
     private String code;
     private String event;
@@ -62,5 +66,14 @@ public class Card {
 
     public String toString() {
         return String.format("%s : %s", code, title);
+    }
+    public HBox generateThumbnail() {
+        HBox cardHBox = new HBox();
+        Image image = new Image(this.getPath());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(270);
+        cardHBox.getChildren().add(imageView);
+        return cardHBox;
     }
 }
