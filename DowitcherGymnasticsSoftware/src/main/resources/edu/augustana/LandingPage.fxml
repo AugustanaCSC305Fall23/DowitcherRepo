@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -15,9 +16,9 @@
    <top>
       <VBox prefHeight="85.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar >
+            <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="File" >
+                <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
@@ -34,21 +35,22 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <Label alignment="TOP_CENTER" text="Dowitcher Software">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets left="150.0" />
-               </padding>
-            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="TOP_LEFT" text="Dowitcher Software">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </top>
    <center>
       <TilePane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#switchToCreatePopup" text="Create or Import">
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToCreatePopup" text="Create or Import">
                <TilePane.margin>
                   <Insets left="20.0" />
                </TilePane.margin>
