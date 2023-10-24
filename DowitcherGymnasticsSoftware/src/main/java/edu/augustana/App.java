@@ -20,6 +20,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("LandingPage"), 640, 480); 
         stage.setScene(scene);
         stage.show();
+        CardLibrary cardLibrary = new CardLibrary();
+        cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
     }
 
     static void setRoot(String fxml) throws IOException {

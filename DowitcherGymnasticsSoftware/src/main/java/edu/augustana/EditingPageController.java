@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class EditingPageController {
@@ -15,7 +16,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<Image> cardImageView;
+    private ListView<HBox> cardImageView;
 
 
     @FXML
@@ -70,6 +71,7 @@ public class EditingPageController {
             }
         });
         fileMenu.getItems().add(homeItem);
+        loadCards();
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -80,5 +82,12 @@ public class EditingPageController {
         App.setRoot("LandingPage");
     }
 
+    @FXML
+    private void loadCards() {
+        for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
+            HBox thumbnail = CardLibrary.cardList.get(cardNum).generateThumbnail();
+            cardImageView.getItems().add(thumbnail);
+        }
+    }
 
 }
