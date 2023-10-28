@@ -30,6 +30,10 @@ public class EventContainer {
         return vbox;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void addCard(Card newCard){
         cards.add(newCard);
         Image image = new Image(newCard.getPath());

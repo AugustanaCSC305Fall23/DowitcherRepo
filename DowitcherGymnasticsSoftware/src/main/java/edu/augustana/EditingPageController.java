@@ -9,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class EditingPageController {
+    static LessonPlan currentLessonPlan;
+
     @FXML
     private ComboBox eventChoiceButton;
 
@@ -63,7 +65,7 @@ public class EditingPageController {
     private Menu fileMenu;
     @FXML
     public void initialize() {
-
+        System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
             try {
@@ -85,6 +87,7 @@ public class EditingPageController {
         App.setRoot("LandingPage");
     }
 
+
     @FXML
     private void loadCards() {
         for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
@@ -94,12 +97,13 @@ public class EditingPageController {
     }
 
     private void addCardToEvent() {
-        
+
     }
 
     @FXML
     private void addEvent() {
         EventContainer container = new EventContainer(eventChoiceButton.getValue().toString());
+        currentLessonPlan.addEventContainer(container);
         lessonPlanVBox.getChildren().add(3, container.getVbox());
     }
 
