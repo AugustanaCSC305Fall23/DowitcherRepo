@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 
 public class EditingPageController {
     @FXML
+    private ComboBox eventChoiceButton;
+
     private Button addEventButton;
 
     @FXML
@@ -72,6 +74,7 @@ public class EditingPageController {
         });
         fileMenu.getItems().add(homeItem);
         loadCards();
+        addEventChoices();
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -88,6 +91,21 @@ public class EditingPageController {
             HBox thumbnail = CardLibrary.cardList.get(cardNum).generateThumbnail();
             cardImageView.getItems().add(thumbnail);
         }
+    }
+
+    private void addCardToEvent() {
+        
+    }
+
+    @FXML
+    private void addEvent() {
+        EventContainer container = new EventContainer(eventChoiceButton.getValue().toString());
+        lessonPlanVBox.getChildren().add(3, container.getVbox());
+    }
+
+    private void addEventChoices() {
+        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
+                "Parallel Bars","Pommel Horse","Still Rings","Uneven Bars","Vault");
     }
 
 }
