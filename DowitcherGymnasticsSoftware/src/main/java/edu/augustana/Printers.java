@@ -5,16 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.print.*;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+
 
 
 public class Printers {
