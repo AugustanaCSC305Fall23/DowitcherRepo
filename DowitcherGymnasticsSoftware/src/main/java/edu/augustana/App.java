@@ -12,13 +12,15 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
+    public static Stage stage;
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("LandingPage"), 640, 480); 
+        scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
+        stage.setMaximized(true);
+        this.stage = stage;
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");

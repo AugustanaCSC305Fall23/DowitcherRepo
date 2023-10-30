@@ -3,10 +3,11 @@ package edu.augustana;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 
 public class EditingPageController {
     @FXML
@@ -24,7 +25,8 @@ public class EditingPageController {
 
     @FXML
     private Button equipmentFilterButton;
-
+    @FXML
+    private Button printButton;
     @FXML
     private Button eventFilterButton;
 
@@ -63,6 +65,8 @@ public class EditingPageController {
     public void initialize() {
 
         MenuItem homeItem = new MenuItem("Home");
+        MenuItem printItem = new MenuItem("Print");
+
         homeItem.setOnAction(evt -> {
             try {
                 switchToHome();
@@ -70,7 +74,9 @@ public class EditingPageController {
                 throw new RuntimeException(e);
             }
         });
-        fileMenu.getItems().add(homeItem);
+        printItem.setOnAction(evt -> Printers.printLessonPlan(planeScrollPane));
+        fileMenu.getItems().addAll(homeItem, printItem);
+
         loadCards();
     }
     @FXML
@@ -90,4 +96,8 @@ public class EditingPageController {
         }
     }
 
+
+
 }
+
+
