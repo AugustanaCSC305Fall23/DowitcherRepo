@@ -1,4 +1,4 @@
-package edu.augustana; 
+package edu.augustana;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

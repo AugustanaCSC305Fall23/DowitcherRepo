@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import java.util.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 
 public class EditingPageController {
     static LessonPlan currentLessonPlan;
@@ -21,7 +23,6 @@ public class EditingPageController {
 
     @FXML
     private ListView<HBox> cardImageView;
-
 
     @FXML
     private Button clearFilterButton;
@@ -63,8 +64,12 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
-    @FXML
+
+    private SearchFunction searchFunction;
+
+    @FXML 
     public void initialize() {
+        searchFunction = new SearchFunction(CardLibrary.cardList);
         System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
@@ -103,6 +108,21 @@ public class EditingPageController {
         }
     }
 
+    @FXML
+    private void cardSearchFunction() {
+        String query = filterSearchField.getText();
+        List<Card> searchResults = searchFunction.performSearch(query);
+        updateCardImageView(searchResults);
+    }
+
+    private void updateCardImageView(List<Card> searchResults) {
+        cardImageView.getItems().clear();
+
+        for (Card card : searchResults) {
+            HBox thumbnail = card.generateThumbnail();
+            cardImageView.getItems().add(thumbnail);
+        }
+    }
     private void addCardToEvent() {
 
     }
