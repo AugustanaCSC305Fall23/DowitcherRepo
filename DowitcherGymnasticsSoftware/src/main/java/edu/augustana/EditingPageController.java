@@ -67,7 +67,7 @@ public class EditingPageController {
 
     private SearchFunction searchFunction;
 
-    @FXML 
+    @FXML
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
         System.out.println(currentLessonPlan.toString());
@@ -81,7 +81,7 @@ public class EditingPageController {
         });
         fileMenu.getItems().add(homeItem);
         loadCards();
-        addEventChoices();
+        addEventChoices(); 
     }
     @FXML
     private void switchToEditingPage() throws IOException {
