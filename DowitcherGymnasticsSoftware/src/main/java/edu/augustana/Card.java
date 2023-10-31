@@ -30,6 +30,12 @@ public class Card {
         this.keywords = keywords;
     }
 
+    public Card(){
+        this("", "", "", "", "", "", "", "", "", "", null);
+        this.image = "Blank Card.png";
+        this.packFolder = "Misc Images";
+    }
+
     public String getCode() {
         return code;
     }

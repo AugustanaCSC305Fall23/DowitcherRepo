@@ -58,7 +58,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField alignment="BOTTOM_CENTER" prefHeight="37.0" prefWidth="600.0" />
+                  <TextField fx:id="LessonPlanTextField" alignment="BOTTOM_CENTER" prefHeight="37.0" prefWidth="600.0" />
                </children>
             </VBox>
          </children></TilePane>

@@ -11,7 +11,11 @@ import javafx.scene.layout.VBox;
 
 
 public class EditingPageController {
+    static LessonPlan currentLessonPlan;
+
     @FXML
+    private ComboBox eventChoiceButton;
+
     private Button addEventButton;
 
     @FXML
@@ -63,10 +67,10 @@ public class EditingPageController {
 
     private SearchFunction searchFunction;
 
-    @FXML
+    @FXML 
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
-
+        System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
             try {
@@ -77,7 +81,7 @@ public class EditingPageController {
         });
         fileMenu.getItems().add(homeItem);
         loadCards();
-
+        addEventChoices();
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -87,6 +91,7 @@ public class EditingPageController {
     private void switchToHome() throws IOException{
         App.setRoot("LandingPage");
     }
+
 
     @FXML
     private void loadCards() {
@@ -110,6 +115,21 @@ public class EditingPageController {
             HBox thumbnail = card.generateThumbnail();
             cardImageView.getItems().add(thumbnail);
         }
+
+    private void addCardToEvent() {
+
+    }
+
+    @FXML
+    private void addEvent() {
+        EventContainer container = new EventContainer(eventChoiceButton.getValue().toString());
+        currentLessonPlan.addEventContainer(container);
+        lessonPlanVBox.getChildren().add(3, container.getVbox());
+    }
+
+    private void addEventChoices() {
+        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
+                "Parallel Bars","Pommel Horse","Still Rings","Uneven Bars","Vault");
 
     }
 
