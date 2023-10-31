@@ -77,6 +77,13 @@ public class EditingPageController {
         fileMenu.getItems().add(homeItem);
         loadCards();
         addEventChoices();
+        lessonPlanTitle.setText(currentLessonPlan.getTitle());
+        cardImageView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                System.out.println("Double clicked");
+                addByDoubleClick();
+            }
+        });
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -109,7 +116,20 @@ public class EditingPageController {
 
     private void addEventChoices() {
         eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
-                "Parallel Bars","Pommel Horse","Still Rings","Uneven Bars","Vault");
+                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
+    }
+
+    private void addByDoubleClick() {
+        System.out.println("Double clicked");
+        HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
+        System.out.println(selectedCard.getId());
+        for (Object key : currentLessonPlan.getEventMap().keySet()) {
+            EventContainer container = (EventContainer) currentLessonPlan.getEventMap().get(key);
+            if (container.getTitle().equalsIgnoreCase(selectedCard.getId())) {
+                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            }
+        }
+        currentLessonPlan.printTree();
     }
 
 }

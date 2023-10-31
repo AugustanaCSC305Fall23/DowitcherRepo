@@ -26,4 +26,29 @@ public class LessonPlan {
 
     }
 
+    public Map getEventMap() {
+        return eventMap;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String printTree() {
+        System.out.println(this.title);
+        for (Object key : eventMap.keySet()) {
+            EventContainer eventContainer = (EventContainer) eventMap.get(key);
+            System.out.println(eventContainer.getTitle());
+            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+                if (cardIndex != 0) {
+                    Card card = (Card) eventContainer.getCards().get(cardIndex);
+                    System.out.println("    \\" + card.getTitle());
+                }
+
+            }
+            System.out.println("");
+        }
+    	return "";
+    }
+
 }
