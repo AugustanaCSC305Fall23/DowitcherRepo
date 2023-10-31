@@ -5,10 +5,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 public class SearchFunction {
-    @FXML
     private TextField filterSearchField;
 
-    @FXML
     private ListView<Card> cardImageView;
     private final List<Card> cards;
 
@@ -16,7 +14,6 @@ public class SearchFunction {
         this.cards = cards;
     }
 
-    @FXML
     private void handleSearch() {
         //String query =
         filterSearchField.setOnKeyPressed(evt -> performSearch(filterSearchField.getText()));
@@ -25,7 +22,7 @@ public class SearchFunction {
 
     }
 
-    private List<Card> performSearch(String query) {
+    public List<Card> performSearch(String query) {
         List<Card> searchResults = new ArrayList<>();
 
         if (query.trim().isEmpty()) {

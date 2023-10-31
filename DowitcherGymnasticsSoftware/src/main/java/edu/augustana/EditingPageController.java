@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import java.util.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 
 public class EditingPageController {
     @FXML
@@ -17,7 +19,6 @@ public class EditingPageController {
 
     @FXML
     private ListView<HBox> cardImageView;
-
 
     @FXML
     private Button clearFilterButton;
@@ -59,8 +60,12 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
+
+    private SearchFunction searchFunction;
+
     @FXML
     public void initialize() {
+        searchFunction = new SearchFunction(CardLibrary.cardList);
 
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
@@ -72,6 +77,7 @@ public class EditingPageController {
         });
         fileMenu.getItems().add(homeItem);
         loadCards();
+
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -88,6 +94,23 @@ public class EditingPageController {
             HBox thumbnail = CardLibrary.cardList.get(cardNum).generateThumbnail();
             cardImageView.getItems().add(thumbnail);
         }
+    }
+
+    @FXML
+    private void cardSearchFunction() {
+        String query = filterSearchField.getText();
+        List<Card> searchResults = searchFunction.performSearch(query);
+        updateCardImageView(searchResults);
+    }
+
+    private void updateCardImageView(List<Card> searchResults) {
+        cardImageView.getItems().clear();
+
+        for (Card card : searchResults) {
+            HBox thumbnail = card.generateThumbnail();
+            cardImageView.getItems().add(thumbnail);
+        }
+
     }
 
 }
