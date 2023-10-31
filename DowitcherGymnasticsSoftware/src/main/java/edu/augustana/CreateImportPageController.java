@@ -3,14 +3,17 @@ package edu.augustana;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 public class CreateImportPageController {
+    @FXML private TextField LessonPlanTextField;
     @FXML private Button Cancel;
     @FXML private Button Import;
     @FXML private Button Create;
 
     @FXML
     private void switchToEditingPage() throws IOException {
+        EditingPageController.currentLessonPlan = createLessonPlan();
         App.setRoot("EditingPage");
     }
     @FXML
@@ -22,4 +25,10 @@ public class CreateImportPageController {
             e.printStackTrace();
         }
     }
+
+    private LessonPlan createLessonPlan() {
+        LessonPlan currentLessonPlan = new LessonPlan(LessonPlanTextField.getText());
+        return currentLessonPlan;
+    }
+
 }

@@ -10,7 +10,11 @@ import javafx.scene.layout.VBox;
 
 
 public class EditingPageController {
+    static LessonPlan currentLessonPlan;
+
     @FXML
+    private ComboBox eventChoiceButton;
+
     private Button addEventButton;
 
     @FXML
@@ -63,7 +67,7 @@ public class EditingPageController {
     private Menu fileMenu;
     @FXML
     public void initialize() {
-
+        System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -78,15 +82,17 @@ public class EditingPageController {
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
+        addEventChoices();
     }
     @FXML
-    private void switchToEditingPage() throws IOException {
+    public static void switchToEditingPage() throws IOException {
         App.setRoot("editingPage.fxml");
     }
     @FXML
     private void switchToHome() throws IOException{
         App.setRoot("LandingPage");
     }
+
 
     @FXML
     private void loadCards() {
@@ -96,6 +102,23 @@ public class EditingPageController {
         }
     }
 
+
+
+    private void addCardToEvent() {
+
+    }
+
+    @FXML
+    private void addEvent() {
+        EventContainer container = new EventContainer(eventChoiceButton.getValue().toString());
+        currentLessonPlan.addEventContainer(container);
+        lessonPlanVBox.getChildren().add(3, container.getVbox());
+    }
+
+    private void addEventChoices() {
+        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
+                "Parallel Bars","Pommel Horse","Still Rings","Uneven Bars","Vault");
+    }
 
 
 }

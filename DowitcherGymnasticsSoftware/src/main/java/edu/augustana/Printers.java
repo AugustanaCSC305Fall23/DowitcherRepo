@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.*;
 
+import java.io.IOException;
 
 
 public class Printers {
@@ -47,6 +48,15 @@ public class Printers {
             print(scrollpane, selectedPrinter);
         });
         gridpane.add(printButton, 0, 3);
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(evt -> {
+            try {
+                EditingPageController.switchToEditingPage();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        gridpane.add(cancelButton, 3, 3);
         root.getChildren().add(gridpane);
 
 
