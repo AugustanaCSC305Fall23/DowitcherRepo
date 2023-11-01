@@ -5,9 +5,12 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 
 public class EditingPageController {
@@ -81,7 +84,13 @@ public class EditingPageController {
         });
         fileMenu.getItems().add(homeItem);
         loadCards();
-        addEventChoices(); 
+        addEventChoices();
+//        cardImageView = new ListView<>();
+        filterSearchField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                cardSearchFunction();
+            }
+        });
     }
     @FXML
     private void switchToEditingPage() throws IOException {
@@ -106,8 +115,11 @@ public class EditingPageController {
         String query = filterSearchField.getText();
         List<Card> searchResults = searchFunction.performSearch(query);
         updateCardImageView(searchResults);
+//        System.out.println("ENTER was pressed");
+//        System.out.println(searchResults.toString());
     }
 
+    @FXML
     private void updateCardImageView(List<Card> searchResults) {
         cardImageView.getItems().clear();
 
@@ -115,6 +127,8 @@ public class EditingPageController {
             HBox thumbnail = card.generateThumbnail();
             cardImageView.getItems().add(thumbnail);
         }
+    }
+
 
     private void addCardToEvent() {
 

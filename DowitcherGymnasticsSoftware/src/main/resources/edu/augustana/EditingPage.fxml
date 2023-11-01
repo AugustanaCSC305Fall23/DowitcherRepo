@@ -57,7 +57,7 @@
                   </BorderPane>
                </children>
             </HBox>
-            <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cardSearchFunction" />
             <ListView fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" VBox.vgrow="ALWAYS" />
          </children>
          <BorderPane.margin>

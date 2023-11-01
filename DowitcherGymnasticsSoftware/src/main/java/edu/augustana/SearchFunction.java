@@ -3,6 +3,8 @@ import javafx.fxml.FXML;
 import java.util.*;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 
 public class SearchFunction {
     private TextField filterSearchField;
@@ -14,13 +16,6 @@ public class SearchFunction {
         this.cards = cards;
     }
 
-    private void handleSearch() {
-        //String query =
-        filterSearchField.setOnKeyPressed(evt -> performSearch(filterSearchField.getText()));
-        List<Card> searchResults = performSearch(filterSearchField.getText());
-        cardImageView.getItems().setAll(searchResults);
-
-    }
 
     public List<Card> performSearch(String query) {
         List<Card> searchResults = new ArrayList<>();
