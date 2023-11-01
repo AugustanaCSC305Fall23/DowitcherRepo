@@ -73,6 +73,12 @@ public class EditingPageController {
     @FXML
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
+//      cardImageView = new ListView<>();
+        filterSearchField.setOnKeyPressed(evt -> {
+            if (evt.getCode() == KeyCode.ENTER) {
+                cardSearchFunction();
+            }
+        });
         System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
@@ -85,10 +91,6 @@ public class EditingPageController {
         fileMenu.getItems().add(homeItem);
         loadCards();
         addEventChoices();
-//        cardImageView = new ListView<>();
-        filterSearchField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                cardSearchFunction();
         lessonPlanTitle.setText(currentLessonPlan.getTitle());
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -159,7 +161,7 @@ public class EditingPageController {
             if (container.getTitle().equalsIgnoreCase(selectedCard.getId())) {
                 container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
             }
-        } 
+        }
         currentLessonPlan.printTree();
     }
 
