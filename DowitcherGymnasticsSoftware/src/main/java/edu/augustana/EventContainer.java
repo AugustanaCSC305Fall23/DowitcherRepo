@@ -10,18 +10,23 @@ import javafx.scene.layout.VBox;
 public class EventContainer {
     private String title;
     private List<Card> cards;
+    private String type;
 
     private VBox vbox;
     private HBox hbox;
 
     private HBox secondaryHbox;
 
-    public EventContainer(String title){
-        this.title = title;
+    public EventContainer(String type){
+        this.type = type;
+        this.title = String.format("New %s Event", type);
         this.cards = new ArrayList<Card>();
         this.vbox = new VBox();
-        Label label = new Label(title);
-        vbox.getChildren().add(label);
+        Label titleLabel = new Label(title);
+        Label typeLabel = new Label(String.format("(%s)", type));
+        titleLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
+        vbox.getChildren().add(titleLabel);
+        vbox.getChildren().add(typeLabel);
         this.hbox = new HBox();
         vbox.getChildren().add(hbox);
         vbox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
@@ -34,6 +39,10 @@ public class EventContainer {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void addCard(Card newCard){
@@ -59,5 +68,8 @@ public class EventContainer {
 
     public List<Card> getCards() {
         return cards;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

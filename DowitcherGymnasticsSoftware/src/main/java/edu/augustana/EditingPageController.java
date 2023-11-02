@@ -141,8 +141,12 @@ public class EditingPageController {
     }
 
     @FXML
-    private void addEvent() {
-        EventContainer container = new EventContainer(eventChoiceButton.getValue().toString());
+    private void addEventByButton() {
+        addEvent(eventChoiceButton.getValue().toString());
+    }
+    @FXML
+    private void addEvent(String event) {
+        EventContainer container = new EventContainer(event);
         currentLessonPlan.addEventContainer(container);
         lessonPlanVBox.getChildren().add(3, container.getVbox());
     }
@@ -156,11 +160,18 @@ public class EditingPageController {
         System.out.println("Double clicked");
         HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
         System.out.println(selectedCard.getId());
+        boolean containerExists = false;
         for (Object key : currentLessonPlan.getEventMap().keySet()) {
             EventContainer container = (EventContainer) currentLessonPlan.getEventMap().get(key);
-            if (container.getTitle().equalsIgnoreCase(selectedCard.getId())) {
+            if (container.getType().equalsIgnoreCase(selectedCard.getId())) {
+                containerExists = true;
                 container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
             }
+        }
+        if (!containerExists) {
+            addEvent(selectedCard.getId());
+            EventContainer newContainer = (EventContainer) currentLessonPlan.getEventMap().get(selectedCard.getId());
+            newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         }
         currentLessonPlan.printTree();
     }

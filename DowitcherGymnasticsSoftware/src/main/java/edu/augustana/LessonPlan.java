@@ -14,7 +14,7 @@ public class LessonPlan {
     }
 
     public void addEventContainer(EventContainer addedContainer) {
-        eventMap.put(addedContainer.getTitle(), addedContainer);
+        eventMap.put(addedContainer.getType(), addedContainer);
 
     }
 
@@ -38,7 +38,7 @@ public class LessonPlan {
         System.out.println(this.title);
         for (Object key : eventMap.keySet()) {
             EventContainer eventContainer = (EventContainer) eventMap.get(key);
-            System.out.println(eventContainer.getTitle());
+            System.out.println(eventContainer.getTitle() + "(Event type: " + eventContainer.getType() + ")");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 if (cardIndex != 0) {
                     Card card = (Card) eventContainer.getCards().get(cardIndex);
