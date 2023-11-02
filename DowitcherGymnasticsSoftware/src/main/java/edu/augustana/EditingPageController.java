@@ -1,7 +1,10 @@
 package edu.augustana;
 
+import java.io.File;
 import java.util.*;
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,10 +14,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 
 public class EditingPageController {
-    static LessonPlan currentLessonPlan;
+
 
     @FXML
     private ComboBox eventChoiceButton;
@@ -79,7 +84,7 @@ public class EditingPageController {
                 cardSearchFunction();
             }
         });
-        System.out.println(currentLessonPlan.toString());
+        System.out.println(App.currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         homeItem.setOnAction(evt -> {
             try {
@@ -91,7 +96,7 @@ public class EditingPageController {
         fileMenu.getItems().add(homeItem);
         loadCards();
         addEventChoices();
-        lessonPlanTitle.setText(currentLessonPlan.getTitle());
+        lessonPlanTitle.setText(App.currentLessonPlan.getTitle());
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
@@ -147,7 +152,7 @@ public class EditingPageController {
     @FXML
     private void addEvent(String event) {
         EventContainer container = new EventContainer(event);
-        currentLessonPlan.addEventContainer(container);
+        App.currentLessonPlan.addEventContainer(container);
         lessonPlanVBox.getChildren().add(3, container.getVbox());
     }
 
@@ -161,8 +166,8 @@ public class EditingPageController {
         HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
         System.out.println(selectedCard.getId());
         boolean containerExists = false;
-        for (Object key : currentLessonPlan.getEventMap().keySet()) {
-            EventContainer container = (EventContainer) currentLessonPlan.getEventMap().get(key);
+        for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
+            EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
             if (container.getType().equalsIgnoreCase(selectedCard.getId())) {
                 containerExists = true;
                 container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
@@ -170,10 +175,62 @@ public class EditingPageController {
         }
         if (!containerExists) {
             addEvent(selectedCard.getId());
-            EventContainer newContainer = (EventContainer) currentLessonPlan.getEventMap().get(selectedCard.getId());
+            EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(selectedCard.getId());
             newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         }
-        currentLessonPlan.printTree();
+        App.currentLessonPlan.printTree();
     }
 
+    @FXML
+    private void openLessonPlan(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Lesson Plan File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
+        fileChooser.getExtensionFilters().add(filter);
+        Window mainWindow = cardImageView.getScene().getWindow();
+        File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        if (chosenFile != null) {
+            try {
+                App.loadCurrentLessonPlanFromFile(chosenFile);
+                lessonPlanVBox.getChildren().clear();
+                LessonPlan loadedPlan = App.getCurrentLessonPlan();
+                lessonPlanTitle.setText(loadedPlan.getTitle());
+                for (Object key : loadedPlan.getEventMap().keySet()) {
+                    EventContainer eventContainer = (EventContainer) loadedPlan.getEventMap().get(key);
+                    lessonPlanVBox.getChildren().add(eventContainer.getVbox());
+                }
+            } catch (IOException ex) {
+                new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + chosenFile).show();
+            }
+        }
+    }
+    @FXML
+    private void save(ActionEvent event) {
+        if (App.getCurrentLessonPlanFile() == null) {
+            saveAs(event);
+        } else {
+            saveCurrentLessonPlanToFile(App.getCurrentLessonPlanFile());
+        }
+     }
+
+     @FXML
+    private void saveAs(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Lesson Plan");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
+        fileChooser.getExtensionFilters().add(filter);
+        Window mainWindow = cardImageView.getScene().getWindow();
+        File chosenFile = fileChooser.showSaveDialog(mainWindow);
+        saveCurrentLessonPlanToFile(chosenFile);
+    }
+    @FXML
+    private void saveCurrentLessonPlanToFile(File chosenFile) {
+        if (chosenFile != null) {
+            try {
+                App.saveCurrentLessonPlanToFile(chosenFile);
+            } catch (IOException ex) {
+                new Alert(Alert.AlertType.ERROR, "Error saving lesson plan file: " + chosenFile).show();
+            }
+        }
+    }
 }
