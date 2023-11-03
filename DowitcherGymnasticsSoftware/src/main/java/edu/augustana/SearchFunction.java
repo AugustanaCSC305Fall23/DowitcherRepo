@@ -61,6 +61,7 @@ public class SearchFunction {
                 matchingCards.add(card);
             }
         }
+        //System.out.println("this runs"); 
         return matchingCards;
     }
 

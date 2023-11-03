@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class LessonPlan { 
+public class LessonPlan {  
     private Map eventMap;
     private String title;
 
