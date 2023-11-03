@@ -1,6 +1,10 @@
 package edu.augustana;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -49,6 +53,22 @@ public class LessonPlan {
             System.out.println("");
         }
     	return "";
+    }
+
+    public static LessonPlan loadFromFile(File logFile) throws IOException {
+        Gson gson = new Gson();
+        FileReader reader = new FileReader(logFile);
+        LessonPlan lessonPlan = gson.fromJson(reader, LessonPlan.class);
+        return lessonPlan;
+    }
+    public void saveToFile(File logFile) throws IOException {
+        System.out.println("Saving to file: " + logFile);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String serializedLessonPlan = gson.toJson(this);
+        PrintWriter writer = new PrintWriter(new FileWriter(logFile));
+        writer.println(serializedLessonPlan);
+        writer.close();
+
     }
 
 }

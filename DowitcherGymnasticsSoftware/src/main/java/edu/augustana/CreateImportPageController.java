@@ -13,7 +13,7 @@ public class CreateImportPageController {
 
     @FXML
     private void switchToEditingPage() throws IOException {
-        EditingPageController.currentLessonPlan = createLessonPlan();
+        App.currentLessonPlan = createLessonPlan();
         App.setRoot("EditingPage");
     }
     @FXML

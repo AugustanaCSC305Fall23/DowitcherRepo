@@ -61,7 +61,7 @@ public class SearchFunction {
                 matchingCards.add(card);
             }
         }
-        return matchingCards;   
+        return matchingCards;
     }
 
 }
