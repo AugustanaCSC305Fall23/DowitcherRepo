@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 import java.io.IOException;
 
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -117,7 +118,7 @@ public class EditingPageController {
     @FXML
     private void loadCards() {
         for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
-            HBox thumbnail = CardLibrary.cardList.get(cardNum).generateThumbnail();
+            HBox thumbnail = CardGraphic.generateCardThumbnail(CardLibrary.cardList.get(cardNum));
             cardImageView.getItems().add(thumbnail);
         }
     }
@@ -136,7 +137,7 @@ public class EditingPageController {
         cardImageView.getItems().clear();
 
         for (Card card : searchResults) {
-            HBox thumbnail = card.generateThumbnail();
+            HBox thumbnail = CardGraphic.generateCardThumbnail(card);
             cardImageView.getItems().add(thumbnail);
         }
     }
@@ -153,7 +154,7 @@ public class EditingPageController {
     private void addEvent(String event) {
         EventContainer container = new EventContainer(event);
         App.currentLessonPlan.addEventContainer(container);
-        lessonPlanVBox.getChildren().add(3, container.getVbox());
+        lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
     }
 
     private void addEventChoices() {
@@ -166,17 +167,23 @@ public class EditingPageController {
         HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
         System.out.println(selectedCard.getId());
         boolean containerExists = false;
+        boolean containerFull = false;
         for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
             EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
-            if (container.getType().equalsIgnoreCase(selectedCard.getId())) {
+            if (container.getCards().size() >= 8) {
+                containerFull = true;
+            }
+            if (container.getType().equalsIgnoreCase(selectedCard.getId()) && !containerFull) {
                 containerExists = true;
-                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
+                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
             }
         }
-        if (!containerExists) {
+        if (!containerExists && !containerFull) {
             addEvent(selectedCard.getId());
             EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(selectedCard.getId());
-            newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
+            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         }
         App.currentLessonPlan.printTree();
     }
@@ -192,12 +199,21 @@ public class EditingPageController {
         if (chosenFile != null) {
             try {
                 App.loadCurrentLessonPlanFromFile(chosenFile);
-                lessonPlanVBox.getChildren().clear();
+                for (int i = 3; i < lessonPlanVBox.getChildren().size(); i++) {
+                    lessonPlanVBox.getChildren().remove(i);
+                }
                 LessonPlan loadedPlan = App.getCurrentLessonPlan();
                 lessonPlanTitle.setText(loadedPlan.getTitle());
-                for (Object key : loadedPlan.getEventMap().keySet()) {
-                    EventContainer eventContainer = (EventContainer) loadedPlan.getEventMap().get(key);
-                    lessonPlanVBox.getChildren().add(eventContainer.getVbox());
+                Map map = App.getCurrentLessonPlan().getEventMap();
+                System.out.println(map.toString());
+                for (Object key : map.keySet()) {
+                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
+                    VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+                    for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+                        Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+                        CardGraphic.addCardToEventContainerGraphic(vbox, card);
+                    }
+                    lessonPlanVBox.getChildren().add(vbox);
                 }
             } catch (IOException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + chosenFile).show();

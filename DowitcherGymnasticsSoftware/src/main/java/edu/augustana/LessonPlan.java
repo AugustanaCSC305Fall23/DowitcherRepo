@@ -45,7 +45,7 @@ public class LessonPlan {
             System.out.println(eventContainer.getTitle() + "(Event type: " + eventContainer.getType() + ")");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 if (cardIndex != 0) {
-                    Card card = (Card) eventContainer.getCards().get(cardIndex);
+                    Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                     System.out.println("    \\" + card.getTitle());
                 }
 
@@ -58,8 +58,7 @@ public class LessonPlan {
     public static LessonPlan loadFromFile(File logFile) throws IOException {
         Gson gson = new Gson();
         FileReader reader = new FileReader(logFile);
-        LessonPlan lessonPlan = gson.fromJson(reader, LessonPlan.class);
-        return lessonPlan;
+        return gson.fromJson(reader, LessonPlan.class);
     }
     public void saveToFile(File logFile) throws IOException {
         System.out.println("Saving to file: " + logFile);

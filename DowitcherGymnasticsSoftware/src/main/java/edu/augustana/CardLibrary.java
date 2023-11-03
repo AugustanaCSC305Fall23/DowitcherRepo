@@ -9,13 +9,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CardLibrary {
     private static int numCards;
     public static ArrayList<Card> cardList;
+    public static Map cardMap;
 
     public CardLibrary() {
         cardList = new ArrayList<Card>();
+        cardMap = new TreeMap<String, Card>();
         numCards = 0;
     }
 
@@ -54,6 +58,11 @@ public class CardLibrary {
 
     private void addCard(Card card) {
         cardList.add(card);
+        cardMap.put(card.getCode(), card);
         numCards++;
+    }
+
+    public Card getCardByCode(String code) {
+        return (Card) cardMap.get(code);
     }
 }
