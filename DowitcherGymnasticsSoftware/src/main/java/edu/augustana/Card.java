@@ -75,6 +75,7 @@ public class Card {
     }
     public HBox generateThumbnail() {
         HBox cardHBox = new HBox();
+        cardHBox.setId(this.getEvent());
         Image image = new Image(this.getPath());
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(200);

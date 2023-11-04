@@ -1,4 +1,4 @@
-package edu.augustana; 
+package edu.augustana;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +19,6 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
-        stage.setMaximized(true);
-        this.stage = stage;
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
@@ -54,6 +52,8 @@ public class App extends Application {
     public static void switchToCreateImportPage(){
         switchToView("CreateImportPage.fxml");
     }
+
+    public static void switchToPrintPage(){switchToView("PrintPage.fxml");}
 
     public static void main(String[] args) {
         launch();

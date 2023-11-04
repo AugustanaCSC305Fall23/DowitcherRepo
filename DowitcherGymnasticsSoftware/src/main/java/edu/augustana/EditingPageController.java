@@ -1,8 +1,10 @@
 package edu.augustana;
 
+import java.util.*;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,7 +24,6 @@ public class EditingPageController {
 
     @FXML
     private ListView<HBox> cardImageView;
-
 
     @FXML
     private Button clearFilterButton;
@@ -65,8 +66,12 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
-    @FXML
+
+    private SearchFunction searchFunction;
+
+    @FXML 
     public void initialize() {
+        searchFunction = new SearchFunction(CardLibrary.cardList);
         System.out.println(currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
@@ -78,11 +83,18 @@ public class EditingPageController {
                 throw new RuntimeException(e);
             }
         });
-        printItem.setOnAction(evt -> Printers.printLessonPlan(planeScrollPane));
+        printItem.setOnAction(evt -> {App.switchToPrintPage();}); //Printers.printLessonPlan(planeScrollPane);});
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
         addEventChoices();
+        lessonPlanTitle.setText(currentLessonPlan.getTitle());
+        cardImageView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                System.out.println("Double clicked");
+                addByDoubleClick();
+            }
+        });
     }
     @FXML
     public static void switchToEditingPage() throws IOException {
@@ -102,7 +114,24 @@ public class EditingPageController {
         }
     }
 
+    @FXML
+    private void cardSearchFunction() {
+        String query = filterSearchField.getText();
+        List<Card> searchResults = searchFunction.performSearch(query);
+        System.out.println(searchResults);
+        updateCardImageView(searchResults);
+    }
 
+
+    private void updateCardImageView(List<Card> searchResults) {
+        cardImageView.getItems().clear();
+
+        for (Card card : searchResults) {
+            HBox thumbnail = card.generateThumbnail();
+            cardImageView.getItems().add(thumbnail);
+        }
+
+    }
 
     private void addCardToEvent() {
 
@@ -117,7 +146,20 @@ public class EditingPageController {
 
     private void addEventChoices() {
         eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
-                "Parallel Bars","Pommel Horse","Still Rings","Uneven Bars","Vault");
+                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
+    }
+
+    private void addByDoubleClick() {
+        System.out.println("Double clicked");
+        HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
+        System.out.println(selectedCard.getId());
+        for (Object key : currentLessonPlan.getEventMap().keySet()) {
+            EventContainer container = (EventContainer) currentLessonPlan.getEventMap().get(key);
+            if (container.getTitle().equalsIgnoreCase(selectedCard.getId())) {
+                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            }
+        }
+        currentLessonPlan.printTree();
     }
 
 

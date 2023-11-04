@@ -14,6 +14,8 @@ public class EventContainer {
     private VBox vbox;
     private HBox hbox;
 
+    private HBox secondaryHbox;
+
     public EventContainer(String title){
         this.title = title;
         this.cards = new ArrayList<Card>();
@@ -40,10 +42,22 @@ public class EventContainer {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(200);
         imageView.setFitWidth(270);
-        hbox.getChildren().add(imageView);
+        if (hbox.getChildren().size() > 4 && secondaryHbox == null) {
+            secondaryHbox = new HBox();
+            vbox.getChildren().add(secondaryHbox);
+            secondaryHbox.getChildren().add(0, imageView);
+        } else if (hbox.getChildren().size() > 4) {
+            secondaryHbox.getChildren().add(0, imageView);
+        } else {
+            hbox.getChildren().add(0, imageView);
+        }
     }
 
     public void removeCard(){
 
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
