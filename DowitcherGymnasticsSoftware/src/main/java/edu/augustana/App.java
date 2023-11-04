@@ -6,13 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
+
     public static Stage stage;
+
+    static LessonPlan currentLessonPlan;
+    static File currentLessonPlanFile;
+
+
     private static Scene scene;
 
     @Override
@@ -51,6 +58,21 @@ public class App extends Application {
     }
     public static void switchToCreateImportPage(){
         switchToView("CreateImportPage.fxml");
+    }
+    public static void loadCurrentLessonPlanFromFile(File lessonPlanFile) throws IOException {
+        currentLessonPlan = LessonPlan.loadFromFile(lessonPlanFile);
+        currentLessonPlanFile = lessonPlanFile;
+    }
+    public static void saveCurrentLessonPlanToFile(File chosenFile) throws IOException {
+        currentLessonPlan.saveToFile(chosenFile);
+        currentLessonPlanFile = chosenFile;
+    }
+
+    public static File getCurrentLessonPlanFile() {
+        return currentLessonPlanFile;
+    }
+    public static LessonPlan getCurrentLessonPlan() {
+        return currentLessonPlan;
     }
 
     public static void switchToPrintPage(){switchToView("PrintPage.fxml");}

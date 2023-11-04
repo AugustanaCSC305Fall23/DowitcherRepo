@@ -25,7 +25,8 @@ public class SearchFunction {
 
         for (Card card : cards) {
             if (card.getCode().equalsIgnoreCase(query) ||
-                    card.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    card.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    card.getCategory().equalsIgnoreCase(query)) {
                 searchResults.add(card);
             }
         }
@@ -61,5 +62,16 @@ public class SearchFunction {
             }
         });
     }*/
+
+    public List<Card> searchByCategory(String category) {
+        List<Card> matchingCards = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getCategory().equalsIgnoreCase(category)) {
+                matchingCards.add(card);
+            }
+        }
+        //System.out.println("this runs"); 
+        return matchingCards;
+    }
 
 }

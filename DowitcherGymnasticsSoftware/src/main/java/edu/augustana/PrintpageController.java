@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import static edu.augustana.App.currentLessonPlan;
 import static edu.augustana.App.stage;
 
 public class PrintpageController {
@@ -41,7 +42,7 @@ public class PrintpageController {
     }
     printerChooser.setItems(printerNames);
 
-    lessonPlanLabel.setText(EditingPageController.currentLessonPlan.getTitle());
+    lessonPlanLabel.setText(currentLessonPlan.getTitle());
 
     //drawLessonPlan(EditingPageController.currentLessonPlan);
     }

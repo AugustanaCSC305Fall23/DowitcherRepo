@@ -21,8 +21,9 @@
          <menus>
             <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#openLessonPlan" text="Open" />
                   <MenuItem mnemonicParsing="false" text="Close" />
                </items>
 
@@ -57,7 +58,7 @@
                   </BorderPane>
                </children>
             </HBox>
-            <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cardSearchFunction" />
             <ListView fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" VBox.vgrow="ALWAYS" />
          </children>
          <BorderPane.margin>
@@ -76,7 +77,7 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="eventChoiceButton" prefWidth="150.0" promptText="Add Event" />
-                  <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEvent" text="Add" />
+                  <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEventByButton" text="Add" />
                </children>
             </VBox>
          </content>
