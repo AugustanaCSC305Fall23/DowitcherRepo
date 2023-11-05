@@ -3,6 +3,8 @@ package edu.augustana;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -20,6 +22,16 @@ public class CardGraphic {
         imageView.setFitHeight(200);
         imageView.setFitWidth(270);
         cardHBox.getChildren().add(imageView);
+        cardHBox.setOnDragDetected(e -> {
+            System.out.println("Drag detected");
+            cardHBox.startFullDrag();
+            Dragboard dragboard = cardHBox.startDragAndDrop(javafx.scene.input.TransferMode.ANY);
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putString(card.getCode());
+            dragboard.setContent(clipboardContent);
+
+            e.consume();
+        });
         return cardHBox;
     }
 
@@ -35,6 +47,22 @@ public class CardGraphic {
         hbox.getChildren().add(generateCardThumbnail(new Card()));
         vbox.getChildren().add(hbox);
         vbox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
+        vbox.setOnDragOver(e -> {
+            if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
+                e.acceptTransferModes(javafx.scene.input.TransferMode.ANY);
+                //addCardToEventContainerGraphic(vbox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
+
+            }
+            e.consume();
+        });
+        hbox.setOnDragDropped(e -> {
+            System.out.println("Drag dropped");
+            if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
+                addCardToEventContainerGraphic(vbox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
+                eventContainer.addCard(e.getDragboard().getString());
+            }
+            e.consume();
+        });
         map.put(eventContainer.getType(), vbox);
         return vbox;
     }
