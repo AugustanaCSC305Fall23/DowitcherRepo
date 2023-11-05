@@ -14,7 +14,7 @@ public class CardGraphic {
     static Map map = new HashMap();
     public static HBox generateCardThumbnail(Card card) {
         HBox cardHBox = new HBox();
-        cardHBox.setId(card.getEvent());
+        cardHBox.setId(card.getCode() + "-" + card.getEvent());
         Image image = new Image(card.getPath());
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(200);
@@ -44,6 +44,18 @@ public class CardGraphic {
         HBox secondaryHbox;
         Image image = new Image(card.getPath());
         ImageView imageView = new ImageView(image);
+        imageView.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                hbox.getChildren().remove(imageView);
+                if (hbox.getChildren().size() == 1) {
+                    System.out.println("Cant remove");
+                }
+                System.out.println("LOOK AT ME I AM HERE" + eventContainerGraphic.getId());
+                EventContainer eventContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(eventContainerGraphic.getId());
+                eventContainer.removeCard(card.getCode());
+                System.out.println(eventContainer.getCards());
+            }
+        });
         imageView.setFitHeight(200);
         imageView.setFitWidth(270);
         if (hbox.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 3) {

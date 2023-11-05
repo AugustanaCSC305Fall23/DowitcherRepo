@@ -31,8 +31,12 @@ public class EventContainer {
         cards.add(newCardCode);
     }
 
-    public void removeCard(){
-
+    public void removeCard(String cardCode){
+        for (int i = 0; i < cards.size(); i++){
+            if (cards.get(i).equals(cardCode)){
+                cards.remove(i);
+            }
+        }
     }
 
     public List<String> getCards() {

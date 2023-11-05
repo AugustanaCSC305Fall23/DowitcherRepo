@@ -34,7 +34,7 @@ public class PrintpageController {
 
     @FXML
     public void initialize(){
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();
         for (Printer printer : printers){

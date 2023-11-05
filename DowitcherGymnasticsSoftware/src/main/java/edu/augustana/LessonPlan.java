@@ -26,8 +26,8 @@ public class LessonPlan {
 
     }
 
-    private void renamePlan() {
-
+    public void renamePlan(String name) {
+        this.title = name;
     }
 
     public Map getEventMap() {
@@ -58,7 +58,13 @@ public class LessonPlan {
     public static LessonPlan loadFromFile(File logFile) throws IOException {
         Gson gson = new Gson();
         FileReader reader = new FileReader(logFile);
-        return gson.fromJson(reader, LessonPlan.class);
+        LessonPlan lessonPlan = gson.fromJson(reader, LessonPlan.class);
+        Map map = lessonPlan.getEventMap();
+        for (Object key : map.keySet()) {
+            EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
+            lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
+        }
+        return lessonPlan;
     }
     public void saveToFile(File logFile) throws IOException {
         System.out.println("Saving to file: " + logFile);

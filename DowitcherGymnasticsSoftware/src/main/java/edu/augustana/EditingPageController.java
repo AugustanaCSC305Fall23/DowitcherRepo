@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
@@ -146,9 +147,14 @@ public class EditingPageController {
         cardImageView.getItems().clear();
 
         for (Card card : searchResults) {
+            System.out.println("Printing New Card");
+            System.out.println(card.getCode());
+            System.out.println(card.getTitle());
             HBox thumbnail = CardGraphic.generateCardThumbnail(card);
             cardImageView.getItems().add(thumbnail);
         }
+
+        System.out.println(cardImageView);
 
     }
 
@@ -175,25 +181,35 @@ public class EditingPageController {
     private void addByDoubleClick() {
         System.out.println("Double clicked");
         HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
-        System.out.println(selectedCard.getId());
+        String cardCode = selectedCard.getId().substring(0, selectedCard.getId().indexOf("-"));
+        String cardEvent = selectedCard.getId().substring(selectedCard.getId().indexOf("-") + 1);
+        //System.out.println(cardEvent + "+" + cardCode);
+        //System.out.println(selectedCard.getId());
         boolean containerExists = false;
         boolean containerFull = false;
+        System.out.println(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+        for (int cardNums = 0; cardNums < cardImageView.getItems().size(); cardNums++) {
+            //System.out.println(cardImageView.getItems().get(cardNums).toString());
+            //System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+        }
         for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
             EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
             if (container.getCards().size() >= 8) {
                 containerFull = true;
             }
-            if (container.getType().equalsIgnoreCase(selectedCard.getId()) && !containerFull) {
+            if (container.getType().equalsIgnoreCase(cardEvent) && !containerFull) {
                 containerExists = true;
                 container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+                //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), (Card) CardLibrary.cardMap.get(cardCode));
             }
         }
         if (!containerExists && !containerFull) {
-            addEvent(selectedCard.getId());
-            EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(selectedCard.getId());
+            addEvent(cardEvent);
+            EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(cardEvent);
             newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), (Card) CardLibrary.cardMap.get(cardCode));
         }
         App.currentLessonPlan.printTree();
     }
@@ -258,6 +274,48 @@ public class EditingPageController {
                 new Alert(Alert.AlertType.ERROR, "Error saving lesson plan file: " + chosenFile).show();
             }
         }
+    }
+
+
+    @FXML
+    private void changeLessonPlanName() {
+        String name = renameLabel(lessonPlanTitle, lessonPlanVBox);
+        App.currentLessonPlan.renamePlan(name);
+    }
+
+    @FXML
+    private void renameEventContainerName() {
+//        renameLabel();
+    }
+    @FXML
+    private String renameLabel(Label label, VBox vbox) {
+        vbox.getChildren().remove(0);
+        TextField renameField = new TextField();
+        HBox renameBox = new HBox();
+        renameBox.alignmentProperty().setValue(Pos.CENTER);
+        renameField.setText(label.getText());
+        Button renameButton = new Button("Rename");
+        renameBox.getChildren().addAll(renameField, renameButton);
+        renameBox.setSpacing(10);
+        vbox.getChildren().add(0, renameBox);
+        String newLabelName = "";
+        renameButton.setOnAction(event -> {
+            label.setText(renameField.getText());
+            vbox.getChildren().remove(0);
+            vbox.getChildren().add(0, label);
+        });
+        renameField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                label.setText(renameField.getText());
+                vbox.getChildren().remove(0);
+                vbox.getChildren().add(0, label);
+            }
+        });
+        if (renameField.getText().equalsIgnoreCase("")) {
+            label.setText("Untitled");
+            renameField.setText("Untitled");
+        }
+        return renameField.getText();
     }
 }
 

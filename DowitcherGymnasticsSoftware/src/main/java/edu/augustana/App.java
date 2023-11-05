@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+import static edu.augustana.App.stage;
+
 /**
  * JavaFX App
  */
@@ -24,6 +26,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setMaximized(true);
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
         stage.show();
