@@ -172,14 +172,14 @@ public class EditingPageController {
         HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
         String cardCode = selectedCard.getId().substring(0, selectedCard.getId().indexOf("-"));
         String cardEvent = selectedCard.getId().substring(selectedCard.getId().indexOf("-") + 1);
-        System.out.println(cardEvent + "+" + cardCode);
-        System.out.println(selectedCard.getId());
+        //System.out.println(cardEvent + "+" + cardCode);
+        //System.out.println(selectedCard.getId());
         boolean containerExists = false;
         boolean containerFull = false;
         System.out.println(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         for (int cardNums = 0; cardNums < cardImageView.getItems().size(); cardNums++) {
-            System.out.println(cardImageView.getItems().get(cardNums).toString());
-            System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
+            //System.out.println(cardImageView.getItems().get(cardNums).toString());
+            //System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         }
         for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
             EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
