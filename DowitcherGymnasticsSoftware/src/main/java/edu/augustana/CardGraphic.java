@@ -14,7 +14,7 @@ public class CardGraphic {
     static Map map = new HashMap();
     public static HBox generateCardThumbnail(Card card) {
         HBox cardHBox = new HBox();
-        cardHBox.setId(card.getEvent());
+        cardHBox.setId(card.getCode() + "-" + card.getEvent());
         Image image = new Image(card.getPath());
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(200);

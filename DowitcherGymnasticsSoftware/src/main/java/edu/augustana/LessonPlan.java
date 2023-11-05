@@ -26,8 +26,8 @@ public class LessonPlan {
 
     }
 
-    private void renamePlan() {
-
+    public void renamePlan(String name) {
+        this.title = name;
     }
 
     public Map getEventMap() {
