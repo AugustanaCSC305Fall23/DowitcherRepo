@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -37,31 +38,40 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <Label alignment="TOP_CENTER" text="Dowitcher Software">
-                    <font>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Dowitcher Software">
+                     <font>
                         <Font size="36.0" />
-                    </font>
-                    <padding>
-                        <Insets left="150.0" />
-                    </padding>
-                </Label>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             </children>
         </VBox>
     </top>
     <center>
-        <TilePane prefHeight="315.0" prefWidth="639.0" BorderPane.alignment="CENTER">
+        <TilePane alignment="TOP_CENTER" prefHeight="315.0" prefWidth="639.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="129.0" prefWidth="600.0">
+            <VBox alignment="TOP_CENTER" prefHeight="129.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lesson Plan Name:" textOrigin="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="LessonPlanTextField" alignment="BOTTOM_CENTER" prefHeight="37.0" prefWidth="600.0" />
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lesson Plan Name:" textAlignment="CENTER" textOrigin="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="LessonPlanTextField" alignment="TOP_CENTER" prefHeight="37.0" prefWidth="600.0" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-         </children></TilePane>
+         </children>
+      </TilePane>
     </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">

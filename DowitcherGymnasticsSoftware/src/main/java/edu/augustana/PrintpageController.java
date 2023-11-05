@@ -34,38 +34,23 @@ public class PrintpageController {
 
     @FXML
     public void initialize(){
+        stage.setMaximized(true);
+        ObservableList<Printer> printerNames = FXCollections.observableArrayList();
+        ObservableSet<Printer> printers = Printer.getAllPrinters();
+        for (Printer printer : printers){
+            printerNames.add(printer);
+        }
+        printerChooser.setItems(printerNames);
 
-    ObservableList<Printer> printerNames = FXCollections.observableArrayList();
-    ObservableSet<Printer> printers = Printer.getAllPrinters();
-    for (Printer printer : printers){
-        printerNames.add(printer);
-    }
-    printerChooser.setItems(printerNames);
-
-    lessonPlanLabel.setText(currentLessonPlan.getTitle());
+        lessonPlanLabel.setText(currentLessonPlan.getTitle());
 
     //drawLessonPlan(EditingPageController.currentLessonPlan);
     }
 
-   // @FXML
-    /*public void drawLessonPlan(LessonPlan lessonPlan){
-        Map eventMap = lessonPlan.getEventMap();
-        for (Object key : eventMap.keySet()) {
-            EventContainer eventContainer = (EventContainer) eventMap.get(key);
-            EventContainer container = new EventContainer(eventContainer.getTitle());
+    @FXML
+    public void drawLessonPlan(LessonPlan lessonPlan){
 
-            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                if (cardIndex != 0) {
-                    Card card = (Card) eventContainer.getCards().get(cardIndex);
-                    //System.out.println("    \\" + card.getTitle());
-
-                }
-
-            }
-            System.out.println("");
-        }
-
-    }*/
+    }
     @FXML
     private void switchToEditing() throws IOException {
         App.setRoot("EditingPage");
@@ -76,10 +61,11 @@ public class PrintpageController {
         Printer pickedPrinter = selectPrinter();
         if (pickedPrinter== null){
             System.out.println("Printer is still null");
+
         }else{
-            System.out.println(selectPrinter());
-        Printers.print(scrollpane, pickedPrinter);
-    }}
+            Printers.print(scrollpane, pickedPrinter);
+        }
+    }
     @FXML
     private Printer selectPrinter(){
         return printerChooser.getValue();
