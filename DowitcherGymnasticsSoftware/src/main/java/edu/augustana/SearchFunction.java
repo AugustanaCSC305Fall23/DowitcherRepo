@@ -16,7 +16,6 @@ public class SearchFunction {
         this.cards = cards;
     }
 
-
     public List<Card> performSearch(String query) {
         List<Card> searchResults = new ArrayList<>();
 
@@ -53,6 +52,16 @@ public class SearchFunction {
         }
         return matchingCards;
     }
+    /*private void handleSearch() {
+        //String query =
+        filterSearchField.setOnKeyPressed(e -> {
+            if (e.getCode()== KeyCode.ENTER){
+                List<Card> searchResults = searchFunction.performSearch(filterSearchField.getText());
+                System.out.println(searchResults);
+                cardImageView.getItems().setAll((HBox) searchResults);
+            }
+        });
+    }*/
 
     public List<Card> searchByCategory(String category) {
         List<Card> matchingCards = new ArrayList<>();

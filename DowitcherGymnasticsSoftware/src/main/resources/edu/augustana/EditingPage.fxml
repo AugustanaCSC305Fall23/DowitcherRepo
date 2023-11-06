@@ -71,7 +71,7 @@
          <content>
             <VBox fx:id="lessonPlanVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="1000.0" prefWidth="1000.0">
                <children>
-                  <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" text="Lesson Plan #1">
+                  <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#changeLessonPlanName" text="Lesson Plan #1">
                      <font>
                         <Font size="18.0" />
                      </font>

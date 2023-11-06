@@ -9,18 +9,25 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+import static edu.augustana.App.stage;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
+
+    public static Stage stage;
+
     static LessonPlan currentLessonPlan;
     static File currentLessonPlanFile;
+
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("LandingPage"), 640, 480); 
+        stage.setMaximized(true);
+        scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
@@ -70,6 +77,8 @@ public class App extends Application {
     public static LessonPlan getCurrentLessonPlan() {
         return currentLessonPlan;
     }
+
+    public static void switchToPrintPage(){switchToView("PrintPage.fxml");}
 
     public static void main(String[] args) {
         launch();

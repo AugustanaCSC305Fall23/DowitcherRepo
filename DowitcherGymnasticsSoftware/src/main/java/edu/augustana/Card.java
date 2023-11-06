@@ -73,14 +73,14 @@ public class Card {
     public String toString() {
         return String.format("%s : %s", code, title);
     }
-    public HBox generateThumbnail() {
-        HBox cardHBox = new HBox();
-        cardHBox.setId(this.getEvent());
-        Image image = new Image(this.getPath());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(270);
-        cardHBox.getChildren().add(imageView);
-        return cardHBox;
-    }
+//    public HBox generateThumbnail() {
+//        HBox cardHBox = new HBox();
+//        cardHBox.setId(this.getEvent());
+//        Image image = new Image(this.getPath());
+//        ImageView imageView = new ImageView(image);
+//        imageView.setFitHeight(200);
+//        imageView.setFitWidth(270);
+//        cardHBox.getChildren().add(imageView);
+//        return cardHBox;
+//    }
 }

@@ -26,8 +26,8 @@ public class LessonPlan {
 
     }
 
-    private void renamePlan() {
-
+    public void renamePlan(String name) {
+        this.title = name;
     }
 
     public Map getEventMap() {
@@ -45,7 +45,7 @@ public class LessonPlan {
             System.out.println(eventContainer.getTitle() + "(Event type: " + eventContainer.getType() + ")");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 if (cardIndex != 0) {
-                    Card card = (Card) eventContainer.getCards().get(cardIndex);
+                    Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                     System.out.println("    \\" + card.getTitle());
                 }
 
@@ -59,6 +59,11 @@ public class LessonPlan {
         Gson gson = new Gson();
         FileReader reader = new FileReader(logFile);
         LessonPlan lessonPlan = gson.fromJson(reader, LessonPlan.class);
+        Map map = lessonPlan.getEventMap();
+        for (Object key : map.keySet()) {
+            EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
+            lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
+        }
         return lessonPlan;
     }
     public void saveToFile(File logFile) throws IOException {
