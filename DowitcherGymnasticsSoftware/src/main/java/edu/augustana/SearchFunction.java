@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana; 
 import javafx.fxml.FXML;
 import java.util.*;
 import javafx.scene.control.ListView;
@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 public class SearchFunction {
     private TextField filterSearchField;
 
-    private ListView<Card> cardImageView; 
+    private ListView<Card> cardImageView;
     private final List<Card> cards;
 
     public SearchFunction(List<Card> cards) {
