@@ -26,11 +26,19 @@ public class CardGraphic {
             System.out.println("Drag detected");
             cardHBox.startFullDrag();
             Dragboard dragboard = cardHBox.startDragAndDrop(javafx.scene.input.TransferMode.ANY);
+            dragboard.setDragView(new Image(card.getPath(), 270, 200, false, false));
             ClipboardContent clipboardContent = new ClipboardContent();
             clipboardContent.putString(card.getCode());
             dragboard.setContent(clipboardContent);
 
             e.consume();
+        });
+        cardHBox.setOnMouseEntered(e -> {
+            cardHBox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
+
+        });
+        cardHBox.setOnMouseExited(e -> {
+            cardHBox.setStyle("-fx-border-width: 0;" + "-fx-border-color: black;");
         });
         return cardHBox;
     }
