@@ -120,6 +120,9 @@ public class EditingPageController {
     private SearchFunction searchFunction;
 
 
+    private FilterSearch filterSearch;
+
+
     @FXML
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
@@ -155,6 +158,31 @@ public class EditingPageController {
         if (App.currentLessonPlanFile != null) {
             openLessonPlanWithFile(App.currentLessonPlanFile);
         }
+
+        ////////////////////////////////////////////////////////////
+        filterSearch = new FilterSearch(List.of(
+                beamCheckbox,
+                floorCheckbox,
+                horizontalBarCheckBox,
+                parallelBarsCheckBox,
+                pommelHorseCheckBox,
+                stillRingsCheckBox,
+                trampCheckBox,
+                unevenBarsCheckBox,
+                vaultCheckBox,
+                levelBCheckBox,
+                levelABCheckBox,
+                levelICheckBox,
+                levelACheckBox,
+                levelAllCheckBox,
+                maleCheckBox,
+                femaleCheckBox
+        ), CardLibrary.cardList, cardImageView);
+
+        // Set up event handler for filter search field
+        filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
+
+        ///////////////////////////////////////////////////////////
     }
 
     @FXML
@@ -200,6 +228,31 @@ public class EditingPageController {
         System.out.println(cardImageView);
 
     }
+
+    //////////////////////////////////////////////////////////////////
+
+
+    @FXML
+    private void applyFilter() {
+        List<HBox> filteredCards = filterSearch.applyFilter();
+        cardImageView.getItems().setAll(filteredCards);
+    }
+
+    @FXML
+    private void clearFilter() {
+        filterSearch.clearFilter();
+    }
+
+    private void handleSearchKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            cardSearchFunction();
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////
+
+
 
     private void addCardToEvent() {
 
