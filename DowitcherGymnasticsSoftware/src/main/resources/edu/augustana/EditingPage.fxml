@@ -41,7 +41,7 @@
             </Menu>
          </menus>
       </MenuBar>
-   </top>
+   </top> 
    <left>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="100.0" BorderPane.alignment="CENTER">
          <children>

@@ -119,6 +119,7 @@ public class EditingPageController {
 
     private SearchFunction searchFunction;
 
+
     @FXML
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
@@ -151,7 +152,11 @@ public class EditingPageController {
                 addByDoubleClick();
             }
         });
+        if (App.currentLessonPlanFile != null) {
+            openLessonPlanWithFile(App.currentLessonPlanFile);
+        }
     }
+
     @FXML
     public static void switchToEditingPage() throws IOException {
         App.setRoot("editingPage.fxml");
@@ -253,16 +258,21 @@ public class EditingPageController {
     }
 
     @FXML
-    private void openLessonPlan(ActionEvent event) {
+    private void openLessonPlan() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Lesson Plan File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
-        if (chosenFile != null) {
+        openLessonPlanWithFile(chosenFile);
+    }
+
+    @FXML
+    private void openLessonPlanWithFile(File file) {
+        if (file != null) {
             try {
-                App.loadCurrentLessonPlanFromFile(chosenFile);
+                App.loadCurrentLessonPlanFromFile(file);
                 for (int i = 3; i < lessonPlanVBox.getChildren().size(); i++) {
                     lessonPlanVBox.getChildren().remove(i);
                 }
@@ -280,7 +290,7 @@ public class EditingPageController {
                     lessonPlanVBox.getChildren().add(vbox);
                 }
             } catch (IOException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + chosenFile).show();
+                new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + file).show();
             }
         }
     }
@@ -297,6 +307,7 @@ public class EditingPageController {
     private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Lesson Plan");
+        fileChooser.setInitialDirectory(new File("src/main/resources/Saved Lesson Plans"));
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();

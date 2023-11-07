@@ -26,6 +26,7 @@ public class CreateImportPageController {
 
     @FXML
     private void switchToEditingPage() throws IOException {
+        App.currentLessonPlanFile = null;
         App.currentLessonPlan = createLessonPlan();
         App.setRoot("EditingPage");
     }
