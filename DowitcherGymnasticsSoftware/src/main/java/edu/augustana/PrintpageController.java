@@ -38,6 +38,8 @@ public class PrintpageController {
 
     @FXML
     public void initialize(){
+        scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //stage.setMaximized(true);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();

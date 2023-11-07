@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.PrintpageController">
    <center>
@@ -14,7 +15,10 @@
          <content>
             <VBox fx:id="printLessonPlanVBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="450.0">
                <children>
-                  <Label fx:id="lessonPlanLabel" contentDisplay="TOP" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="lessonPlanLabel" contentDisplay="TOP" text="Label" textAlignment="CENTER" textFill="#142ae3">
+                     <font>
+                        <Font name="System Bold Italic" size="24.0" />
+                     </font></Label>
                </children>
             </VBox>
          </content></ScrollPane>
