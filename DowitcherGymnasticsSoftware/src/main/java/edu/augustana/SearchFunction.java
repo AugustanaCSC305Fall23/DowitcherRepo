@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 
 public class SearchFunction {
-    private TextField filterSearchField;   
+    private TextField filterSearchField;
 
     private ListView<Card> cardImageView;
     private final List<Card> cards;
