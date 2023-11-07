@@ -81,6 +81,7 @@ public class EditingPageController {
 
     private SearchFunction searchFunction;
 
+
     @FXML
     public void initialize() {
         searchFunction = new SearchFunction(CardLibrary.cardList);
@@ -113,7 +114,9 @@ public class EditingPageController {
                 addByDoubleClick();
             }
         });
+
     }
+
     @FXML
     public static void switchToEditingPage() throws IOException {
         App.setRoot("editingPage.fxml");
