@@ -25,6 +25,44 @@ import javafx.stage.Window;
 
 public class EditingPageController {
 
+    @FXML
+    private CheckBox beamCheckbox;
+
+    @FXML
+    private CheckBox floorCheckbox;
+    @FXML
+    private CheckBox horizontalBarCheckBox;
+    @FXML
+    private CheckBox parallelBarsCheckBox;
+    @FXML
+    private CheckBox pommelHorseCheckBox;
+    @FXML
+    private CheckBox stillRingsCheckBox;
+    @FXML
+    private CheckBox trampCheckBox;
+    @FXML
+    private CheckBox unevenBarsCheckBox;
+    @FXML
+    private CheckBox vaultCheckBox;
+
+    @FXML
+    private CheckBox levelBCheckBox;
+    @FXML
+    private CheckBox levelABCheckBox;
+    @FXML
+    private CheckBox levelICheckBox;
+    @FXML
+    private CheckBox levelACheckBox;
+    @FXML
+    private CheckBox levelAllCheckBox;
+    @FXML
+    private CheckBox maleCheckBox;
+    @FXML
+    private CheckBox femaleCheckBox;
+
+
+
+
 
     @FXML
     private ComboBox eventChoiceButton;
@@ -41,17 +79,17 @@ public class EditingPageController {
     private Button clearFilterButton;
 
     @FXML
-    private Button equipmentFilterButton;
+    private TitledPane equipmentFilterTitledPane;
     @FXML
     private Button printButton;
     @FXML
-    private Button eventFilterButton;
+    private TitledPane eventFilterTitledPane;
 
     @FXML
     private TextField filterSearchField;
 
     @FXML
-    private Button genderFilterButton;
+    private TitledPane genderFilterTitledPane;
 
     @FXML
     private Label lessonPlanTitle;
@@ -60,7 +98,7 @@ public class EditingPageController {
     private VBox lessonPlanVBox;
 
     @FXML
-    private Button levelFilterButton;
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
