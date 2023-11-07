@@ -26,7 +26,8 @@ public class FilterSearch {
             if (checkbox.isSelected()) {
                 String category = checkbox.getText();
                 for (Card card : allCards) {
-                    if (card.getCategory().equalsIgnoreCase(category)) {
+                    if (card.getCategory().equalsIgnoreCase(category) || card.getEvent().equalsIgnoreCase(category) ||
+                    card.getGender().equalsIgnoreCase(category) || card.getLevel().equalsIgnoreCase(category)) {
                         HBox cardThumbnail = generateCardThumbnail(card);
                         filteredCards.add(cardThumbnail);
                     }
@@ -56,7 +57,7 @@ public class FilterSearch {
         cardHBox.getChildren().addAll(imageView, titleLabel);
 
         return cardHBox;
-    } 
+    }
 
 
     public void updateCardImageView(List<Card> searchResults) {
@@ -66,6 +67,30 @@ public class FilterSearch {
             HBox thumbnail = generateCardThumbnail(card);
             cardImageView.getItems().add(thumbnail);
         }
+    }
+
+
+    public List<Card> performFilterSearch(String query) {
+        List<Card> searchResults = new ArrayList<>();
+
+        if (query.trim().isEmpty()) {
+            return allCards;
+        }
+
+        for (Card card : allCards) {
+            if (card.getCode().equalsIgnoreCase(query) ||
+                    card.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    card.getCategory().equalsIgnoreCase(query)) {
+                searchResults.add(card);
+            }
+        }
+
+        return searchResults;
+    }
+
+    public void applySearchFilter(String query) {
+        List<Card> searchResults = performFilterSearch(query);
+        updateCardImageView(searchResults);
     }
 
 

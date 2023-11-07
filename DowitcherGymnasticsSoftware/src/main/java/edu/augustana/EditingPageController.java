@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import java.io.File;
+import java.io.File; 
 import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
@@ -159,7 +159,7 @@ public class EditingPageController {
             openLessonPlanWithFile(App.currentLessonPlanFile);
         }
 
-        ////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
         filterSearch = new FilterSearch(List.of(
                 beamCheckbox,
                 floorCheckbox,
@@ -179,7 +179,6 @@ public class EditingPageController {
                 femaleCheckBox
         ), CardLibrary.cardList, cardImageView);
 
-        // Set up event handler for filter search field
         filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
 
         ///////////////////////////////////////////////////////////
@@ -229,7 +228,7 @@ public class EditingPageController {
 
     }
 
-    //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
 
 
     @FXML

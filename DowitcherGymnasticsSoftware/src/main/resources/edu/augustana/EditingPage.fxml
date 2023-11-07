@@ -52,14 +52,14 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <CheckBox fx:id="beamCheckbox" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" text="Beam" />
-                              <CheckBox fx:id="floorCheckBox" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Floor" />
-                              <CheckBox fx:id="horizontalBarCheckbox" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Horizontal Bar" />
-                              <CheckBox fx:id="parallelBarsCheckbox" layoutX="14.0" layoutY="96.0" mnemonicParsing="false" text="Parallel Bars" />
-                              <CheckBox fx:id="pommelHorseCheckbox" layoutX="14.0" layoutY="121.0" mnemonicParsing="false" text="Pommel Horse" />
-                              <CheckBox fx:id="stillRingsCheckbox" layoutX="165.0" layoutY="20.0" mnemonicParsing="false" text="Still Rings" />
-                              <CheckBox fx:id="trampCheckbox" layoutX="165.0" layoutY="45.0" mnemonicParsing="false" text="Tramp" />
-                              <CheckBox fx:id="unevenBarsCheckbox" layoutX="165.0" layoutY="72.0" mnemonicParsing="false" text="Uneven Bars" />
-                              <CheckBox fx:id="vaultCheckbox" layoutX="165.0" layoutY="96.0" mnemonicParsing="false" text="Vault" />
+                              <CheckBox fx:id="floorCheckbox" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Floor" />
+                              <CheckBox fx:id="horizontalBarCheckBox" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Horizontal Bar" />
+                              <CheckBox fx:id="parallelBarsCheckBox" layoutX="14.0" layoutY="96.0" mnemonicParsing="false" text="Parallel Bars" />
+                              <CheckBox fx:id="pommelHorseCheckBox" layoutX="14.0" layoutY="121.0" mnemonicParsing="false" text="Pommel Horse" />
+                              <CheckBox fx:id="stillRingsCheckBox" layoutX="165.0" layoutY="20.0" mnemonicParsing="false" text="Still Rings" />
+                              <CheckBox fx:id="trampCheckBox" layoutX="165.0" layoutY="45.0" mnemonicParsing="false" text="Tramp" />
+                              <CheckBox fx:id="unevenBarsCheckBox" layoutX="165.0" layoutY="72.0" mnemonicParsing="false" text="Uneven Bars" />
+                              <CheckBox fx:id="vaultCheckBox" layoutX="165.0" layoutY="96.0" mnemonicParsing="false" text="Vault" />
                            </children></AnchorPane>
                     </content>
                   </TitledPane>
@@ -67,10 +67,10 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <CheckBox fx:id="levelBCheckbox" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" text="B" />
-                              <CheckBox fx:id="levelABCheckbox" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" text="AB" />
-                              <CheckBox fx:id="levelICheckbox" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" text="I" />
-                              <CheckBox fx:id="levelACheckbox" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" text="A" />
+                              <CheckBox fx:id="levelBCheckBox" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" text="B" />
+                              <CheckBox fx:id="levelABCheckBox" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" text="AB" />
+                              <CheckBox fx:id="levelICheckBox" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" text="I" />
+                              <CheckBox fx:id="levelACheckBox" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" text="A" />
                               <CheckBox fx:id="levelAllCheckBox" layoutX="14.0" layoutY="139.0" mnemonicParsing="false" text="All" />
                            </children></AnchorPane>
                   </content>
@@ -79,8 +79,8 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <CheckBox fx:id="maleCheckbox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" text="Male" />
-                              <CheckBox fx:id="femaleCheckbox" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="Female" />
+                              <CheckBox fx:id="maleCheckBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" text="Male" />
+                              <CheckBox fx:id="femaleCheckBox" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="Female" />
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
@@ -95,10 +95,10 @@
                <children>
                   <BorderPane prefHeight="0.0" prefWidth="1000.0">
                      <left>
-                        <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear" BorderPane.alignment="CENTER" />
+                        <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearFilter" text="Clear" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <Button fx:id="applyFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Apply" BorderPane.alignment="CENTER" />
+                        <Button fx:id="applyFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#applyFilter" text="Apply" BorderPane.alignment="CENTER" />
                      </right>
                   </BorderPane>
                </children>
