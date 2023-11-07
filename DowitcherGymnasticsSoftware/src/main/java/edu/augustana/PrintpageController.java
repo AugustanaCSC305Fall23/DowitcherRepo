@@ -3,6 +3,7 @@ package edu.augustana;
 import java.io.IOException;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -15,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import static edu.augustana.App.currentLessonPlan;
@@ -25,6 +27,8 @@ public class PrintpageController {
     private ScrollPane scrollpane;
     @FXML
     private ComboBox<Printer> printerChooser;
+    @FXML
+    private VBox printLessonPlanVBox;
     @FXML
     private GridPane gridpane;
     @FXML
@@ -44,12 +48,22 @@ public class PrintpageController {
 
         lessonPlanLabel.setText(currentLessonPlan.getTitle());
 
-    //drawLessonPlan(EditingPageController.currentLessonPlan);
+    drawLessonPlan(App.currentLessonPlan);
     }
 
     @FXML
     public void drawLessonPlan(LessonPlan lessonPlan){
-
+        Map map = App.getCurrentLessonPlan().getEventMap();
+        System.out.println(map.toString());
+        for (Object key : map.keySet()) {
+            EventContainer eventContainer = (EventContainer) map.get(key);
+            VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+                Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+                CardGraphic.addCardToEventContainerGraphic(vbox, card);
+            }
+            printLessonPlanVBox.getChildren().add(vbox);
+        }
     }
     @FXML
     private void switchToEditing() throws IOException {
@@ -60,7 +74,7 @@ public class PrintpageController {
     private void printScrollPane(){
         Printer pickedPrinter = selectPrinter();
         if (pickedPrinter== null){
-            System.out.println("Printer is still null");
+            new Alert(Alert.AlertType.WARNING, "Select a printer first!").show();
 
         }else{
             Printers.print(scrollpane, pickedPrinter);
