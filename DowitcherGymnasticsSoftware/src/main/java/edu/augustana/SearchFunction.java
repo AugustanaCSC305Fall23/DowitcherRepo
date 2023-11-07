@@ -12,6 +12,7 @@ public class SearchFunction {
     private ListView<Card> cardImageView;
     private final List<Card> cards;
 
+
     public SearchFunction(List<Card> cards) {
         this.cards = cards;
     }
@@ -70,7 +71,7 @@ public class SearchFunction {
                 matchingCards.add(card);
             }
         }
-        //System.out.println("this runs"); 
+        //System.out.println("this runs");
         return matchingCards;
     }
 
