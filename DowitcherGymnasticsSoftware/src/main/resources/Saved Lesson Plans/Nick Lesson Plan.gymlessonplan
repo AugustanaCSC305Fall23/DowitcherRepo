@@ -1,0 +1,22 @@
+{
+  "eventMap": {
+    "ALL": {
+      "title": "New ALL Event",
+      "cards": [
+        "S1",
+        "BS9"
+      ],
+      "type": "ALL"
+    },
+    "Floor": {
+      "title": "New Floor Event",
+      "cards": [
+        "HS5",
+        "C3",
+        "B47"
+      ],
+      "type": "Floor"
+    }
+  },
+  "title": "Nick Lesson Plan"
+}
