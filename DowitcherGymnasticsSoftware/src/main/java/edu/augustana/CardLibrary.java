@@ -38,8 +38,8 @@ public class CardLibrary {
                 String image = nextLine[5];
                 String gender = nextLine[6];
                 String modelSex = nextLine[7];
-                String level = nextLine[8];
-                String equipment = nextLine[9];
+                String[] level = nextLine[8].split(",");
+                String[] equipment = nextLine[9].split(",");
                 String[] keywords = nextLine[10].split(",");
 
                 System.out.println(String.format("CODE: %s, EVENT: %s, CATEGORY: %s, TITLE: %s, PACK FOLDER: %s, IMAGE: %s, GENDER: %s, MODEL SEX: %s, LEVEL: %s, EQUIPMENT: %s, KEYWORDS: %s", code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords));
