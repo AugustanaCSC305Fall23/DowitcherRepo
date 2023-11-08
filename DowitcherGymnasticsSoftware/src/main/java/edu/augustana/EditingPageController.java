@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import java.io.File;
+import java.io.File; 
 import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
@@ -25,6 +25,44 @@ import javafx.stage.Window;
 
 public class EditingPageController {
 
+    @FXML
+    private CheckBox beamCheckbox;
+
+    @FXML
+    private CheckBox floorCheckbox;
+    @FXML
+    private CheckBox horizontalBarCheckBox;
+    @FXML
+    private CheckBox parallelBarsCheckBox;
+    @FXML
+    private CheckBox pommelHorseCheckBox;
+    @FXML
+    private CheckBox stillRingsCheckBox;
+    @FXML
+    private CheckBox trampCheckBox;
+    @FXML
+    private CheckBox unevenBarsCheckBox;
+    @FXML
+    private CheckBox vaultCheckBox;
+
+    @FXML
+    private CheckBox levelBCheckBox;
+    @FXML
+    private CheckBox levelABCheckBox;
+    @FXML
+    private CheckBox levelICheckBox;
+    @FXML
+    private CheckBox levelACheckBox;
+    @FXML
+    private CheckBox levelAllCheckBox;
+    @FXML
+    private CheckBox maleCheckBox;
+    @FXML
+    private CheckBox femaleCheckBox;
+
+
+
+
 
     @FXML
     private ComboBox eventChoiceButton;
@@ -41,17 +79,17 @@ public class EditingPageController {
     private Button clearFilterButton;
 
     @FXML
-    private Button equipmentFilterButton;
+    private TitledPane equipmentFilterTitledPane;
     @FXML
     private Button printButton;
     @FXML
-    private Button eventFilterButton;
+    private TitledPane eventFilterTitledPane;
 
     @FXML
     private TextField filterSearchField;
 
     @FXML
-    private Button genderFilterButton;
+    private TitledPane genderFilterTitledPane;
 
     @FXML
     private Label lessonPlanTitle;
@@ -60,7 +98,7 @@ public class EditingPageController {
     private VBox lessonPlanVBox;
 
     @FXML
-    private Button levelFilterButton;
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -80,6 +118,10 @@ public class EditingPageController {
     private Menu fileMenu;
 
     private SearchFunction searchFunction;
+
+
+    private FilterSearch filterSearch;
+
 
     @FXML
     public void initialize() {
@@ -116,7 +158,32 @@ public class EditingPageController {
         if (App.currentLessonPlanFile != null) {
             openLessonPlanWithFile(App.currentLessonPlanFile);
         }
+
+        //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
+        filterSearch = new FilterSearch(List.of(
+                beamCheckbox,
+                floorCheckbox,
+                horizontalBarCheckBox,
+                parallelBarsCheckBox,
+                pommelHorseCheckBox,
+                stillRingsCheckBox,
+                trampCheckBox,
+                unevenBarsCheckBox,
+                vaultCheckBox,
+                levelBCheckBox,
+                levelABCheckBox,
+                levelICheckBox,
+                levelACheckBox,
+                levelAllCheckBox,
+                maleCheckBox,
+                femaleCheckBox
+        ), CardLibrary.cardList, cardImageView);
+
+        filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
+
+        ///////////////////////////////////////////////////////////
     }
+
     @FXML
     public static void switchToEditingPage() throws IOException {
         App.setRoot("editingPage.fxml");
@@ -160,6 +227,31 @@ public class EditingPageController {
         System.out.println(cardImageView);
 
     }
+
+    ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
+
+
+    @FXML
+    private void applyFilter() {
+        List<HBox> filteredCards = filterSearch.applyFilter();
+        cardImageView.getItems().setAll(filteredCards);
+    }
+
+    @FXML
+    private void clearFilter() {
+        filterSearch.clearFilter();
+    }
+
+    private void handleSearchKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            cardSearchFunction();
+        }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////
+
+
 
     private void addCardToEvent() {
 

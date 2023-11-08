@@ -32,6 +32,7 @@ public class Printers {
 
             if (success) {
                 printerJob.getJobSettings().setPageLayout(pageLayout);
+
                 printerJob.printPage(scrollpane);
                 printerJob.endJob();
 
