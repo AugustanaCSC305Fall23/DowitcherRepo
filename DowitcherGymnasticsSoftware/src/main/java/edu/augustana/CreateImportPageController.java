@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class CreateImportPageController {
     @FXML private TextField LessonPlanTextField;
@@ -25,6 +27,15 @@ public class CreateImportPageController {
     }
 
     @FXML
+    private void titleRequiredWarning(String message) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
     private void switchToEditingPage() throws IOException {
         App.currentLessonPlanFile = null;
         App.currentLessonPlan = createLessonPlan();
@@ -32,11 +43,15 @@ public class CreateImportPageController {
     }
     @FXML
     private void handleCreateButtonClick() {
-        try {
-            switchToEditingPage();
-        } catch (IOException e) {
-            // Handle IOException, e.g., show an error message
-            e.printStackTrace();
+        if (LessonPlanTextField.getText().isEmpty()) {
+            titleRequiredWarning("Create a title before making a lesson plan");
+        } else {
+            try {
+                switchToEditingPage();
+            } catch (IOException e) {
+                // Handle IOException, e.g., show an error message
+                e.printStackTrace();
+            }
         }
     }
 

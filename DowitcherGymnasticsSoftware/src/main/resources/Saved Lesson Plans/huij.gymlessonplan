@@ -1,0 +1,26 @@
+{
+  "eventMap": {
+    "Beam": {
+      "title": "New Beam Event",
+      "cards": [
+        "BS9"
+      ],
+      "type": "Beam"
+    },
+    "Floor": {
+      "title": "New Floor Event",
+      "cards": [
+        "S1",
+        "H13 ",
+        "S1"
+      ],
+      "type": "Floor"
+    },
+    "Still Rings": {
+      "title": "New Still Rings Event",
+      "cards": [],
+      "type": "Still Rings"
+    }
+  },
+  "title": "Test"
+}
