@@ -51,10 +51,9 @@ public class CardGraphic {
         titleLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
         vbox.getChildren().add(titleLabel);
         vbox.getChildren().add(typeLabel);
-        HBox hbox = new HBox();
-//        hbox.getChildren().add(generateCardThumbnail(new Card()));
-//        vbox.getChildren().add(hbox);
-        tilePane.getChildren().addAll(generateCardThumbnail(new Card()));
+        HBox blankCard = generateCardThumbnail(new Card());
+        blankCard.setId("blankcard");
+        tilePane.getChildren().addAll(blankCard);
         vbox.getChildren().add(tilePane);
         vbox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
         vbox.setOnDragOver(e -> {

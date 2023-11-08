@@ -69,7 +69,7 @@
    <center>
       <ScrollPane fx:id="planeScrollPane" fitToWidth="true" maxWidth="1.7976931348623157E308" minHeight="0.0" scaleShape="false" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="lessonPlanVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="1000.0" prefWidth="1000.0">
+            <VBox fx:id="lessonPlanVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
                   <Label fx:id="lessonPlanTitle" alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#changeLessonPlanName" text="Lesson Plan #1">
                      <font>
