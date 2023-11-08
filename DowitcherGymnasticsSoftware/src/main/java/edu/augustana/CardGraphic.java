@@ -76,7 +76,7 @@ public class CardGraphic {
         return vbox;
     }
 
-    public static void addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
+    public static VBox addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
         TilePane tilePane = (TilePane) eventContainerGraphic.getChildren().get(2);
         tilePane.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         tilePane.setMaxWidth(270*5);
@@ -133,6 +133,7 @@ public class CardGraphic {
             tilePane.getChildren().add(tilePane.getChildren().size(), cardContainer);
         }
         System.out.println(tilePane.getChildren().size());
+        return eventContainerGraphic;
     }
 
     public static VBox getEventContainer(String type){
