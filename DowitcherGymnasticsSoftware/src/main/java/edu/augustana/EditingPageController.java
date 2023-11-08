@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import java.io.File; 
+import java.io.File;
 import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
