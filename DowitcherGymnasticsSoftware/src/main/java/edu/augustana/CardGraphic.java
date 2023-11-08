@@ -5,8 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +44,7 @@ public class CardGraphic {
 
     public static VBox generateEventContainerGraphic(EventContainer eventContainer) {
         VBox vbox = new VBox();
+        TilePane tilePane = new TilePane();
         vbox.setId(eventContainer.getType());
         Label titleLabel = new Label(eventContainer.getTitle());
         Label typeLabel = new Label(String.format("(%s)", eventContainer.getType()));
@@ -52,8 +52,10 @@ public class CardGraphic {
         vbox.getChildren().add(titleLabel);
         vbox.getChildren().add(typeLabel);
         HBox hbox = new HBox();
-        hbox.getChildren().add(generateCardThumbnail(new Card()));
-        vbox.getChildren().add(hbox);
+//        hbox.getChildren().add(generateCardThumbnail(new Card()));
+//        vbox.getChildren().add(hbox);
+        tilePane.getChildren().addAll(generateCardThumbnail(new Card()));
+        vbox.getChildren().add(tilePane);
         vbox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
         vbox.setOnDragOver(e -> {
             if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
@@ -63,7 +65,7 @@ public class CardGraphic {
             }
             e.consume();
         });
-        hbox.setOnDragDropped(e -> {
+        tilePane.setOnDragDropped(e -> {
             System.out.println("Drag dropped");
             if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
                 addCardToEventContainerGraphic(vbox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
@@ -76,39 +78,62 @@ public class CardGraphic {
     }
 
     public static void addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
-        HBox hbox = (HBox) eventContainerGraphic.getChildren().get(2);
+        TilePane tilePane = (TilePane) eventContainerGraphic.getChildren().get(2);
+        tilePane.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        tilePane.setMaxWidth(270*5);
         HBox secondaryHbox;
+        VBox cardContainer = new VBox();
+        cardContainer.setId(card.getCode());
         Image image = new Image(card.getPath());
         ImageView imageView = new ImageView(image);
+        Label cardEquipment = new Label();
+        if (!card.getEquipment()[0].equalsIgnoreCase("none")) {
+            cardEquipment.setText("Equipment: ");
+            for (String equipment : card.getEquipment()) {
+                cardEquipment.setText(cardEquipment.getText() + "\n" + equipment + " ");
+            }
+        }
+        cardContainer.getChildren().addAll(imageView, cardEquipment);
         imageView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                hbox.getChildren().remove(imageView);
-                if (hbox.getChildren().size() == 1) {
+                tilePane.getChildren().remove(cardContainer);
+                if (tilePane.getChildren().size() == 1) {
                     System.out.println("Cant remove");
                 }
-                System.out.println("LOOK AT ME I AM HERE" + eventContainerGraphic.getId());
                 EventContainer eventContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(eventContainerGraphic.getId());
                 eventContainer.removeCard(card.getCode());
                 System.out.println(eventContainer.getCards());
+                if (!tilePane.getChildren().get(tilePane.getChildren().size()-1).getId().equalsIgnoreCase("blankcard")) {
+                    HBox blankCard = generateCardThumbnail(new Card());
+                    blankCard.setId("blankcard");
+                    tilePane.getChildren().add(blankCard);
+                }
             }
         });
         imageView.setFitHeight(200);
         imageView.setFitWidth(270);
-        if (hbox.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 3) {
-            hbox.getChildren().remove(hbox.getChildren().size() - 1);
-            hbox.getChildren().add(imageView);
-            secondaryHbox = new HBox();
-            eventContainerGraphic.getChildren().add(secondaryHbox);
-            secondaryHbox.getChildren().add(0, generateCardThumbnail(new Card()));
-        } else if (hbox.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 4) {
-            secondaryHbox = (HBox) eventContainerGraphic.getChildren().get(3);
-            secondaryHbox.getChildren().add(secondaryHbox.getChildren().size() -1, imageView);
-            if (secondaryHbox.getChildren().size() > 4) {
-                secondaryHbox.getChildren().remove(secondaryHbox.getChildren().size() - 1);
-            }
-        } else {
-            hbox.getChildren().add(hbox.getChildren().size() - 1, imageView);
+//        if (gridPane.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 3) {
+//            gridPane.getChildren().remove(gridPane.getChildren().size() - 1);
+//            gridPane.getChildren().add(cardContainer);
+//            secondaryHbox = new HBox();
+//            eventContainerGraphic.getChildren().add(secondaryHbox);
+//            secondaryHbox.getChildren().add(0, generateCardThumbnail(new Card()));
+//        } else if (gridPane.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 4) {
+//            secondaryHbox = (HBox) eventContainerGraphic.getChildren().get(3);
+//            secondaryHbox.getChildren().add(secondaryHbox.getChildren().size() -1, cardContainer);
+//            if (secondaryHbox.getChildren().size() > 4) {
+//                secondaryHbox.getChildren().remove(secondaryHbox.getChildren().size() - 1);
+//            }
+//        } else {
+//            gridPane.getChildren().add(gridPane.getChildren().size() - 1, cardContainer);
+//        }
+        if (tilePane.getChildren().size() < 8) {
+            tilePane.getChildren().add(tilePane.getChildren().size() - 1, cardContainer);
+        } else if (tilePane.getChildren().size() == 8) {
+            tilePane.getChildren().remove(tilePane.getChildren().size() - 1);
+            tilePane.getChildren().add(tilePane.getChildren().size(), cardContainer);
         }
+        System.out.println(tilePane.getChildren().size());
     }
 
     public static VBox getEventContainer(String type){
