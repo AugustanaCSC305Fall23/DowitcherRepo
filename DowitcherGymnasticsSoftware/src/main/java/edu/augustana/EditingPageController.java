@@ -110,9 +110,6 @@ public class EditingPageController {
     private Button subCategoryFilterButton;
 
     @FXML
-    private Button tempButton;
-
-    @FXML
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
@@ -121,6 +118,8 @@ public class EditingPageController {
 
 
     private FilterSearch filterSearch;
+
+    private boolean isLessonPlanSaved = false;
 
 
     @FXML
@@ -143,7 +142,13 @@ public class EditingPageController {
                 throw new RuntimeException(e);
             }
         });
-        printItem.setOnAction(evt -> {App.switchToPrintPage();}); //Printers.printLessonPlan(planeScrollPane);});
+        printItem.setOnAction(evt -> {
+            if (isLessonPlanSaved) {
+                App.switchToPrintPage();
+            } else {
+                showLessonPlanNotSavedWarning();
+            }
+        }); //Printers.printLessonPlan(planeScrollPane);});
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
@@ -347,7 +352,16 @@ public class EditingPageController {
         }
     }
     @FXML
+    private void showLessonPlanNotSavedWarning() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("You must save the lesson plan before attempting to print.");
+        alert.showAndWait();
+    }
+    @FXML
     private void save(ActionEvent event) {
+        isLessonPlanSaved = true;
         if (App.getCurrentLessonPlanFile() == null) {
             saveAs(event);
         } else {
