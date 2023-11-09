@@ -40,6 +40,7 @@ public class PrintpageController {
     public void initialize(){
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollpane.setMinWidth(1000);
         //stage.setMaximized(true);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();
@@ -62,7 +63,7 @@ public class PrintpageController {
             VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                CardGraphic.addCardToEventContainerGraphic(vbox, card);
+                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
             }
             printLessonPlanVBox.getChildren().add(vbox);
         }

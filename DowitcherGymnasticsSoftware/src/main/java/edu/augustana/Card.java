@@ -13,10 +13,10 @@ public class Card {
     private String image;
     private String gender;
     private String modelSex;
-    private String level;
-    private String equipment;
+    private String[] level;
+    private String[] equipment;
     private String[] keywords;
-    public Card(String code, String event, String category, String title, String packFolder, String image, String gender, String modelSex, String level, String equipment, String[] keywords) {
+    public Card(String code, String event, String category, String title, String packFolder, String image, String gender, String modelSex, String[] level, String[] equipment, String[] keywords) {
         this.code = code;
         this.event = event;
         this.category = category;
@@ -31,7 +31,7 @@ public class Card {
     }
 
     public Card(){
-        this("", "", "", "", "", "", "", "", "", "", null);
+        this("", "", "", "", "", "", "", "", null, null, null);
         this.image = "Blank Card.png";
         this.packFolder = "Misc Images";
     }
@@ -60,10 +60,10 @@ public class Card {
     public String getModelSex() {
         return modelSex;
     }
-    public String getLevel() {
+    public String[] getLevel() {
         return level;
     }
-    public String getEquipment() {
+    public String[] getEquipment() {
         return equipment;
     }
     public String[] getKeywords() {

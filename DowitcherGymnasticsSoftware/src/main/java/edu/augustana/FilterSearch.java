@@ -26,11 +26,15 @@ public class FilterSearch {
             if (checkbox.isSelected()) {
                 String category = checkbox.getText();
                 for (Card card : allCards) {
-                    if (card.getCategory().equalsIgnoreCase(category) || card.getEvent().equalsIgnoreCase(category) ||
-                    card.getGender().equalsIgnoreCase(category) || card.getLevel().equalsIgnoreCase(category)) {
-                        HBox cardThumbnail = generateCardThumbnail(card);
-                        filteredCards.add(cardThumbnail);
+                    for (String level : card.getLevel()) {
+                        if (card.getCategory().equalsIgnoreCase(category) || card.getEvent().equalsIgnoreCase(category) ||
+                                card.getGender().equalsIgnoreCase(category) || level.equalsIgnoreCase(category)) {
+                            HBox cardThumbnail = generateCardThumbnail(card);
+                            cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
+                            filteredCards.add(cardThumbnail);
+                        }
                     }
+
                 }
             }
         }
@@ -46,15 +50,7 @@ public class FilterSearch {
     }
 
     private HBox generateCardThumbnail(Card card) {
-        HBox cardHBox = new HBox();
-
-        ImageView imageView = new ImageView(new Image(card.getPath()));
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(270);
-
-        Label titleLabel = new Label(card.getTitle());
-
-        cardHBox.getChildren().addAll(imageView, titleLabel);
+        HBox cardHBox = CardGraphic.generateCardThumbnail(card);
 
         return cardHBox;
     }

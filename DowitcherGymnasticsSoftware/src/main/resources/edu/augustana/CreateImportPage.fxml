@@ -78,7 +78,7 @@
         <buttons>
           <Button mnemonicParsing="false" text="Cancel" />
             <Button mnemonicParsing="false" text="Import" />
-            <Button mnemonicParsing="false" onAction="#switchToEditingPage" text="Create" />
+            <Button fx:id="Create" mnemonicParsing="false" onAction="#handleCreateButtonClick" text="Create" />
         </buttons>
       </ButtonBar>
    </bottom>
