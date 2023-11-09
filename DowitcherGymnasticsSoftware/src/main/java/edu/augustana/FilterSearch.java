@@ -34,7 +34,7 @@ public class FilterSearch {
                 }
             }
         }
-        return filteredCards;
+        return filteredCards; 
     }
 
     public void clearFilter() {
