@@ -13,7 +13,7 @@ public class SearchFunction {
     private final List<Card> cards;
 
 
-    public SearchFunction(List<Card> cards) {
+    public SearchFunction(List<Card> cards) {  
         this.cards = cards;
     }
 
