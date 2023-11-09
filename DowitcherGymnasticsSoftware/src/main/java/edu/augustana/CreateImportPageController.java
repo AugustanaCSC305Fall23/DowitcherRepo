@@ -37,21 +37,22 @@ public class CreateImportPageController {
 
     @FXML
     private void switchToEditingPage() throws IOException {
-        App.currentLessonPlanFile = null;
-        App.currentLessonPlan = createLessonPlan();
-        App.setRoot("EditingPage");
-    }
-    @FXML
-    private void handleCreateButtonClick() {
         if (LessonPlanTextField.getText().isEmpty()) {
             titleRequiredWarning("Create a title before making a lesson plan");
         } else {
-            try {
-                switchToEditingPage();
-            } catch (IOException e) {
-                // Handle IOException, e.g., show an error message
-                e.printStackTrace();
-            }
+            App.currentLessonPlanFile = null;
+            App.currentLessonPlan = createLessonPlan();
+            App.setRoot("EditingPage");
+        }
+
+    }
+    @FXML
+    private void handleCreateButtonClick() {
+        try {
+            switchToEditingPage();
+        } catch (IOException e) {
+            // Handle IOException, e.g., show an error message
+            e.printStackTrace();
         }
     }
 

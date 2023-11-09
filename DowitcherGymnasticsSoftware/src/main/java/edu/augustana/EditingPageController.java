@@ -205,6 +205,10 @@ public class EditingPageController {
             HBox thumbnail = CardGraphic.generateCardThumbnail(CardLibrary.cardList.get(cardNum));
             cardImageView.getItems().add(thumbnail);
         }
+//        for (Object cardKey : CardLibrary.cardMap.keySet()) {
+//            HBox thumbnail = CardGraphic.generateCardThumbnail((Card) CardLibrary.cardMap.get(cardKey));
+//            cardImageView.getItems().add(thumbnail);
+//        }
     }
 
     @FXML
