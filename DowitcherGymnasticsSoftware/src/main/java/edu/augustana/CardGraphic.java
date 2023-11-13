@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -34,6 +35,12 @@ public class CardGraphic {
         });
         cardHBox.setOnMouseEntered(e -> {
             cardHBox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
+            ImageView enlargedImageView = new ImageView(card.getPath());
+            enlargedImageView.setFitHeight(400);
+            enlargedImageView.setFitWidth(540);
+            Tooltip tooltip = new Tooltip();
+            tooltip.setGraphic(enlargedImageView);
+            Tooltip.install(cardHBox, tooltip);
 
         });
         cardHBox.setOnMouseExited(e -> {
