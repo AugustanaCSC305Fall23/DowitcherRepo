@@ -1,10 +1,10 @@
 package edu.augustana;
-import javafx.fxml.FXML;
+//import javafx.fxml.FXML;
 import java.util.*;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
+//import javafx.scene.input.KeyCode;
+//import javafx.scene.layout.HBox;
 
 public class SearchFunction {
     private TextField filterSearchField;
@@ -13,7 +13,7 @@ public class SearchFunction {
     private final List<Card> cards;
 
 
-    public SearchFunction(List<Card> cards) {  
+    public SearchFunction(List<Card> cards) {
         this.cards = cards;
     }
 
