@@ -18,10 +18,54 @@ public class FilterSearch {
         this.categoryCheckboxes = categoryCheckboxes;
         this.allCards = allCards;
         this.cardImageView = cardImageView;
-    }
 
-    public List<HBox> applyFilter() {
-        List<HBox> filteredCards = new ArrayList<>();
+
+        for (CheckBox checkbox : categoryCheckboxes) {
+            checkbox.setOnAction(event -> applyFilter());
+        }
+    }
+//
+//    public List<HBox> applyFilter() {
+//        List<HBox> filteredCards = new ArrayList<>();
+//        for (CheckBox checkbox : categoryCheckboxes) {
+//            if (checkbox.isSelected()) {
+//                String category = checkbox.getText();
+//                for (Card card : allCards) {
+//                    for (String level : card.getLevel()) {
+//                        if (card.getCategory().equalsIgnoreCase(category) || card.getEvent().equalsIgnoreCase(category) ||
+//                                card.getGender().equalsIgnoreCase(category) || level.equalsIgnoreCase(category)) {
+//                            HBox cardThumbnail = generateCardThumbnail(card);
+//                            cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
+//                            filteredCards.add(cardThumbnail);
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//        return filteredCards;
+//    }
+//
+//    public void clearFilter() {
+//        cardImageView.getItems().clear();
+//        for (Card card : allCards) {
+//            HBox cardThumbnail = generateCardThumbnail(card);
+//            cardImageView.getItems().add(cardThumbnail);
+//        }
+//    }
+//
+//    private HBox generateCardThumbnail(Card card) {
+//        HBox cardHBox = CardGraphic.generateCardThumbnail(card);
+//
+//        return cardHBox;
+//    }
+
+    ////////////////////////////////////////////////////////// **NEW***
+
+    public void applyFilter() {
+        List<Card> filteredCards = new ArrayList<>();
+        cardImageView.getItems().clear(); // Clear existing items before adding filtered cards
+
         for (CheckBox checkbox : categoryCheckboxes) {
             if (checkbox.isSelected()) {
                 String category = checkbox.getText();
@@ -31,17 +75,21 @@ public class FilterSearch {
                                 card.getGender().equalsIgnoreCase(category) || level.equalsIgnoreCase(category)) {
                             HBox cardThumbnail = generateCardThumbnail(card);
                             cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
-                            filteredCards.add(cardThumbnail);
+                            cardImageView.getItems().add(cardThumbnail);
+                            filteredCards.add(card);
                         }
                     }
-
                 }
             }
         }
-        return filteredCards;
     }
 
     public void clearFilter() {
+        // Clear checkboxes and update cardImageView
+        for (CheckBox checkbox : categoryCheckboxes) {
+            checkbox.setSelected(false);
+        }
+        applyFilter();
         cardImageView.getItems().clear();
         for (Card card : allCards) {
             HBox cardThumbnail = generateCardThumbnail(card);
@@ -50,11 +98,17 @@ public class FilterSearch {
     }
 
     private HBox generateCardThumbnail(Card card) {
-        HBox cardHBox = CardGraphic.generateCardThumbnail(card);
-
-        return cardHBox;
+        return CardGraphic.generateCardThumbnail(card);
     }
 
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////
 
     public void updateCardImageView(List<Card> searchResults) {
         cardImageView.getItems().clear();

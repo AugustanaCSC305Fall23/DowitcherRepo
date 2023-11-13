@@ -1,6 +1,6 @@
 package edu.augustana;
 
-import java.io.File; 
+import java.io.File;
 import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
@@ -184,7 +184,7 @@ public class EditingPageController {
                 femaleCheckBox
         ), CardLibrary.cardList, cardImageView);
 
-        filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
+      //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
 
         ///////////////////////////////////////////////////////////
     }
@@ -242,8 +242,7 @@ public class EditingPageController {
 
     @FXML
     private void applyFilter() {
-        List<HBox> filteredCards = filterSearch.applyFilter();
-        cardImageView.getItems().setAll(filteredCards);
+        filterSearch.applyFilter();
     }
 
     @FXML

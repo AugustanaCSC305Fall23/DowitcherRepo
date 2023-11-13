@@ -97,9 +97,6 @@
                      <left>
                         <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearFilter" text="Clear" BorderPane.alignment="CENTER" />
                      </left>
-                     <right>
-                        <Button fx:id="applyFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#applyFilter" text="Apply" BorderPane.alignment="CENTER" />
-                     </right>
                   </BorderPane>
                </children>
             </HBox>
