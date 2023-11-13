@@ -13,14 +13,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class CardLibrary {
-    private static int numCards;
     public static ArrayList<Card> cardList;
     public static Map cardMap;
 
     public CardLibrary() {
         cardList = new ArrayList<Card>();
         cardMap = new TreeMap<String, Card>();
-        numCards = 0;
     }
 
     public void readInCards(String fileName) {
@@ -42,7 +40,6 @@ public class CardLibrary {
                 String[] equipment = nextLine[9].split(",");
                 String[] keywords = nextLine[10].split(",");
 
-                System.out.println(String.format("CODE: %s, EVENT: %s, CATEGORY: %s, TITLE: %s, PACK FOLDER: %s, IMAGE: %s, GENDER: %s, MODEL SEX: %s, LEVEL: %s, EQUIPMENT: %s, KEYWORDS: %s", code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords));
                 Card card = new Card(code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords);
                 addCard(card);
                 System.out.println(card);
@@ -59,7 +56,6 @@ public class CardLibrary {
     private void addCard(Card card) {
         cardList.add(card);
         cardMap.put(card.getCode(), card);
-        numCards++;
     }
 
     public Card getCardByCode(String code) {
