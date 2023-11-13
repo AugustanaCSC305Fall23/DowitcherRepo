@@ -2,11 +2,8 @@ package edu.augustana;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox; 
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class FilterSearch {
@@ -24,43 +21,8 @@ public class FilterSearch {
             checkbox.setOnAction(event -> applyFilter());
         }
     }
-//
-//    public List<HBox> applyFilter() {
-//        List<HBox> filteredCards = new ArrayList<>();
-//        for (CheckBox checkbox : categoryCheckboxes) {
-//            if (checkbox.isSelected()) {
-//                String category = checkbox.getText();
-//                for (Card card : allCards) {
-//                    for (String level : card.getLevel()) {
-//                        if (card.getCategory().equalsIgnoreCase(category) || card.getEvent().equalsIgnoreCase(category) ||
-//                                card.getGender().equalsIgnoreCase(category) || level.equalsIgnoreCase(category)) {
-//                            HBox cardThumbnail = generateCardThumbnail(card);
-//                            cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
-//                            filteredCards.add(cardThumbnail);
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//        return filteredCards;
-//    }
-//
-//    public void clearFilter() {
-//        cardImageView.getItems().clear();
-//        for (Card card : allCards) {
-//            HBox cardThumbnail = generateCardThumbnail(card);
-//            cardImageView.getItems().add(cardThumbnail);
-//        }
-//    }
-//
-//    private HBox generateCardThumbnail(Card card) {
-//        HBox cardHBox = CardGraphic.generateCardThumbnail(card);
-//
-//        return cardHBox;
-//    }
 
-    ////////////////////////////////////////////////////////// **NEW***
+    ////////////////////////////////////////////////////////// **UPDATED CODE***
 
     public void applyFilter() {
         List<Card> filteredCards = new ArrayList<>();
@@ -100,12 +62,6 @@ public class FilterSearch {
     private HBox generateCardThumbnail(Card card) {
         return CardGraphic.generateCardThumbnail(card);
     }
-
-
-
-
-
-
 
 
 ////////////////////////////////////////////////////////////////////////

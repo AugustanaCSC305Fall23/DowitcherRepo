@@ -1,10 +1,7 @@
 package edu.augustana;
-//import javafx.fxml.FXML;
 import java.util.*;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-//import javafx.scene.input.KeyCode;
-//import javafx.scene.layout.HBox;
 
 public class SearchFunction {
     private TextField filterSearchField;
@@ -15,9 +12,9 @@ public class SearchFunction {
 
     public SearchFunction(List<Card> cards) {
         this.cards = cards;
-    }
+    }  // Constructor of the SearchFunction Class
 
-    public List<Card> performSearch(String query) {
+    public List<Card> performSearch(String query) {                  // performSearch creates an arrayList to store the cards that meet the text inside of text SearchBox
         List<Card> searchResults = new ArrayList<>();
 
         if (query.trim().isEmpty()) {
@@ -35,7 +32,7 @@ public class SearchFunction {
         return searchResults;
     }
 
-    public Card searchByCode(String code) {
+    public Card searchByCode(String code) {                         // Will be utilized LATER FOR CSV 
         for (Card card : cards) {
             if (card.getCode().equals(code)) {
                 return card;
@@ -44,7 +41,7 @@ public class SearchFunction {
         return null;
     }
 
-    public List<Card> searchByTitle(String title) {
+    public List<Card> searchByTitle(String title) {                 // Will be utilized LATER FOR CSV
         List<Card> matchingCards = new ArrayList<>();
         for (Card card : cards) {
             if (card.getTitle().equalsIgnoreCase(title)) {
@@ -53,25 +50,14 @@ public class SearchFunction {
         }
         return matchingCards;
     }
-    /*private void handleSearch() {
-        //String query =
-        filterSearchField.setOnKeyPressed(e -> {
-            if (e.getCode()== KeyCode.ENTER){
-                List<Card> searchResults = searchFunction.performSearch(filterSearchField.getText());
-                System.out.println(searchResults);
-                cardImageView.getItems().setAll((HBox) searchResults);
-            }
-        });
-    }*/
 
-    public List<Card> searchByCategory(String category) {
+    public List<Card> searchByCategory(String category) {           // Will be utilized LATER FOR CSV
         List<Card> matchingCards = new ArrayList<>();
         for (Card card : cards) {
             if (card.getCategory().equalsIgnoreCase(category)) {
                 matchingCards.add(card);
             }
         }
-        //System.out.println("this runs");
         return matchingCards;
     }
 
