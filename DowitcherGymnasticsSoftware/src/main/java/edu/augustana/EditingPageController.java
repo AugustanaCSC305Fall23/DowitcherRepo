@@ -73,7 +73,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<HBox> cardImageView;
+    private ListView<VBox> cardImageView;
 
     @FXML
     private Button clearFilterButton;
@@ -202,7 +202,7 @@ public class EditingPageController {
     @FXML
     private void loadCards() {
         for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
-            HBox thumbnail = CardGraphic.generateCardThumbnail(CardLibrary.cardList.get(cardNum));
+            VBox thumbnail = CardGraphic.createCardWithAllFeatures(CardLibrary.cardList.get(cardNum));
             cardImageView.getItems().add(thumbnail);
         }
 //        for (Object cardKey : CardLibrary.cardMap.keySet()) {
@@ -229,7 +229,7 @@ public class EditingPageController {
             System.out.println("Printing New Card");
             System.out.println(card.getCode());
             System.out.println(card.getTitle());
-            HBox thumbnail = CardGraphic.generateCardThumbnail(card);
+            VBox thumbnail = CardGraphic.createCardWithAllFeatures(card);
             cardImageView.getItems().add(thumbnail);
         }
 
@@ -283,7 +283,7 @@ public class EditingPageController {
 
     private void addByDoubleClick() {
         System.out.println("Double clicked");
-        HBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
+        VBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
         String cardCode = selectedCard.getId().substring(0, selectedCard.getId().indexOf("-"));
         String cardEvent = selectedCard.getId().substring(selectedCard.getId().indexOf("-") + 1);
         //System.out.println(cardEvent + "+" + cardCode);

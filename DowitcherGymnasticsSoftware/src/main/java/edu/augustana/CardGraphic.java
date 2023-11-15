@@ -1,10 +1,12 @@
 package edu.augustana;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 
 import java.util.HashMap;
@@ -12,79 +14,66 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class CardGraphic {
+
+    public static final int CARD_THUMBNAIL_WIDTH = 270;
+    public static final int CARD_THUMBNAIL_HEIGHT = 200;
+
+    public static final int MAX_CARDS_PER_EVENT = 8;
     static Map map = new HashMap();
-    public static HBox generateCardThumbnail(Card card) {
-        HBox cardHBox = new HBox();
-        cardHBox.setId(card.getCode() + "-" + card.getEvent());
+
+    public static VBox generateCardThumbnail(Card card) { //Creates a thumbnail of the card within an HBox
+        VBox cardVBox = new VBox();
+        cardVBox.setId(card.getCode() + "-" + card.getEvent());
         Image image = new Image(card.getPath());
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(270);
-        cardHBox.getChildren().add(imageView);
-        cardHBox.setOnDragDetected(e -> {
-            System.out.println("Drag detected");
-            cardHBox.startFullDrag();
-            Dragboard dragboard = cardHBox.startDragAndDrop(javafx.scene.input.TransferMode.ANY);
-            dragboard.setDragView(new Image(card.getPath(), 270, 200, false, false));
+        imageView.setFitHeight(CARD_THUMBNAIL_HEIGHT);
+        imageView.setFitWidth(CARD_THUMBNAIL_WIDTH);
+        cardVBox.getChildren().add(imageView);
+        return cardVBox;
+    }
+
+    public static VBox addCardZoom(VBox cardVBox) {//Adds a zoom feature to the card when the mouse hovers over it
+        cardVBox.setOnMouseEntered(e -> {
+            ImageView enlargedImageView = new ImageView(((ImageView) cardVBox.getChildren().get(0)).getImage());
+            enlargedImageView.setFitHeight(CARD_THUMBNAIL_HEIGHT * 2);
+            enlargedImageView.setFitWidth(CARD_THUMBNAIL_WIDTH * 2);
+            Tooltip tooltip = new Tooltip();
+            tooltip.setGraphic(enlargedImageView);
+            Tooltip.install(cardVBox, tooltip);
+
+        });
+        return cardVBox;
+    }
+
+    public static VBox addCardOutline(VBox cardVBox) {//Adds an outline to the card when the mouse hovers over it
+        cardVBox.setOnMouseEntered(e -> {
+            cardVBox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
+        });
+        cardVBox.setOnMouseExited(e -> {
+            cardVBox.setStyle("-fx-border-width: 0;" + "-fx-border-color: black;");
+        });
+        return cardVBox;
+    }
+    public static VBox addCardDragDrop(VBox cardVBox) {//Adds drag and drop functionality to the card
+        cardVBox.setOnDragDetected(e -> {
+            Card currentCard = (Card) CardLibrary.cardMap.get(cardVBox.getId().split("-")[0]);
+            cardVBox.startFullDrag();
+            Dragboard dragboard = cardVBox.startDragAndDrop(TransferMode.ANY);
+            dragboard.setDragView(new Image(currentCard.getPath(), CARD_THUMBNAIL_WIDTH, CARD_THUMBNAIL_HEIGHT, false, false));
             ClipboardContent clipboardContent = new ClipboardContent();
-            clipboardContent.putString(card.getCode());
+            clipboardContent.putString(currentCard.getCode());
             dragboard.setContent(clipboardContent);
 
             e.consume();
         });
-        cardHBox.setOnMouseEntered(e -> {
-            cardHBox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
-
-        });
-        cardHBox.setOnMouseExited(e -> {
-            cardHBox.setStyle("-fx-border-width: 0;" + "-fx-border-color: black;");
-        });
-        return cardHBox;
+        return cardVBox;
     }
 
-    public static VBox generateEventContainerGraphic(EventContainer eventContainer) {
-        VBox vbox = new VBox();
-        TilePane tilePane = new TilePane();
-        vbox.setId(eventContainer.getType());
-        Label titleLabel = new Label(eventContainer.getTitle());
-        Label typeLabel = new Label(String.format("(%s)", eventContainer.getType()));
-        titleLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
-        vbox.getChildren().add(titleLabel);
-        vbox.getChildren().add(typeLabel);
-        HBox blankCard = generateCardThumbnail(new Card());
-        blankCard.setId("blankcard");
-        tilePane.getChildren().addAll(blankCard);
-        vbox.getChildren().add(tilePane);
-        vbox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
-        vbox.setOnDragOver(e -> {
-            if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
-                e.acceptTransferModes(javafx.scene.input.TransferMode.ANY);
-                //addCardToEventContainerGraphic(vbox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
-
-            }
-            e.consume();
-        });
-        tilePane.setOnDragDropped(e -> {
-            System.out.println("Drag dropped");
-            if (e.getGestureSource() != vbox && e.getDragboard().hasString()) {
-                addCardToEventContainerGraphic(vbox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
-                eventContainer.addCard(e.getDragboard().getString());
-            }
-            e.consume();
-        });
-        map.put(eventContainer.getType(), vbox);
-        return vbox;
+    public static VBox createCardWithAllFeatures(Card card) {//Creates a card with all features
+        return addCardDragDrop(addCardOutline(addCardZoom(generateCardThumbnail(card))));
     }
 
-    public static VBox addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
-        TilePane tilePane = (TilePane) eventContainerGraphic.getChildren().get(2);
-        tilePane.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        tilePane.setMaxWidth(270*5);
-        HBox secondaryHbox;
-        VBox cardContainer = new VBox();
-        cardContainer.setId(card.getCode());
-        Image image = new Image(card.getPath());
-        ImageView imageView = new ImageView(image);
+    public static VBox addEquipmentText(VBox cardVBox, Card card) {
         Label cardEquipment = new Label();
         if (!card.getEquipment()[0].equalsIgnoreCase("none")) {
             cardEquipment.setText("Equipment: ");
@@ -92,10 +81,14 @@ public class CardGraphic {
                 cardEquipment.setText(cardEquipment.getText() + "\n" + equipment + " ");
             }
         }
-        cardContainer.getChildren().addAll(imageView, cardEquipment);
-        imageView.setOnMouseClicked(e -> {
+        cardVBox.getChildren().add(cardEquipment);
+        return cardVBox;
+    }
+
+    public static VBox addDoubleClickToRemove(VBox eventContainerGraphic, VBox cardVBox, TilePane tilePane, Card card) {
+        cardVBox.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                tilePane.getChildren().remove(cardContainer);
+                tilePane.getChildren().remove(cardVBox);
                 if (tilePane.getChildren().size() == 1) {
                     System.out.println("Cant remove");
                 }
@@ -103,32 +96,56 @@ public class CardGraphic {
                 eventContainer.removeCard(card.getCode());
                 System.out.println(eventContainer.getCards());
                 if (!tilePane.getChildren().get(tilePane.getChildren().size()-1).getId().equalsIgnoreCase("blankcard")) {
-                    HBox blankCard = generateCardThumbnail(new Card());
+                    VBox blankCard = generateCardThumbnail(new Card());
                     blankCard.setId("blankcard");
                     tilePane.getChildren().add(blankCard);
                 }
             }
         });
-        imageView.setFitHeight(200);
-        imageView.setFitWidth(270);
-//        if (gridPane.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 3) {
-//            gridPane.getChildren().remove(gridPane.getChildren().size() - 1);
-//            gridPane.getChildren().add(cardContainer);
-//            secondaryHbox = new HBox();
-//            eventContainerGraphic.getChildren().add(secondaryHbox);
-//            secondaryHbox.getChildren().add(0, generateCardThumbnail(new Card()));
-//        } else if (gridPane.getChildren().size() >= 4 && eventContainerGraphic.getChildren().size() == 4) {
-//            secondaryHbox = (HBox) eventContainerGraphic.getChildren().get(3);
-//            secondaryHbox.getChildren().add(secondaryHbox.getChildren().size() -1, cardContainer);
-//            if (secondaryHbox.getChildren().size() > 4) {
-//                secondaryHbox.getChildren().remove(secondaryHbox.getChildren().size() - 1);
-//            }
-//        } else {
-//            gridPane.getChildren().add(gridPane.getChildren().size() - 1, cardContainer);
-//        }
-        if (tilePane.getChildren().size() < 8) {
+        return cardVBox;
+    }
+
+    public static VBox generateEventContainerGraphic(EventContainer eventContainer) {
+        VBox eventContainerGraphicVBox = new VBox();
+        TilePane tilePane = new TilePane();
+        eventContainerGraphicVBox.setId(eventContainer.getType());
+        Label typeLabel = new Label(String.format("%s", eventContainer.getType()));
+        typeLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
+        eventContainerGraphicVBox.getChildren().add(typeLabel);
+        VBox blankCard = generateCardThumbnail(new Card());
+        blankCard.setId("blankcard");
+        tilePane.getChildren().addAll(blankCard);
+        eventContainerGraphicVBox.getChildren().add(tilePane);
+        eventContainerGraphicVBox.setStyle("-fx-border-width: 2;" + "-fx-border-color: black;");
+        eventContainerGraphicVBox.setOnDragOver(e -> {
+            if (e.getGestureSource() != eventContainerGraphicVBox && e.getDragboard().hasString()) {
+                e.acceptTransferModes(javafx.scene.input.TransferMode.ANY);
+            }
+            e.consume();
+        });
+        tilePane.setOnDragDropped(e -> {
+            System.out.println("Drag dropped");
+            if (e.getGestureSource() != eventContainerGraphicVBox && e.getDragboard().hasString()) {
+                addCardToEventContainerGraphic(eventContainerGraphicVBox, (Card) CardLibrary.cardMap.get(e.getDragboard().getString()));
+                eventContainer.addCard(e.getDragboard().getString());
+            }
+            e.consume();
+        });
+        map.put(eventContainer.getType(), eventContainerGraphicVBox);
+        return eventContainerGraphicVBox;
+    }
+
+    public static VBox addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
+        TilePane tilePane = (TilePane) eventContainerGraphic.getChildren().get(1);
+        tilePane.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        tilePane.setMaxWidth(CARD_THUMBNAIL_WIDTH*5);
+        VBox cardContainer = createCardWithAllFeatures(card);
+        cardContainer.setId(card.getCode());
+        addEquipmentText(cardContainer, card);
+        addDoubleClickToRemove(eventContainerGraphic,cardContainer, tilePane, card);
+        if (tilePane.getChildren().size() < MAX_CARDS_PER_EVENT) {
             tilePane.getChildren().add(tilePane.getChildren().size() - 1, cardContainer);
-        } else if (tilePane.getChildren().size() == 8) {
+        } else if (tilePane.getChildren().size() == MAX_CARDS_PER_EVENT) {
             tilePane.getChildren().remove(tilePane.getChildren().size() - 1);
             tilePane.getChildren().add(tilePane.getChildren().size(), cardContainer);
         }
