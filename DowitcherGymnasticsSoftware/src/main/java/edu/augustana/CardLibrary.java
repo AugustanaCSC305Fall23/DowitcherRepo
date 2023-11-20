@@ -26,6 +26,7 @@ public class CardLibrary {
     public void readInCards(String fileName) {
         try{
             CSVReader reader = new CSVReaderBuilder(new FileReader(fileName)).build();
+            System.out.println(fileName);
             CSVIterator iterator = new CSVIterator(reader);
             String[] firstLine = iterator.next(); // skip first line labels
             for (CSVIterator it = iterator; it.hasNext(); ) {

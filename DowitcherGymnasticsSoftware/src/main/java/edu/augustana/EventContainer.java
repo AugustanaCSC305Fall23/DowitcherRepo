@@ -14,7 +14,7 @@ public class EventContainer {
 
     public EventContainer(String type){
         this.type = type;
-        this.title = String.format("New %s Event", type);
+        this.title = String.format("%s", type);
         this.cards = new ArrayList<String>();
     }
 

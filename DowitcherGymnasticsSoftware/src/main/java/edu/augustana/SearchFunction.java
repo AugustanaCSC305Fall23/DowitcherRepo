@@ -18,6 +18,7 @@ public class SearchFunction {
     }
 
     public List<Card> performSearch(String query) {
+
         List<Card> searchResults = new ArrayList<>();
 
         if (query.trim().isEmpty()) {
