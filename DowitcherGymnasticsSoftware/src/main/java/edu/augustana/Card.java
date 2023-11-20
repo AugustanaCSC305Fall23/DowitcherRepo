@@ -48,11 +48,8 @@ public class Card {
     public String getTitle() {
         return title;
     }
-    public String getPath() {
+    public String getPath() { //Returns the path to the image
         return String.format("%s/%s", packFolder, image);
-    }
-    public String getImage() {
-        return image;
     }
     public String getGender() {
         return gender;
@@ -73,14 +70,4 @@ public class Card {
     public String toString() {
         return String.format("%s : %s", code, title);
     }
-//    public HBox generateThumbnail() {
-//        HBox cardHBox = new HBox();
-//        cardHBox.setId(this.getEvent());
-//        Image image = new Image(this.getPath());
-//        ImageView imageView = new ImageView(image);
-//        imageView.setFitHeight(200);
-//        imageView.setFitWidth(270);
-//        cardHBox.getChildren().add(imageView);
-//        return cardHBox;
-//    }
 }
