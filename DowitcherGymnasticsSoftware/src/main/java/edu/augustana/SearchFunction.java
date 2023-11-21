@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana; 
 import java.util.*;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -32,7 +32,7 @@ public class SearchFunction {
         return searchResults;
     }
 
-    public Card searchByCode(String code) {                         // Will be utilized LATER FOR CSV 
+    public Card searchByCode(String code) {                         // Will be utilized LATER FOR CSV
         for (Card card : cards) {
             if (card.getCode().equals(code)) {
                 return card;
