@@ -135,6 +135,7 @@ public class EditingPageController {
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
+
         homeItem.setOnAction(evt -> {
             try {
                 switchToHome();
@@ -154,6 +155,7 @@ public class EditingPageController {
         loadCards();
         addEventChoices();
         lessonPlanTitle.setText(App.currentLessonPlan.getTitle());
+        // constantly checking for double-clicks on cards
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
@@ -211,6 +213,11 @@ public class EditingPageController {
 //        }
     }
 
+    private void expandCardImageView() {
+
+    }
+
+
     @FXML
     private void cardSearchFunction() {
         String query = filterSearchField.getText();
@@ -224,9 +231,9 @@ public class EditingPageController {
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
         cardImageView.getItems().clear();
-
+        // only displays cards of the new search
         for (Card card : searchResults) {
-            System.out.println("Printing New Card");
+            //System.out.println("Printing New Card");
             System.out.println(card.getCode());
             System.out.println(card.getTitle());
             VBox thumbnail = CardGraphic.createCardWithAllFeatures(card);
@@ -261,9 +268,6 @@ public class EditingPageController {
 
 
 
-    private void addCardToEvent() {
-
-    }
 
     @FXML
     private void addEventByButton() {
@@ -271,6 +275,7 @@ public class EditingPageController {
     }
     @FXML
     private void addEvent(String event) {
+        // creates new eventContainer
         EventContainer container = new EventContainer(event);
         App.currentLessonPlan.addEventContainer(container);
         lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
@@ -295,6 +300,7 @@ public class EditingPageController {
             //System.out.println(cardImageView.getItems().get(cardNums).toString());
             //System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
         }
+
         for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
             EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
             if (container.getCards().size() >= 8) {
@@ -401,10 +407,6 @@ public class EditingPageController {
         App.currentLessonPlan.renamePlan(name);
     }
 
-    @FXML
-    private void renameEventContainerName() {
-//        renameLabel();
-    }
     @FXML
     private String renameLabel(Label label, VBox vbox) {
         vbox.getChildren().remove(0);

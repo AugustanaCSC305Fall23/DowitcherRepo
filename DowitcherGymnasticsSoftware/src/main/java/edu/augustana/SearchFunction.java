@@ -14,7 +14,11 @@ public class SearchFunction {
         this.cards = cards;
     }  // Constructor of the SearchFunction Class
 
-    public List<Card> performSearch(String query) {                  // performSearch creates an arrayList to store the cards that meet the text inside of text SearchBox
+    public List<Card> performSearch(String query) {
+
+
+        // performSearch creates an arrayList to store the cards that meet the text inside of text SearchBox
+
         List<Card> searchResults = new ArrayList<>();
 
         if (query.trim().isEmpty()) {
