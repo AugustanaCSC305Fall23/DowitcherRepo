@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * This class is used to create a card object that contains all the information about a Gymnastic card.
+ */
 public class Card {
     private String code;
     private String event;

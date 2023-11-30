@@ -10,13 +10,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
-import javafx.scene.image.Image;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -60,7 +57,14 @@ public class EditingPageController {
     @FXML
     private CheckBox femaleCheckBox;
 
+    @FXML
+    private TabPane lessonPlanTabs;
 
+    @FXML
+    private Tab newTabButton;
+
+    @FXML
+    private Tab currentTab;
 
 
 
@@ -91,8 +95,6 @@ public class EditingPageController {
     @FXML
     private TitledPane genderFilterTitledPane;
 
-    @FXML
-    private Label lessonPlanTitle;
 
     @FXML
     private VBox lessonPlanVBox;
@@ -131,7 +133,7 @@ public class EditingPageController {
                 cardSearchFunction();
             }
         });
-        System.out.println(App.currentLessonPlan.toString());
+        //System.out.println(App.currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -152,14 +154,16 @@ public class EditingPageController {
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
-        addEventChoices();
-        lessonPlanTitle.setText(App.currentLessonPlan.getTitle());
+        //addEventChoices();
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
                 addByDoubleClick();
             }
         });
+        if (lessonPlanTabs.getTabs().size() == 1) {
+            createNewLessonPlanTab();
+        }
         if (App.currentLessonPlanFile != null) {
             openLessonPlanWithFile(App.currentLessonPlanFile);
         }
@@ -187,6 +191,9 @@ public class EditingPageController {
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
 
         ///////////////////////////////////////////////////////////
+        newTabButton.setOnSelectionChanged(event -> {
+            createNewLessonPlanTab();
+        });
     }
 
     @FXML
@@ -273,13 +280,14 @@ public class EditingPageController {
     private void addEvent(String event) {
         EventContainer container = new EventContainer(event);
         App.currentLessonPlan.addEventContainer(container);
-        lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
+        //lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
+//        currentTab.setContent(CardGraphic.generateLessonPlanPane(App.currentLessonPlan));
     }
 
-    private void addEventChoices() {
-        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
-                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
-    }
+//    private void addEventChoices() {
+//        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
+//                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
+//    }
 
     private void addByDoubleClick() {
         System.out.println("Double clicked");
@@ -304,7 +312,12 @@ public class EditingPageController {
                 containerExists = true;
                 container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
                 //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), (Card) CardLibrary.cardMap.get(cardCode));
+                //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), (Card) CardLibrary.cardMap.get(cardCode));
+                ScrollPane currentScrollPane = (ScrollPane) lessonPlanTabs.getSelectionModel().getSelectedItem().getContent();
+                Map map = CardGraphic.lessonPlanToEventMap.get(App.currentLessonPlan.getTitle());
+                VBox currentEventContainerGraphic = (VBox) map.get(container.getType());
+                currentEventContainerGraphic.setId(container.getType());
+                CardGraphic.addCardToEventContainerGraphic(currentEventContainerGraphic, (Card) CardLibrary.cardMap.get(cardCode));
             }
         }
         if (!containerExists && !containerFull) {
@@ -312,7 +325,16 @@ public class EditingPageController {
             EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(cardEvent);
             newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
             //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), (Card) CardLibrary.cardMap.get(cardCode));
+            //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), (Card) CardLibrary.cardMap.get(cardCode));
+            ScrollPane currentScrollPane = (ScrollPane) lessonPlanTabs.getSelectionModel().getSelectedItem().getContent();
+            VBox lessonPlanVBox = (VBox) currentScrollPane.getContent();
+            VBox newCardGraphicContainer = CardGraphic.generateEventContainerGraphic(newContainer);
+            lessonPlanVBox.getChildren().add(newCardGraphicContainer);
+            Label testLabel = new Label("Test");
+            lessonPlanVBox.getChildren().add(testLabel);
+//            currentScrollPane.setContent(lessonPlanVBox);
+            CardGraphic.addCardToEventContainerGraphic(newCardGraphicContainer, (Card) CardLibrary.cardMap.get(cardCode));
+//            CardGraphic.addCardToEventContainerGraphic(CardGraphic.lessonPlanMap.get(App.currentLessonPlan.getTitle()).get(newContainer.getTitle()), (Card) CardLibrary.cardMap.get(cardCode));
         }
         App.currentLessonPlan.printTree();
     }
@@ -337,7 +359,7 @@ public class EditingPageController {
                     lessonPlanVBox.getChildren().remove(i);
                 }
                 LessonPlan loadedPlan = App.getCurrentLessonPlan();
-                lessonPlanTitle.setText(loadedPlan.getTitle());
+                //lessonPlanTitle.setText(loadedPlan.getTitle());// FIX ME PLEASE
                 Map map = App.getCurrentLessonPlan().getEventMap();
                 System.out.println(map.toString());
                 for (Object key : map.keySet()) {
@@ -395,16 +417,39 @@ public class EditingPageController {
     }
 
 
-    @FXML
-    private void changeLessonPlanName() {
-        String name = renameLabel(lessonPlanTitle, lessonPlanVBox);
-        App.currentLessonPlan.renamePlan(name);
-    }
+//    @FXML
+//    private void changeLessonPlanName() {
+//        String name = renameLabel(lessonPlanTitle, lessonPlanVBox);
+//        App.currentLessonPlan.renamePlan(name);
+//    }
 
     @FXML
-    private void renameEventContainerName() {
-//        renameLabel();
+    private void setCurrentLessonPlanTab() {
+        currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
+        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
+        System.out.println(App.currentLessonPlan.toString());
     }
+
+    private void createNewLessonPlanTab() {
+        if (newTabButton.isSelected()) {
+            String lessonPlanName = "New Lesson Plan";
+            while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+                lessonPlanName = lessonPlanName + "1";
+            }
+            LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
+            App.currentCourse.addLessonPlan(newLessonPlan);
+            Tab newTab = new Tab(lessonPlanName);
+            newTab.setOnSelectionChanged(event -> {
+                setCurrentLessonPlanTab();
+            });
+            newTab.setContent(CardGraphic.generateLessonPlanPane(newLessonPlan));
+            lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size() - 1, newTab);
+            lessonPlanTabs.getSelectionModel().select(newTab);
+        }
+    }
+
+
     @FXML
     private String renameLabel(Label label, VBox vbox) {
         vbox.getChildren().remove(0);
@@ -435,5 +480,6 @@ public class EditingPageController {
         }
         return renameField.getText();
     }
+
 }
 

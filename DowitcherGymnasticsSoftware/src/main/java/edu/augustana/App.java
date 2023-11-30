@@ -21,6 +21,10 @@ public class App extends Application {
     static LessonPlan currentLessonPlan;
     static File currentLessonPlanFile;
 
+    static Course currentCourse;
+
+    static File currentCourseFile;
+
 
     private static Scene scene;
 
