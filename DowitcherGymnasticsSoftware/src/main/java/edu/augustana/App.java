@@ -21,6 +21,8 @@ public class App extends Application {
     static LessonPlan currentLessonPlan;
     static File currentLessonPlanFile;
 
+    static CardLibrary cardLibrary;
+
 
     private static Scene scene;
 
@@ -30,7 +32,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
         stage.show();
-        CardLibrary cardLibrary = new CardLibrary();
+        cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
         cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
     }

@@ -124,8 +124,7 @@ public class EditingPageController {
 
     @FXML
     public void initialize() {
-        searchFunction = new SearchFunction(CardLibrary.cardList);
-//      cardImageView = new ListView<>();
+        searchFunction = new SearchFunction(App.cardLibrary);
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();

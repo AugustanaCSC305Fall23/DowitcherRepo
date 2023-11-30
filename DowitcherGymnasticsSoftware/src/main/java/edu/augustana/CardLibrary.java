@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 public class CardLibrary {
     public static ArrayList<Card> cardList;
-    public static Map cardMap;
+    public static Map<String, Card> cardMap;
 
     public CardLibrary() {
         cardList = new ArrayList<Card>();
