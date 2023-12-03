@@ -8,17 +8,16 @@ import com.google.gson.Gson;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -82,7 +81,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<VBox> cardImageView;
+    private TilePane cardImageView;
 
     @FXML
     private Button clearFilterButton;
@@ -219,7 +218,7 @@ public class EditingPageController {
     private void loadCards() {
         for (Object cardKey : CardLibrary.cardMap.keySet()) {
             CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
-            cardImageView.getItems().add(cardUI);
+            cardImageView.getChildren().add(cardUI);
         }
     }
 
@@ -241,24 +240,24 @@ public class EditingPageController {
         double columnWidth = newWidth / 2;
 
         // Set the cell factory to display items in two columns
-        cardImageView.setCellFactory(listView -> new ListCell<VBox>() {
-            @Override
-            protected void updateItem(VBox item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    // Set the preferred and max width for each card
-                    item.setPrefWidth(columnWidth);
-                    item.setMaxWidth(columnWidth);
-
-                    // Set the graphic (card) for the cell
-                    setGraphic(item);
-                }
-            }
-        });
+        //cardImageView.setCellFactory(listView -> new ListCell<VBox>() {
+            //@Override
+//            protected void updateItem(VBox item, boolean empty) {
+//                super.updateItem(item, empty);
+//
+//                if (empty || item == null) {
+//                    setText(null);
+//                    setGraphic(null);
+//                } else {
+//                    // Set the preferred and max width for each card
+//                    item.setPrefWidth(columnWidth);
+//                    item.setMaxWidth(columnWidth);
+//
+//                    // Set the graphic (card) for the cell
+//                    setGraphic(item);
+//                }
+//            }
+//        });
     }
 
 
@@ -274,18 +273,12 @@ public class EditingPageController {
 
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
-        cardImageView.getItems().clear();
-        // only displays cards of the new search
+        cardImageView.getChildren().clear();
+
         for (Card card : searchResults) {
-            //System.out.println("Printing New Card");
-            System.out.println(card.getCode());
-            System.out.println(card.getTitle());
             VBox thumbnail = new CardUI(card);
-            cardImageView.getItems().add(thumbnail);
+            cardImageView.getChildren().add(thumbnail);
         }
-
-        System.out.println(cardImageView);
-
     }
 
     ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY

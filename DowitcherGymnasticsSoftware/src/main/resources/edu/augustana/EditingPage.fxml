@@ -18,6 +18,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <top>
       <MenuBar fx:id="menuBar" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -103,7 +105,11 @@
                </children>
             </HBox>
             <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cardSearchFunction" />
-            <ListView fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" VBox.vgrow="ALWAYS" />
+             <ScrollPane fx:id="cardScrollPane" VBox.vgrow="ALWAYS">
+                <content>
+                    <TilePane fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" VBox.vgrow="ALWAYS" hgap="10" vgap="10" />
+                </content>
+             </ScrollPane>
          </children>
          <BorderPane.margin>
             <Insets />
