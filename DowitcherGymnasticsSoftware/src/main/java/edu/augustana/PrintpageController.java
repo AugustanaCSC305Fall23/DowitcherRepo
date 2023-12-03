@@ -68,7 +68,7 @@ public class PrintpageController {
             EventContainer eventContainer = (EventContainer) map.get(key);
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-            if(eventContainer.getCards().size()>=4){
+            if(eventContainer.getCards().size()>4){
                 eventCount++;
             }
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
