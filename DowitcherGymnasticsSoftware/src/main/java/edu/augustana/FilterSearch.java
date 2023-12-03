@@ -2,7 +2,9 @@ package edu.augustana;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.CheckBox; 
+
+import edu.augustana.ui.CardUI;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -61,7 +63,7 @@ public class FilterSearch {
     }
 
     private VBox generateCardThumbnail(Card card) {
-        return CardGraphic.generateCardThumbnail(card);
+        return new CardUI(card);
     }
 
 
