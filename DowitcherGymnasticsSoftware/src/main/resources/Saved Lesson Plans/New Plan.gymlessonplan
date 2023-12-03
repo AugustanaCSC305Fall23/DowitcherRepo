@@ -1,0 +1,25 @@
+{
+  "eventMap": {
+    "Floor": {
+      "title": "New Floor Event",
+      "cards": [
+        "H5",
+        "S1"
+      ],
+      "type": "Floor"
+    },
+    "Still Rings": {
+      "title": "New Still Rings Event",
+      "cards": [],
+      "type": "Still Rings"
+    },
+    "Tramp": {
+      "title": "New Tramp Event",
+      "cards": [
+        "T0"
+      ],
+      "type": "Tramp"
+    }
+  },
+  "title": "asd"
+}

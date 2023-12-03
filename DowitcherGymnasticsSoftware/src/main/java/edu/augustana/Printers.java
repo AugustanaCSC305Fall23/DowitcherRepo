@@ -5,39 +5,50 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.transform.Scale;
 
 public class Printers {
-
+    /**
+     *
+     * @param scrollpane
+     * @param printer
+     */
     public static void print(ScrollPane scrollpane, Printer printer) {
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
         printerJob.setPrinter(printer);
 
-        if (printerJob != null) {
-            boolean success = printerJob.showPrintDialog(App.stage);
+        boolean success = printerJob.showPrintDialog(App.stage);
 
-            double width = scrollpane.getWidth();
-            double height = scrollpane.getHeight();
-
-            PrintResolution resolution = printerJob.getJobSettings().getPrintResolution();
-
-            width /= resolution.getFeedResolution();
-            height /= resolution.getCrossFeedResolution();
-
-            double scaleX = pageLayout.getPrintableWidth() / width / resolution.getFeedResolution();
-            double scaleY = pageLayout.getPrintableHeight() / height / resolution.getCrossFeedResolution();
-
-            Scale scale = new Scale(scaleX, scaleY);
-
-            scrollpane.getTransforms().add(scale);
+        Scale scale = scale(scrollpane, printerJob, pageLayout);
+        scrollpane.getTransforms().add(scale);
 
 
-            if (success) {
-                printerJob.getJobSettings().setPageLayout(pageLayout);
+        if (success) {
+            printerJob.getJobSettings().setPageLayout(pageLayout);
+            printerJob.printPage(scrollpane);
+            printerJob.endJob();
 
-                printerJob.printPage(scrollpane);
-                printerJob.endJob();
-
-            }
-            scrollpane.getTransforms().remove(scale);
         }
+        scrollpane.getTransforms().remove(scale);
+    }
+
+    /**
+     *
+     * @param scrollpane
+     * @param printerJob
+     * @param pageLayout
+     * @return
+     */
+    private static Scale scale(ScrollPane scrollpane, PrinterJob printerJob, PageLayout pageLayout){
+        double width = scrollpane.getPrefWidth();
+        double height = scrollpane.getPrefHeight();
+
+        PrintResolution resolution = printerJob.getJobSettings().getPrintResolution();
+
+        width /= resolution.getFeedResolution();
+        height /= resolution.getCrossFeedResolution();
+
+        double scaleX = pageLayout.getPrintableWidth() / width / resolution.getFeedResolution();
+        double scaleY = pageLayout.getPrintableHeight() / height / resolution.getCrossFeedResolution();
+
+        return new Scale(scaleX, scaleY);
     }
 }

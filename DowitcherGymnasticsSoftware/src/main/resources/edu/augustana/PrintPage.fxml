@@ -3,36 +3,46 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.PrintpageController">
    <center>
-      <ScrollPane fx:id="scrollpane" prefHeight="400.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollpane" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="printLessonPlanVBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="450.0">
-               <children>
-                  <Label fx:id="lessonPlanLabel" contentDisplay="TOP" text="Label" textAlignment="CENTER" textFill="#142ae3">
-                     <font>
-                        <Font name="System Bold Italic" size="24.0" />
-                     </font></Label>
-               </children>
-            </VBox>
+            <VBox fx:id="printLessonPlanVBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="450.0" />
          </content></ScrollPane>
    </center>
    <right>
-      <VBox alignment="TOP_CENTER" minWidth="350.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" minWidth="350.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="printerChooser" onAction="#selectPrinter" prefHeight="26.0" prefWidth="225.0" />
+            <ComboBox fx:id="printerChooser" onAction="#selectPrinter" prefHeight="26.0" prefWidth="100.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></ComboBox>
             <Button fx:id="printButton" mnemonicParsing="false" onAction="#printScrollPane" text="Print" />
             <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#switchToEditing" text="Cancel" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="imageViewButton" mnemonicParsing="false" onAction="#setImageView" text="Image View" />
+                  <Button fx:id="textViewButton" mnemonicParsing="false" onAction="#setTextView" text="Text View" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </VBox>
    </right>
 </BorderPane>

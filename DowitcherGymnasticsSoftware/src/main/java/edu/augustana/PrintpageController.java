@@ -4,23 +4,22 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import edu.augustana.ui.CardUI;
+import edu.augustana.ui.EventContainerUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.print.Printer;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import static edu.augustana.App.currentLessonPlan;
-import static edu.augustana.App.stage;
 
 public class PrintpageController {
     @FXML
@@ -30,49 +29,106 @@ public class PrintpageController {
     @FXML
     private VBox printLessonPlanVBox;
     @FXML
-    private GridPane gridpane;
-    @FXML
-    private BorderPane borderPane;
-    @FXML
     private Label lessonPlanLabel;
-
+    /**
+     *
+     */
     @FXML
     public void initialize(){
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setMinWidth(1000);
+
         //stage.setMaximized(true);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();
-        for (Printer printer : printers){
-            printerNames.add(printer);
-        }
+        printerNames.addAll(printers);
         printerChooser.setItems(printerNames);
 
-        lessonPlanLabel.setText(currentLessonPlan.getTitle());
 
-    drawLessonPlan(App.currentLessonPlan);
+
     }
-
+    /**
+     *
+     */
+    public void setImageView(){
+        printLessonPlanVBox.getChildren().clear();
+        scrollpane.setContent(drawLessonPlan());
+    }
+    /**
+     *
+     * @return
+     */
     @FXML
-    public void drawLessonPlan(LessonPlan lessonPlan){
+    public Node drawLessonPlan() {
+        int eventCount = 0;
         Map map = App.getCurrentLessonPlan().getEventMap();
         System.out.println(map.toString());
         for (Object key : map.keySet()) {
             EventContainer eventContainer = (EventContainer) map.get(key);
-            VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+            EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
+            eventCount++;
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+//                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+                eventContainerUI.addCard(new CardUI(card));
+                eventContainerUI.setMaxWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
             }
-            printLessonPlanVBox.getChildren().add(vbox);
+            printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
+        System.out.println("Events: " + eventCount);
+        return printLessonPlanVBox;
     }
+
+    /**
+     *
+     */
+    public void setTextView() {
+        printLessonPlanVBox.getChildren().clear();
+        scrollpane.setContent(typeLessonPlan());
+    }
+
+    /**
+     *
+     * @return
+     */
+    @FXML
+    public Node typeLessonPlan() {
+        Text titleText = new Text ();
+        titleText.setText(currentLessonPlan.getTitle());
+        titleText.setFont(Font.font(24));
+        printLessonPlanVBox.getChildren().add(titleText);
+        Map map = App.getCurrentLessonPlan().getEventMap();
+        for (Object key : map.keySet()){
+            String eventText = currentLessonPlan.getTitle();
+            EventContainer eventContainer = (EventContainer) map.get(key);
+            eventText = (eventContainer.getType()+"\n");
+            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
+                Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+                eventText = eventText + card.getTitle() + ", ";
+
+            }
+
+            Text text = new Text (eventText);
+            text.setFont(Font.font(16));
+            printLessonPlanVBox.getChildren().addAll( text);
+
+        }
+        return printLessonPlanVBox;
+    }
+
+    /**
+     *
+     * @throws IOException
+     */
     @FXML
     private void switchToEditing() throws IOException {
         App.setRoot("EditingPage");
     }
 
+    /**
+     *
+     */
     @FXML
     private void printScrollPane(){
         Printer pickedPrinter = selectPrinter();
@@ -83,6 +139,11 @@ public class PrintpageController {
             Printers.print(scrollpane, pickedPrinter);
         }
     }
+
+    /**
+     *
+     * @return
+     */
     @FXML
     private Printer selectPrinter(){
         return printerChooser.getValue();

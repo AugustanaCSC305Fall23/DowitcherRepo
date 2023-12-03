@@ -40,6 +40,8 @@ public class CreateImportPageController {
         if (LessonPlanTextField.getText().isEmpty()) {
             titleRequiredWarning("Create a title before making a lesson plan");
         } else {
+            App.currentCourse = null;
+            App.currentCourseFile = null;
             App.currentLessonPlanFile = null;
             App.currentLessonPlan = createLessonPlan();
             App.setRoot("EditingPage");
