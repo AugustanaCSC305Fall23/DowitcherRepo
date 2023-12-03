@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -226,9 +227,11 @@ public class EditingPageController {
     //when the user clicks on the expand button
     @FXML
     private void expandFilterSearchCardVBox() {
+        int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = originalWidth * 2;
+        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -239,25 +242,14 @@ public class EditingPageController {
         // Calculate the new width for each column
         double columnWidth = newWidth / 2;
 
-        // Set the cell factory to display items in two columns
-        //cardImageView.setCellFactory(listView -> new ListCell<VBox>() {
-            //@Override
-//            protected void updateItem(VBox item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (empty || item == null) {
-//                    setText(null);
-//                    setGraphic(null);
-//                } else {
-//                    // Set the preferred and max width for each card
-//                    item.setPrefWidth(columnWidth);
-//                    item.setMaxWidth(columnWidth);
-//
-//                    // Set the graphic (card) for the cell
-//                    setGraphic(item);
-//                }
-//            }
-//        });
+        // Set the preferred and max width for each card in the TilePane
+        for (Node node : cardImageView.getChildren()) {
+            if (node instanceof VBox) {
+                VBox cardUI = (VBox) node;
+                cardUI.setPrefWidth(columnWidth);
+                cardUI.setMaxWidth(columnWidth);
+            }
+        }
     }
 
 
