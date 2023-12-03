@@ -5,18 +5,18 @@ import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
 
+import edu.augustana.ui.CardUI;
+import edu.augustana.ui.EventContainerUI;
+import edu.augustana.ui.LessonPlanUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
-import javafx.scene.image.Image;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -60,7 +60,14 @@ public class EditingPageController {
     @FXML
     private CheckBox femaleCheckBox;
 
+    @FXML
+    private TabPane lessonPlanTabs;
 
+    @FXML
+    private Tab newTabButton;
+
+    @FXML
+    private Tab currentTab;
 
 
 
@@ -91,8 +98,6 @@ public class EditingPageController {
     @FXML
     private TitledPane genderFilterTitledPane;
 
-    @FXML
-    private Label lessonPlanTitle;
 
     @FXML
     private VBox lessonPlanVBox;
@@ -124,14 +129,13 @@ public class EditingPageController {
 
     @FXML
     public void initialize() {
-        searchFunction = new SearchFunction(CardLibrary.cardList);
-//      cardImageView = new ListView<>();
+        searchFunction = new SearchFunction(App.cardLibrary);
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
             }
         });
-        System.out.println(App.currentLessonPlan.toString());
+        //System.out.println(App.currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -153,15 +157,15 @@ public class EditingPageController {
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
-        addEventChoices();
-        lessonPlanTitle.setText(App.currentLessonPlan.getTitle());
-        // constantly checking for double-clicks on cards
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
-                addByDoubleClick();
+//                addByDoubleClick();
             }
         });
+        if (lessonPlanTabs.getTabs().size() == 1) {
+            createNewLessonPlanTab();
+        }
         if (App.currentLessonPlanFile != null) {
             openLessonPlanWithFile(App.currentLessonPlanFile);
         }
@@ -189,6 +193,9 @@ public class EditingPageController {
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
 
         ///////////////////////////////////////////////////////////
+        newTabButton.setOnSelectionChanged(event -> {
+            createNewLessonPlanTab();
+        });
     }
 
     @FXML
@@ -203,14 +210,10 @@ public class EditingPageController {
 
     @FXML
     private void loadCards() {
-        for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
-            VBox thumbnail = CardGraphic.createCardWithAllFeatures(CardLibrary.cardList.get(cardNum));
-            cardImageView.getItems().add(thumbnail);
+        for (Object cardKey : CardLibrary.cardMap.keySet()) {
+            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
+            cardImageView.getItems().add(cardUI);
         }
-//        for (Object cardKey : CardLibrary.cardMap.keySet()) {
-//            HBox thumbnail = CardGraphic.generateCardThumbnail((Card) CardLibrary.cardMap.get(cardKey));
-//            cardImageView.getItems().add(thumbnail);
-//        }
     }
 
     private void expandCardImageView() {
@@ -236,7 +239,7 @@ public class EditingPageController {
             //System.out.println("Printing New Card");
             System.out.println(card.getCode());
             System.out.println(card.getTitle());
-            VBox thumbnail = CardGraphic.createCardWithAllFeatures(card);
+            VBox thumbnail = new CardUI(card);
             cardImageView.getItems().add(thumbnail);
         }
 
@@ -266,63 +269,6 @@ public class EditingPageController {
 
     ////////////////////////////////////////////////////////////////////
 
-
-
-
-    @FXML
-    private void addEventByButton() {
-        addEvent(eventChoiceButton.getValue().toString());
-    }
-    @FXML
-    private void addEvent(String event) {
-        // creates new eventContainer
-        EventContainer container = new EventContainer(event);
-        App.currentLessonPlan.addEventContainer(container);
-        lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
-    }
-
-    private void addEventChoices() {
-        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
-                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
-    }
-
-    private void addByDoubleClick() {
-        System.out.println("Double clicked");
-        VBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
-        String cardCode = selectedCard.getId().substring(0, selectedCard.getId().indexOf("-"));
-        String cardEvent = selectedCard.getId().substring(selectedCard.getId().indexOf("-") + 1);
-        //System.out.println(cardEvent + "+" + cardCode);
-        //System.out.println(selectedCard.getId());
-        boolean containerExists = false;
-        boolean containerFull = false;
-        System.out.println(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-        for (int cardNums = 0; cardNums < cardImageView.getItems().size(); cardNums++) {
-            //System.out.println(cardImageView.getItems().get(cardNums).toString());
-            //System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-        }
-
-        for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
-            EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
-            if (container.getCards().size() >= 8) {
-                containerFull = true;
-            }
-            if (container.getType().equalsIgnoreCase(cardEvent) && !containerFull) {
-                containerExists = true;
-                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-                //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), (Card) CardLibrary.cardMap.get(cardCode));
-            }
-        }
-        if (!containerExists && !containerFull) {
-            addEvent(cardEvent);
-            EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(cardEvent);
-            newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-            //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), (Card) CardLibrary.cardMap.get(cardCode));
-        }
-        App.currentLessonPlan.printTree();
-    }
-
     @FXML
     private void openLessonPlan() {
         FileChooser fileChooser = new FileChooser();
@@ -343,17 +289,17 @@ public class EditingPageController {
                     lessonPlanVBox.getChildren().remove(i);
                 }
                 LessonPlan loadedPlan = App.getCurrentLessonPlan();
-                lessonPlanTitle.setText(loadedPlan.getTitle());
+                //lessonPlanTitle.setText(loadedPlan.getTitle());// FIX ME PLEASE
                 Map map = App.getCurrentLessonPlan().getEventMap();
                 System.out.println(map.toString());
                 for (Object key : map.keySet()) {
                     EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
-                    VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+                    EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                         Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                        CardGraphic.addCardToEventContainerGraphic(vbox, card);
+                        eventContainerUI.addCard(new CardUI(card));
                     }
-                    lessonPlanVBox.getChildren().add(vbox);
+                    lessonPlanVBox.getChildren().add(eventContainerUI);
                 }
             } catch (IOException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + file).show();
@@ -402,40 +348,34 @@ public class EditingPageController {
 
 
     @FXML
-    private void changeLessonPlanName() {
-        String name = renameLabel(lessonPlanTitle, lessonPlanVBox);
-        App.currentLessonPlan.renamePlan(name);
+    private void setCurrentLessonPlanTab() {
+        currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
+        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+
+        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
+        System.out.println(App.currentLessonPlan.toString());
     }
 
-    @FXML
-    private String renameLabel(Label label, VBox vbox) {
-        vbox.getChildren().remove(0);
-        TextField renameField = new TextField();
-        HBox renameBox = new HBox();
-        renameBox.alignmentProperty().setValue(Pos.CENTER);
-        renameField.setText(label.getText());
-        Button renameButton = new Button("Rename");
-        renameBox.getChildren().addAll(renameField, renameButton);
-        renameBox.setSpacing(10);
-        vbox.getChildren().add(0, renameBox);
-        String newLabelName = "";
-        renameButton.setOnAction(event -> {
-            label.setText(renameField.getText());
-            vbox.getChildren().remove(0);
-            vbox.getChildren().add(0, label);
-        });
-        renameField.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                label.setText(renameField.getText());
-                vbox.getChildren().remove(0);
-                vbox.getChildren().add(0, label);
+    private void createNewLessonPlanTab() {
+        if (newTabButton.isSelected()) {
+            String lessonPlanName = "New Lesson Plan";
+            while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+                lessonPlanName = lessonPlanName + "1";
             }
-        });
-        if (renameField.getText().equalsIgnoreCase("")) {
-            label.setText("Untitled");
-            renameField.setText("Untitled");
+            LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
+            App.currentCourse.addLessonPlan(newLessonPlan);
+            LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
+            App.currentLessonPlanUI = newLessonPlanUI;
+            Tab newTab = new Tab(lessonPlanName);
+            newTab.setOnSelectionChanged(event -> {
+                setCurrentLessonPlanTab();
+            });
+            newTab.setContent(newLessonPlanUI);
+            lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size() - 1, newTab);
+            lessonPlanTabs.getSelectionModel().select(newTab);
         }
-        return renameField.getText();
     }
+
+
 }
 

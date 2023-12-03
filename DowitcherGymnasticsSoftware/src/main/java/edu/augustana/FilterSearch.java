@@ -2,9 +2,11 @@ package edu.augustana;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.CheckBox; 
+
+import edu.augustana.ui.CardUI;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
+//import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class FilterSearch {
@@ -61,44 +63,40 @@ public class FilterSearch {
     }
 
     private VBox generateCardThumbnail(Card card) {
-        return CardGraphic.generateCardThumbnail(card);
+        return new CardUI(card);
     }
 
 
 ////////////////////////////////////////////////////////////////////////
 
-    public void updateCardImageView(List<Card> searchResults) {
-        cardImageView.getItems().clear();
-
-        for (Card card : searchResults) {
-            VBox thumbnail = generateCardThumbnail(card);
-            cardImageView.getItems().add(thumbnail);
-        }
-    }
-
-
-    public List<Card> performFilterSearch(String query) {
-        List<Card> searchResults = new ArrayList<>();
-
-        if (query.trim().isEmpty()) {
-            return allCards;
-        }
-
-        for (Card card : allCards) {
-            if (card.getCode().equalsIgnoreCase(query) ||
-                    card.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    card.getCategory().equalsIgnoreCase(query)) {
-                searchResults.add(card);
-            }
-        }
-
-        return searchResults;
-    }
-
-    public void applySearchFilter(String query) {
-        List<Card> searchResults = performFilterSearch(query);
-        updateCardImageView(searchResults);
-    }
-
+//    public void updateCardImageView(List<Card> searchResults) {
+//        cardImageView.getItems().clear();
+//
+//        for (Card card : searchResults) {
+//            VBox thumbnail = generateCardThumbnail(card);
+//            cardImageView.getItems().add(thumbnail);
+//        }
+//    }
+//
+//
+//    public List<Card> performFilterSearch(String query) {
+//        List<Card> searchResults = new ArrayList<>();
+//
+//        if (query.trim().isEmpty()) {
+//            return allCards;
+//        }
+//
+//        for (Card card : allCards) {
+//            if (card.getCode().equalsIgnoreCase(query) ||
+//                    card.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+//                    card.getCategory().equalsIgnoreCase(query)) {
+//                searchResults.add(card);
+//            }
+//        }
+//
+//        return searchResults;
+//    }
+//
+//
 
 }

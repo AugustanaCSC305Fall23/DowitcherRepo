@@ -17,21 +17,38 @@ import java.text.SimpleDateFormat;
 
 public class LandingPageController {
     @FXML
-    private Button createImportButton;
-    @FXML
     private TilePane lessonPlansTilePane;
 
     @FXML
     public void initialize() throws IOException {
-
         loadSavedLessonPlans();
     }
     @FXML
-    private void switchToCreatePopup() throws IOException {
-        App.switchToCreateImportPage();
+    private void switchToEditingPage() throws IOException {
+        App.currentCourse = createCourse();
+//        App.currentLessonPlan= createLessonPlan();
+//        App.currentCourse.addLessonPlan(App.currentLessonPlan);
+        App.switchToEditingPage();
 
     }
 
+//    private LessonPlan createLessonPlan() {
+//        LessonPlan currentLessonPlan = new LessonPlan("New Lesson Plan");
+//        App.currentCourse.addLessonPlan(currentLessonPlan);
+//        App.currentLessonPlan = currentLessonPlan;
+//        System.out.println(String.format("%s HAS BEEN CREATED", App.currentLessonPlan.getTitle()));
+//        return currentLessonPlan;
+//    }
+
+    @FXML
+    private Course createCourse() {
+        return new Course("New Course");
+
+    }
+
+    private void openSavedCourse() {
+
+    }
     @FXML
     private void loadSavedLessonPlans() throws IOException {
         lessonPlansTilePane.setHgap(10);

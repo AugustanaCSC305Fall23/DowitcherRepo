@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import edu.augustana.ui.LessonPlanUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +20,14 @@ public class App extends Application {
     public static Stage stage;
 
     static LessonPlan currentLessonPlan;
+
+    static LessonPlanUI currentLessonPlanUI;
     static File currentLessonPlanFile;
+
+    static Course currentCourse;
+
+    static File currentCourseFile;
+    static CardLibrary cardLibrary;
 
 
     private static Scene scene;
@@ -31,8 +39,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
-        cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
-        cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
+        cardLibrary.readInCards("src/main/resources/Card Packs");
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -77,6 +84,10 @@ public class App extends Application {
     }
     public static LessonPlan getCurrentLessonPlan() {
         return currentLessonPlan;
+    }
+
+    public static LessonPlanUI getCurrentLessonPlanUI() {
+        return currentLessonPlanUI;
     }
 
     public static void switchToPrintPage(){switchToView("PrintPage.fxml");}

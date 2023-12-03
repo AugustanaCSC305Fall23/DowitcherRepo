@@ -3,6 +3,9 @@ package edu.augustana;
 import java.io.IOException;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import edu.augustana.ui.CardUI;
+import edu.augustana.ui.EventContainerUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -63,16 +66,18 @@ public class PrintpageController {
         System.out.println(map.toString());
         for (Object key : map.keySet()) {
             EventContainer eventContainer = (EventContainer) map.get(key);
-            VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+            EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
             if(eventContainer.getCards().size()>=4){
                 eventCount++;
             }
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+//                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+                eventContainerUI.addCard(new CardUI(card));
+                eventContainerUI.setMaxWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
             }
-            printLessonPlanVBox.getChildren().add(vbox);
+            printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);
         if(eventCount > 4) {
