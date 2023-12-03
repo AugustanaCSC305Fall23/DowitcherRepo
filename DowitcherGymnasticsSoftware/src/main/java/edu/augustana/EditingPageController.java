@@ -129,8 +129,7 @@ public class EditingPageController {
 
     @FXML
     public void initialize() {
-        searchFunction = new SearchFunction(CardLibrary.cardList);
-//      cardImageView = new ListView<>();
+        searchFunction = new SearchFunction(App.cardLibrary);
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
@@ -139,6 +138,7 @@ public class EditingPageController {
         //System.out.println(App.currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
+
 
         homeItem.setOnAction(evt -> {
             try {
@@ -157,7 +157,6 @@ public class EditingPageController {
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
-        //addEventChoices();
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
@@ -217,6 +216,11 @@ public class EditingPageController {
         }
     }
 
+    private void expandCardImageView() {
+
+    }
+
+
     @FXML
     private void cardSearchFunction() {
         String query = filterSearchField.getText();
@@ -230,9 +234,9 @@ public class EditingPageController {
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
         cardImageView.getItems().clear();
-
+        // only displays cards of the new search
         for (Card card : searchResults) {
-            System.out.println("Printing New Card");
+            //System.out.println("Printing New Card");
             System.out.println(card.getCode());
             System.out.println(card.getTitle());
             VBox thumbnail = new CardUI(card);

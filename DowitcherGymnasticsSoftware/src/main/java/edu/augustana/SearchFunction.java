@@ -1,30 +1,35 @@
 package edu.augustana;
-import java.util.*;
+
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class SearchFunction {
     private TextField filterSearchField;
+    private ListView<Card> cardImageView; 
+    private final Map<String, Card> cardMap;
 
-    private ListView<Card> cardImageView;
-    private final List<Card> cards;
+    public SearchFunction(CardLibrary cardLibrary) {
+        this.cardMap = CardLibrary.cardMap;
+    }
 
-
-    public SearchFunction(List<Card> cards) {
-        this.cards = cards;
-    }  // Constructor of the SearchFunction Class
-
-    public List<Card> performSearch(String query) {                  // performSearch creates an arrayList to store the cards that meet the text inside of text SearchBox
+    public List<Card> performSearch(String query) {
         List<Card> searchResults = new ArrayList<>();
 
         if (query.trim().isEmpty()) {
-            return cards;
+            return new ArrayList<>(cardMap.values());
         }
 
-        for (Card card : cards) {
+        for (Card card : cardMap.values()) {
             if (card.getCode().equalsIgnoreCase(query) ||
                     card.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    card.getCategory().equalsIgnoreCase(query)) {
+                    card.getCategory().equalsIgnoreCase(query) || card.getGender().equalsIgnoreCase(query) ||
+                    Arrays.stream(card.getLevel()).anyMatch(level -> level.equalsIgnoreCase(query)) ||
+                    card.getModelSex().equalsIgnoreCase(query)){
+
                 searchResults.add(card);
             }
         }
@@ -32,33 +37,27 @@ public class SearchFunction {
         return searchResults;
     }
 
-    public Card searchByCode(String code) {                         // Will be utilized LATER FOR CSV 
-        for (Card card : cards) {
-            if (card.getCode().equals(code)) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public List<Card> searchByTitle(String title) {                 // Will be utilized LATER FOR CSV
-        List<Card> matchingCards = new ArrayList<>();
-        for (Card card : cards) {
-            if (card.getTitle().equalsIgnoreCase(title)) {
-                matchingCards.add(card);
-            }
-        }
-        return matchingCards;
-    }
-
-    public List<Card> searchByCategory(String category) {           // Will be utilized LATER FOR CSV
-        List<Card> matchingCards = new ArrayList<>();
-        for (Card card : cards) {
-            if (card.getCategory().equalsIgnoreCase(category)) {
-                matchingCards.add(card);
-            }
-        }
-        return matchingCards;
-    }
-
+//    public Card searchByCode(String code) {
+//        return cardMap.get(code);
+//    }
+//
+//    public List<Card> searchByTitle(String title) {
+//        List<Card> matchingCards = new ArrayList<>();
+//        for (Card card : cardMap.values()) {
+//            if (card.getTitle().equalsIgnoreCase(title)) {
+//                matchingCards.add(card);
+//            }
+//        }
+//        return matchingCards;
+//    }
+//
+//    public List<Card> searchByCategory(String category) {
+//        List<Card> matchingCards = new ArrayList<>();
+//        for (Card card : cardMap.values()) {
+//            if (card.getCategory().equalsIgnoreCase(category)) {
+//                matchingCards.add(card);
+//            }
+//        }
+//        return matchingCards;
+//    }
 }

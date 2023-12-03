@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 public class CardLibrary {
     public static ArrayList<Card> cardList;
-    public static Map cardMap;
+    public static Map<String, Card> cardMap;
 
     public CardLibrary() {
         cardList = new ArrayList<Card>();
@@ -46,7 +46,6 @@ public class CardLibrary {
                             String[] level = nextLine[8].split(",");
                             String[] equipment = nextLine[9].split(",");
                             String[] keywords = nextLine[10].split(",");
-
                             Card card = new Card(code, event, category, title, packFolder, image, gender, modelSex, level, equipment, keywords);
                             addCard(card);
                             System.out.println(card);

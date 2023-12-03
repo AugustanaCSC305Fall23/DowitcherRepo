@@ -27,6 +27,7 @@ public class App extends Application {
     static Course currentCourse;
 
     static File currentCourseFile;
+    static CardLibrary cardLibrary;
 
 
     private static Scene scene;
@@ -39,8 +40,6 @@ public class App extends Application {
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/Card Packs");
-//        cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
-//        cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
     }
 
     static void setRoot(String fxml) throws IOException {
