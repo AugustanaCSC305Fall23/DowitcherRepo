@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
@@ -15,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -113,6 +115,11 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
+    @FXML
+    private Button expandButton;
+    @FXML
+    private VBox filterSearchCardVBox;
+
 
     private SearchFunction searchFunction;
 
@@ -213,8 +220,42 @@ public class EditingPageController {
 //        }
     }
 
-    private void expandCardImageView() {
+    //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
+    //when the user clicks on the expand button
+    @FXML
+    private void expandFilterSearchCardVBox() {
+        // Calculate the new width for the filterSearchCardVBox
+        double originalWidth = filterSearchCardVBox.getPrefWidth();
+        double newWidth = originalWidth * 2;
 
+        // Set the new width for the filterSearchCardVBox
+        filterSearchCardVBox.setPrefWidth(newWidth);
+
+        // Set constraints on the filterSearchCardVBox within its parent container
+        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+
+        // Calculate the new width for each column
+        double columnWidth = newWidth / 2;
+
+        // Set the cell factory to display items in two columns
+        cardImageView.setCellFactory(listView -> new ListCell<VBox>() {
+            @Override
+            protected void updateItem(VBox item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // Set the preferred and max width for each card
+                    item.setPrefWidth(columnWidth);
+                    item.setMaxWidth(columnWidth);
+
+                    // Set the graphic (card) for the cell
+                    setGraphic(item);
+                }
+            }
+        });
     }
 
 

@@ -43,7 +43,7 @@
       </MenuBar>
    </top>
    <left>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="600.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Accordion>
               <panes>
@@ -97,6 +97,9 @@
                      <left>
                         <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearFilter" text="Clear" BorderPane.alignment="CENTER" />
                      </left>
+                     <right>
+                        <Button fx:id="expandButton" mnemonicParsing="false" onAction="#expandFilterSearchCardVBox" text="Expand" BorderPane.alignment="CENTER" />
+                     </right>
                   </BorderPane>
                </children>
             </HBox>
