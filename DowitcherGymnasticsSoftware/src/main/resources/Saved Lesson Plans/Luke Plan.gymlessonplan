@@ -31,9 +31,7 @@
     "Beam": {
       "title": "New Beam Event",
       "cards": [
-        "S1",
-        "S30",
-        "S1"
+        "S30"
       ],
       "type": "Beam"
     },

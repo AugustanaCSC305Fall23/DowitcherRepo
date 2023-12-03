@@ -16,6 +16,15 @@
         "B47"
       ],
       "type": "Floor"
+    },
+    "Beam": {
+      "title": "New Beam Event",
+      "cards": [
+        "BL5",
+        "BB19",
+        "BB11"
+      ],
+      "type": "Beam"
     }
   },
   "title": "Nick Lesson Plan"

@@ -25,8 +25,8 @@ public class PrintpageController {
     private ComboBox<Printer> printerChooser;
     @FXML
     private VBox printLessonPlanVBox;
-    @FXML
-    private Label lessonPlanLabel;
+
+    private int eventCount = 0;
     /**
      *
      */
@@ -35,15 +35,11 @@ public class PrintpageController {
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setMinWidth(1000);
-
-        //stage.setMaximized(true);
+        scrollpane.setPrefWidth(270*4);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();
         printerNames.addAll(printers);
         printerChooser.setItems(printerNames);
-
-
-
     }
     /**
      *
@@ -58,13 +54,20 @@ public class PrintpageController {
      */
     @FXML
     public Node drawLessonPlan() {
-        int eventCount = 0;
+
+        Text titleLabel = new Text();
+        titleLabel.setText(currentLessonPlan.getTitle());
+        titleLabel.setFont(Font.font(24));
+        printLessonPlanVBox.getChildren().add(titleLabel);
         Map map = App.getCurrentLessonPlan().getEventMap();
         System.out.println(map.toString());
         for (Object key : map.keySet()) {
             EventContainer eventContainer = (EventContainer) map.get(key);
             VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
             eventCount++;
+            if(eventContainer.getCards().size()>=4){
+                eventCount++;
+            }
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                 CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
@@ -72,6 +75,11 @@ public class PrintpageController {
             printLessonPlanVBox.getChildren().add(vbox);
         }
         System.out.println("Events: " + eventCount);
+        if(eventCount > 4) {
+            scrollpane.setPrefHeight(1120);
+        }else{
+            scrollpane.setPrefHeight(290*eventCount);
+        }
         return printLessonPlanVBox;
     }
 
@@ -100,7 +108,7 @@ public class PrintpageController {
             eventText = (eventContainer.getType()+"\n");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                eventText = eventText + card.getTitle() + ", ";
+                eventText = eventText + card.getCode() + " " + card.getTitle() + ", ";
 
             }
 
@@ -109,6 +117,8 @@ public class PrintpageController {
             printLessonPlanVBox.getChildren().addAll( text);
 
         }
+        scrollpane.setPrefHeight(500);
+        scrollpane.setPrefWidth(270*5);
         return printLessonPlanVBox;
     }
 
@@ -131,7 +141,7 @@ public class PrintpageController {
             new Alert(Alert.AlertType.WARNING, "Select a printer first!").show();
 
         }else{
-            Printers.print(scrollpane, pickedPrinter);
+            Printers.print(scrollpane, pickedPrinter, eventCount);
         }
     }
 
