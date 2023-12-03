@@ -16,7 +16,7 @@
          </content></ScrollPane>
    </center>
    <right>
-      <VBox alignment="TOP_CENTER" minWidth="350.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" minWidth="335.0" prefHeight="400.0" prefWidth="335.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="printerChooser" onAction="#selectPrinter" prefHeight="26.0" prefWidth="100.0">
                <opaqueInsets>

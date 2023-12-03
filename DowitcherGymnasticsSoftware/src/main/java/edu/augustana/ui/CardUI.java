@@ -18,7 +18,6 @@ public class CardUI extends VBox{
 
     private EventContainerUI inEventContainerUI;
 
-    //Add a reference to what EventContainerUI the card is in so it can be removed when dragged out
 
 
     public static final int CARD_THUMBNAIL_WIDTH = 270;
