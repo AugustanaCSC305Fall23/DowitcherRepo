@@ -8,16 +8,17 @@ import com.google.gson.Gson;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.control.*;
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -100,8 +101,7 @@ public class EditingPageController {
     private TitledPane genderFilterTitledPane;
 
 
-    @FXML
-    private VBox lessonPlanVBox;
+
 
     @FXML
     private TitledPane levelFilterTitledPane;
@@ -172,8 +172,8 @@ public class EditingPageController {
         if (lessonPlanTabs.getTabs().size() == 1) {
             createNewLessonPlanTab();
         }
-        if (App.currentLessonPlanFile != null) {
-            openLessonPlanWithFile(App.currentLessonPlanFile);
+        if (App.currentCourseFile != null) {
+            openLessonPlanWithFile(App.currentCourseFile);
         }
 
         //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -318,23 +318,13 @@ public class EditingPageController {
     private void openLessonPlanWithFile(File file) {
         if (file != null) {
             try {
-                App.loadCurrentLessonPlanFromFile(file);
-                for (int i = 3; i < lessonPlanVBox.getChildren().size(); i++) {
-                    lessonPlanVBox.getChildren().remove(i);
+                lessonPlanTabs.getTabs().clear();
+                App.loadCurrentCourseFromFile(file);
+                for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                    new LessonPlanUI(lessonPlan);
+                    lessonPlanTabs.getTabs().add(new Tab(lessonPlan.getTitle()));
                 }
-                LessonPlan loadedPlan = App.getCurrentLessonPlan();
-                //lessonPlanTitle.setText(loadedPlan.getTitle());// FIX ME PLEASE
-                Map map = App.getCurrentLessonPlan().getEventMap();
-                System.out.println(map.toString());
-                for (Object key : map.keySet()) {
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
-                    EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
-                    for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                        Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                        eventContainerUI.addCard(new CardUI(card));
-                    }
-                    lessonPlanVBox.getChildren().add(eventContainerUI);
-                }
+
             } catch (IOException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + file).show();
             }
@@ -351,31 +341,31 @@ public class EditingPageController {
     @FXML
     private void save(ActionEvent event) {
         isLessonPlanSaved = true;
-        if (App.getCurrentLessonPlanFile() == null) {
+        if (App.getCurrentCourseFile() == null) {
             saveAs(event);
         } else {
-            saveCurrentLessonPlanToFile(App.getCurrentLessonPlanFile());
+            saveCurrentCourseToFile(App.getCurrentCourseFile());
         }
      }
 
      @FXML
     private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Lesson Plan");
-        fileChooser.setInitialDirectory(new File("src/main/resources/Saved Lesson Plans"));
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
+        fileChooser.setTitle("Save Course");
+        fileChooser.setInitialDirectory(new File("src/main/resources/Saved Courses"));
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
-        saveCurrentLessonPlanToFile(chosenFile);
+        saveCurrentCourseToFile(chosenFile);
     }
     @FXML
-    private void saveCurrentLessonPlanToFile(File chosenFile) {
+    private void saveCurrentCourseToFile(File chosenFile) {
         if (chosenFile != null) {
             try {
-                App.saveCurrentLessonPlanToFile(chosenFile);
+                App.saveCurrentCourseToFile(chosenFile);
             } catch (IOException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error saving lesson plan file: " + chosenFile).show();
+                new Alert(Alert.AlertType.ERROR, "Error saving course file: " + chosenFile).show();
             }
         }
     }

@@ -1,0 +1,33 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "eventMap": {
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "New Lesson Plan"
+    }
+  ],
+  "lessonPlanMap": {
+    "New Lesson Plan": {
+      "eventMap": {
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "New Lesson Plan"
+    }
+  }
+}

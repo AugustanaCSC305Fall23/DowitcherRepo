@@ -68,12 +68,14 @@ public class PrintpageController {
             EventContainer eventContainer = (EventContainer) map.get(key);
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-//                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
-                eventContainerUI.addCard(new CardUI(card));
-                eventContainerUI.setMaxWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
-            }
+            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4);
+            eventContainerUI.drawCardInEventContainerUI();
+//            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+//                System.out.println("THE CARD THAT SHOULD BE ADDED: " + eventContainer.getCards().get(cardIndex));
+//                Card card = CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+////                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+////                eventContainerUI.drawCardInEventContainerUI();
+//            }
             printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);

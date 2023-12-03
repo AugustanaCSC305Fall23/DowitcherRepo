@@ -48,7 +48,7 @@
       </VBox>
    </top>
    <center>
-      <TilePane fx:id="lessonPlansTilePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TilePane fx:id="coursesTilePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox TilePane.alignment="TOP_CENTER">
                <children>
