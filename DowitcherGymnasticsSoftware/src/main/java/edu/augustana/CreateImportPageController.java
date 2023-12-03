@@ -42,7 +42,6 @@ public class CreateImportPageController {
         } else {
             App.currentCourse = null;
             App.currentCourseFile = null;
-            App.currentLessonPlanFile = null;
             App.currentLessonPlan = createLessonPlan();
             App.setRoot("EditingPage");
         }

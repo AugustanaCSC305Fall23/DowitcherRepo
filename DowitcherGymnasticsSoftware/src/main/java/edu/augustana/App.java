@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import static edu.augustana.App.stage;
-
 /**
  * JavaFX App
  */
@@ -22,7 +20,6 @@ public class App extends Application {
     static LessonPlan currentLessonPlan;
 
     static LessonPlanUI currentLessonPlanUI;
-    static File currentLessonPlanFile;
 
     static Course currentCourse;
 
@@ -70,17 +67,21 @@ public class App extends Application {
     public static void switchToCreateImportPage(){
         switchToView("CreateImportPage.fxml");
     }
-    public static void loadCurrentLessonPlanFromFile(File lessonPlanFile) throws IOException {
-        currentLessonPlan = LessonPlan.loadFromFile(lessonPlanFile);
-        currentLessonPlanFile = lessonPlanFile;
+    public static void loadCurrentCourseFromFile(File courseFile) throws IOException {
+        currentCourse = Course.loadFromFile(courseFile);
+        currentCourseFile = courseFile;
     }
-    public static void saveCurrentLessonPlanToFile(File chosenFile) throws IOException {
-        currentLessonPlan.saveToFile(chosenFile);
-        currentLessonPlanFile = chosenFile;
+    public static void saveCurrentCourseToFile(File chosenFile) throws IOException {
+        currentCourse.saveToFile(chosenFile);
+        currentCourseFile = chosenFile;
     }
 
-    public static File getCurrentLessonPlanFile() {
-        return currentLessonPlanFile;
+    public static Course getCurrentCourse() {
+        return currentCourse;
+    }
+
+    public static File getCurrentCourseFile() {
+        return currentCourseFile;
     }
     public static LessonPlan getCurrentLessonPlan() {
         return currentLessonPlan;

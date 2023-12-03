@@ -138,5 +138,12 @@ public class EventContainerUI extends VBox {
         });
     }
 
+    public void drawCardInEventContainerUI() {
+        cardTilePane.getChildren().clear();
+        for (String cardID : eventContainer.getCards()) {
+            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardID));
+            cardTilePane.getChildren().add(cardUI);
+        }
+    }
 
 }
