@@ -37,6 +37,7 @@ public class Card {
         this("", "", "", "", "", "", "", "", null, null, null);
         this.image = "Blank Card.png";
         this.packFolder = "Misc Images";
+        this.title = "blankcard";
     }
 
     public String getCode() {
@@ -52,7 +53,7 @@ public class Card {
         return title;
     }
     public String getPath() { //Returns the path to the image
-        return String.format("%s/%s", packFolder, image);
+        return String.format("Card Packs/%s/%s", packFolder, image);
     }
     public String getGender() {
         return gender;
@@ -68,6 +69,14 @@ public class Card {
     }
     public String[] getKeywords() {
         return keywords;
+    }
+
+    public void setPath(String path) {
+        this.image = path;
+    }
+
+    public void setPackFolder(String packFolder) {
+        this.packFolder = packFolder;
     }
 
     public String toString() {

@@ -73,7 +73,7 @@ public class CardGraphic {
     }
 
     public static VBox createCardWithAllFeatures(Card card) {//Creates a card with all features
-        return addCardDragDrop(addCardOutline(addCardZoom(generateCardThumbnail(card))));
+        return addCardDragDrop(addCardZoom(generateCardThumbnail(card)));
     }
 
     public static VBox addEquipmentText(VBox cardVBox, Card card) {
