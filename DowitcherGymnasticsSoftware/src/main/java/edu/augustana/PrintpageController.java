@@ -79,7 +79,7 @@ public class PrintpageController {
         }
         System.out.println("Events: " + eventCount);
         if(eventCount > 4) {
-            scrollpane.setPrefHeight(1125);
+            scrollpane.setPrefHeight(900);
         }else{
             scrollpane.setPrefHeight(290*eventCount);
         }
