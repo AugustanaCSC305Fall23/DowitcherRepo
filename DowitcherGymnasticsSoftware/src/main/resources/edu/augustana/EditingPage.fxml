@@ -27,7 +27,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
-                  <MenuItem mnemonicParsing="false" onAction="#openLessonPlan" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#openCourse" text="Open" />
                   <MenuItem mnemonicParsing="false" text="Close" />
                </items>
 
