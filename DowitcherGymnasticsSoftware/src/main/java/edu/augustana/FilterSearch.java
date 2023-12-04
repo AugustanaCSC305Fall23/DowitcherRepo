@@ -124,7 +124,7 @@ public class FilterSearch {
             cardImageView.getChildren().add(cardThumbnail);
         }
     }
-     
+
 
     private VBox generateCardThumbnail(Card card) {
         return new CardUI(card);
