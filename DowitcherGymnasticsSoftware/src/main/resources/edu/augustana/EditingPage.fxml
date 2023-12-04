@@ -89,11 +89,6 @@
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane fx:id="equipmentFilterTitledPane" animated="false" text="Equipment">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
               </panes>
             </Accordion>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">

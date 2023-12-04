@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class SearchFunction {
     private TextField filterSearchField;
-    private ListView<Card> cardImageView; 
+    private ListView<Card> cardImageView;
     private final Map<String, Card> cardMap;
 
     public SearchFunction(CardLibrary cardLibrary) {
@@ -37,27 +37,4 @@ public class SearchFunction {
         return searchResults;
     }
 
-//    public Card searchByCode(String code) {
-//        return cardMap.get(code);
-//    }
-//
-//    public List<Card> searchByTitle(String title) {
-//        List<Card> matchingCards = new ArrayList<>();
-//        for (Card card : cardMap.values()) {
-//            if (card.getTitle().equalsIgnoreCase(title)) {
-//                matchingCards.add(card);
-//            }
-//        }
-//        return matchingCards;
-//    }
-//
-//    public List<Card> searchByCategory(String category) {
-//        List<Card> matchingCards = new ArrayList<>();
-//        for (Card card : cardMap.values()) {
-//            if (card.getCategory().equalsIgnoreCase(category)) {
-//                matchingCards.add(card);
-//            }
-//        }
-//        return matchingCards;
-//    }
 }
