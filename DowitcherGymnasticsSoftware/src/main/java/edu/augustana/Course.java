@@ -69,11 +69,26 @@ public class Course {
             LessonPlan lessonPlan = new Gson().fromJson(new Gson().toJson(map.get(key)), LessonPlan.class);
             course.getLessonPlanMap().put(lessonPlan.getTitle(), lessonPlan);
             for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-
                 EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+                lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
                 for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                     Card card = (Card) new Gson().fromJson(new Gson().toJson(CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex))), Card.class);
                     eventContainer.getCards().set(cardIndex, card.getCode());
+                }
+            }
+        }
+        System.out.printf("Loaded course: %s\n", course.getCourseName());
+        System.out.println("Course Lesson Plans:");
+        for (Object key : course.getLessonPlanMap().keySet()) {
+            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
+            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
+            System.out.println("Lesson Plan Event Containers:");
+            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
+                System.out.printf("Event Container: %s\n", eventContainer.getType());
+                System.out.println("Event Container Cards:");
+                for (String cardCode : eventContainer.getCards()) {
+                    System.out.printf("Card Code: %s\n", cardCode);
                 }
             }
         }

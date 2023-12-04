@@ -5,10 +5,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -16,9 +16,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <top>
       <MenuBar fx:id="menuBar" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <menus>
@@ -38,11 +39,16 @@
                   <MenuItem mnemonicParsing="false" text="Delete" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showInstructionsPopUp" text="Instructions" />
+              </items>
+            </Menu>
          </menus>
       </MenuBar>
    </top>
    <left>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="600.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Accordion>
               <panes>
@@ -83,11 +89,6 @@
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane fx:id="equipmentFilterTitledPane" animated="false" text="Equipment">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
               </panes>
             </Accordion>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -96,11 +97,18 @@
                      <left>
                         <Button fx:id="clearFilterButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearFilter" text="Clear" BorderPane.alignment="CENTER" />
                      </left>
+                     <right>
+                        <Button fx:id="expandButton" mnemonicParsing="false" onAction="#expandFilterSearchCardVBox" text="Expand" BorderPane.alignment="CENTER" />
+                     </right>
                   </BorderPane>
                </children>
             </HBox>
             <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cardSearchFunction" />
-            <ListView fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" VBox.vgrow="ALWAYS" />
+             <ScrollPane fx:id="cardScrollPane" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                <content>
+                    <TilePane fx:id="cardImageView" hgap="0" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" prefColumns="2" vgap="0" VBox.vgrow="ALWAYS" />
+                </content>
+             </ScrollPane>
          </children>
          <BorderPane.margin>
             <Insets />

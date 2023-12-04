@@ -3,13 +3,18 @@ package edu.augustana;
 import java.io.File;
 import java.util.*;
 import java.io.IOException;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
 import javafx.scene.input.KeyCode;
@@ -78,7 +83,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<VBox> cardImageView;
+    private TilePane cardImageView;
 
     @FXML
     private Button clearFilterButton;
@@ -115,6 +120,11 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
+    @FXML
+    private Button expandButton;
+    @FXML
+    private VBox filterSearchCardVBox;
+
 
     private SearchFunction searchFunction;
 
@@ -160,11 +170,11 @@ public class EditingPageController {
 //                addByDoubleClick();
             }
         });
+        if (App.currentCourseFile != null) {
+            openCourseWithFile(App.currentCourseFile);
+        }
         if (lessonPlanTabs.getTabs().size() == 1) {
             createNewLessonPlanTab();
-        }
-        if (App.currentCourseFile != null) {
-            openLessonPlanWithFile(App.currentCourseFile);
         }
 
         //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -209,12 +219,37 @@ public class EditingPageController {
     private void loadCards() {
         for (Object cardKey : CardLibrary.cardMap.keySet()) {
             CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
-            cardImageView.getItems().add(cardUI);
+            cardImageView.getChildren().add(cardUI);
         }
     }
 
-    private void expandCardImageView() {
+    //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
+    //when the user clicks on the expand button
+    @FXML
+    private void expandFilterSearchCardVBox() {
+        int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        cardImageView.setPrefColumns(newColumnCount);
+        // Calculate the new width for the filterSearchCardVBox
+        double originalWidth = filterSearchCardVBox.getPrefWidth();
+        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
 
+        // Set the new width for the filterSearchCardVBox
+        filterSearchCardVBox.setPrefWidth(newWidth);
+
+        // Set constraints on the filterSearchCardVBox within its parent container
+        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+
+        // Calculate the new width for each column
+        double columnWidth = newWidth / 2;
+
+        // Set the preferred and max width for each card in the TilePane
+        for (Node node : cardImageView.getChildren()) {
+            if (node instanceof VBox) {
+                VBox cardUI = (VBox) node;
+                cardUI.setPrefWidth(columnWidth);
+                cardUI.setMaxWidth(columnWidth);
+            }
+        }
     }
 
 
@@ -230,18 +265,12 @@ public class EditingPageController {
 
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
-        cardImageView.getItems().clear();
-        // only displays cards of the new search
+        cardImageView.getChildren().clear();
+
         for (Card card : searchResults) {
-            //System.out.println("Printing New Card");
-            System.out.println(card.getCode());
-            System.out.println(card.getTitle());
             VBox thumbnail = new CardUI(card);
-            cardImageView.getItems().add(thumbnail);
+            cardImageView.getChildren().add(thumbnail);
         }
-
-        System.out.println(cardImageView);
-
     }
 
     ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -269,28 +298,41 @@ public class EditingPageController {
     @FXML
     private void openLessonPlan() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Lesson Plan File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
+        fileChooser.setTitle("Open Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
-        openLessonPlanWithFile(chosenFile);
+        openCourseWithFile(chosenFile);
     }
 
     @FXML
-    private void openLessonPlanWithFile(File file) {
+    private void openCourseWithFile(File file) {
         if (file != null) {
-            try {
-                lessonPlanTabs.getTabs().clear();
-                App.loadCurrentCourseFromFile(file);
-                for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-                    new LessonPlanUI(lessonPlan);
-                    lessonPlanTabs.getTabs().add(new Tab(lessonPlan.getTitle()));
+            //                App.loadCurrentCourseFromFile(file);
+            for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                App.currentLessonPlan = lessonPlan;
+                App.currentLessonPlanUI = new LessonPlanUI(lessonPlan);
+                Tab lessonPlanTab = new Tab(lessonPlan.getTitle());
+                lessonPlanTab.setContent(App.currentLessonPlanUI);
+                lessonPlanTab.setOnSelectionChanged(event -> {
+                    setCurrentLessonPlanTab();
+                });
+                lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size()-1, lessonPlanTab);
+                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+                    EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
+                    App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
+                        for (int cardIndex = eventContainer.getCards().size() -1; cardIndex >= 0; cardIndex--) {
+                            Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+                            eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
+                            CardUI cardUI = new CardUI(card);
+                            eventContainerUI.addCard(cardUI);
+                        }
                 }
 
-            } catch (IOException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + file).show();
             }
+            lessonPlanTabs.getSelectionModel().select(0);
         }
     }
     @FXML
@@ -299,6 +341,33 @@ public class EditingPageController {
         alert.setTitle("Warning");
         alert.setHeaderText(null);
         alert.setContentText("You must save the lesson plan before attempting to print.");
+        alert.showAndWait();
+    }
+    @FXML
+    private void showInstructionsPopUp() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText(null);
+
+        // Create a TextArea for more space
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+
+        // Set your detailed instructions here
+        textArea.setText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+
+        // Create a GridPane to allow TextArea to expand
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(textArea, 0, 0);
+
+        // Set the expanded content to the Alert
+        alert.getDialogPane().setExpandableContent(expContent);
+
         alert.showAndWait();
     }
     @FXML
