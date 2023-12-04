@@ -24,7 +24,12 @@ public class LessonPlanUI extends ScrollPane {
 
     private LessonTab inLessonTab;
 
+    private HBox titleAndDeleteHBox;
+
     public LessonPlanUI(LessonPlan lessonPlan) {
+        titleAndDeleteHBox = new HBox();
+        Button deleteLessonPlanButton = new Button("Delete");
+        deleteLessonPlanButtonFunctionality(deleteLessonPlanButton);
         this.lessonPlan = lessonPlan;
         eventContainerUIList = new ArrayList<>();
         eventComboBox = new ComboBox<>();
@@ -37,7 +42,8 @@ public class LessonPlanUI extends ScrollPane {
         lessonPlanTitleLabel = new Label(lessonPlan.getTitle());
         renameLessonPlanOnDoubleClick();
         lessonPlanTitleLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
-        lessonPlanVBox.getChildren().addAll(lessonPlanTitleLabel, eventComboBox, addEventButton);
+        titleAndDeleteHBox.getChildren().addAll(lessonPlanTitleLabel, deleteLessonPlanButton);
+        lessonPlanVBox.getChildren().addAll(titleAndDeleteHBox, eventComboBox, addEventButton);
         this.setContent(lessonPlanVBox);
         lessonPlanMap.put(lessonPlan.getTitle(), this);
     }
@@ -130,7 +136,7 @@ public class LessonPlanUI extends ScrollPane {
 
             }
             lessonPlanVBox.getChildren().remove(0);
-            lessonPlanVBox.getChildren().add(0, lessonPlanTitleLabel);
+            lessonPlanVBox.getChildren().add(0, titleAndDeleteHBox);
 //            System.out.println("NEW TITLES:");
 //            for (String lPKey : lessonPlanMap.keySet()) {
 //                System.out.println(lessonPlanMap.get(lPKey).getTitle());
@@ -161,5 +167,20 @@ public class LessonPlanUI extends ScrollPane {
 
     public void setInLessonTab(LessonTab lessonTab) {
         this.inLessonTab = lessonTab;
+    }
+
+    private void deleteLessonPlanButtonFunctionality(Button deleteLessonPlanButton) {
+        deleteLessonPlanButton.setOnAction(e -> {
+            deleteLessonPlan();
+        });
+    }
+
+    private void deleteLessonPlan() {
+        App.getCurrentCourse().getLessonPlanMap().remove(lessonPlan.getTitle());
+        lessonPlanMap.remove(lessonPlan.getTitle());
+        inLessonTab.getTabPane().getTabs().remove(inLessonTab);
+        LessonTab.getLessonTabMap().remove(inLessonTab.getTitle());
+        LessonTab.getLessonTabList().remove(inLessonTab);
+        App.getCurrentCourse().getLessonPlanList().remove(lessonPlan);
     }
 }

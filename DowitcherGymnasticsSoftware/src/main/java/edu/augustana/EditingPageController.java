@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
+import static java.lang.Character.getNumericValue;
 
 
 public class EditingPageController {
@@ -177,6 +178,7 @@ public class EditingPageController {
         });
         printItem.setOnAction(evt -> {
             if (isLessonPlanSaved) {
+                save(evt);
                 App.switchToPrintPage();
             } else {
                 showLessonPlanNotSavedWarning();
@@ -465,8 +467,14 @@ public class EditingPageController {
             }
             System.out.println("Done");
             String lessonPlanName = "New Lesson Plan";
-            while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+            if (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
                 lessonPlanName = lessonPlanName + "1";
+                while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+                    char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
+                    int charInt = getNumericValue(lastChar);
+                    charInt++;
+                    lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+                }
             }
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
             App.currentCourse.addLessonPlan(newLessonPlan);
