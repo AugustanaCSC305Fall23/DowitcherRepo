@@ -69,14 +69,14 @@ public class EventContainerUI extends VBox {
                 cardTilePane.getChildren().remove(cardTilePane.lookup("#blankcard"));
             }
         }
-        System.out.println(String.format("\nCurrent Lesson Plan: %s", App.getCurrentLessonPlan().getTitle()));
-        for (Object eventContainerKey : App.getCurrentLessonPlan().getEventMap().keySet()) {
-            EventContainer printableEventContainer = (EventContainer) App.getCurrentLessonPlan().getEventMap().get(eventContainerKey);
-            System.out.println(String.format("Event Container: %s", printableEventContainer.getType()));
-            for (String cardCode : printableEventContainer.getCards()) {
-                System.out.println(String.format("Card Code: %s", cardCode));
-            }
-        }
+//        System.out.println(String.format("\nCurrent Lesson Plan: %s", App.getCurrentLessonPlan().getTitle()));
+//        for (Object eventContainerKey : App.getCurrentLessonPlan().getEventMap().keySet()) {
+//            EventContainer printableEventContainer = (EventContainer) App.getCurrentLessonPlan().getEventMap().get(eventContainerKey);
+//            System.out.println(String.format("Event Container: %s", printableEventContainer.getType()));
+//            for (String cardCode : printableEventContainer.getCards()) {
+//                System.out.println(String.format("Card Code: %s", cardCode));
+//            }
+//        }
 
     }
 
@@ -142,6 +142,9 @@ public class EventContainerUI extends VBox {
         cardTilePane.getChildren().clear();
         for (String cardID : eventContainer.getCards()) {
             CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardID));
+            cardUI.addCardZoomAndOutline();
+            cardUI.removeOnDoubleClick();
+            cardUI.removeDragDrop();
             cardTilePane.getChildren().add(cardUI);
         }
     }

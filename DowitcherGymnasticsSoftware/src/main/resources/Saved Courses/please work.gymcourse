@@ -1,0 +1,67 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "eventMap": {
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47",
+            "BB11",
+            "BB19"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "New Lesson Plan"
+    },
+    {
+      "eventMap": {
+        "Floor": {
+          "title": "Floor",
+          "cards": [
+            "ER1",
+            "F2",
+            "PB22",
+            "PB5A"
+          ],
+          "type": "Floor"
+        }
+      },
+      "title": "New Lesson Plan1"
+    }
+  ],
+  "lessonPlanMap": {
+    "New Lesson Plan": {
+      "eventMap": {
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47",
+            "BB11",
+            "BB19"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "New Lesson Plan"
+    },
+    "New Lesson Plan1": {
+      "eventMap": {
+        "Floor": {
+          "title": "Floor",
+          "cards": [
+            "ER1",
+            "F2",
+            "PB22",
+            "PB5A"
+          ],
+          "type": "Floor"
+        }
+      },
+      "title": "New Lesson Plan1"
+    }
+  }
+}

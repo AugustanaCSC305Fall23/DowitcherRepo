@@ -122,4 +122,10 @@ public class LessonPlanUI extends ScrollPane {
             }
         });
     }
+
+    public void drawEventContainerinLessonPlanUI(EventContainerUI eventContainerUI) {
+        eventContainerUIList.add(eventContainerUI);
+        lessonPlanVBox.getChildren().add(eventContainerUI);
+
+    }
 }
