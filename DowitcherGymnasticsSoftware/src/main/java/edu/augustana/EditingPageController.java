@@ -331,6 +331,33 @@ public class EditingPageController {
         alert.showAndWait();
     }
     @FXML
+    private void showInstructionsPopUp() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText(null);
+
+        // Create a TextArea for more space
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+
+        // Set your detailed instructions here
+        textArea.setText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+
+        // Create a GridPane to allow TextArea to expand
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(textArea, 0, 0);
+
+        // Set the expanded content to the Alert
+        alert.getDialogPane().setExpandableContent(expContent);
+
+        alert.showAndWait();
+    }
+    @FXML
     private void save(ActionEvent event) {
         isLessonPlanSaved = true;
         if (App.getCurrentCourseFile() == null) {
