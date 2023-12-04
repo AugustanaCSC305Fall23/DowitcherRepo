@@ -10,6 +10,11 @@ import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
 import javafx.scene.input.KeyCode;
@@ -78,7 +83,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<VBox> cardImageView;
+    private TilePane cardImageView;
 
     @FXML
     private Button clearFilterButton;
@@ -115,6 +120,11 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
+    @FXML
+    private Button expandButton;
+    @FXML
+    private VBox filterSearchCardVBox;
+
 
     private SearchFunction searchFunction;
 
@@ -209,12 +219,37 @@ public class EditingPageController {
     private void loadCards() {
         for (Object cardKey : CardLibrary.cardMap.keySet()) {
             CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
-            cardImageView.getItems().add(cardUI);
+            cardImageView.getChildren().add(cardUI);
         }
     }
 
-    private void expandCardImageView() {
+    //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
+    //when the user clicks on the expand button
+    @FXML
+    private void expandFilterSearchCardVBox() {
+        int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        cardImageView.setPrefColumns(newColumnCount);
+        // Calculate the new width for the filterSearchCardVBox
+        double originalWidth = filterSearchCardVBox.getPrefWidth();
+        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
 
+        // Set the new width for the filterSearchCardVBox
+        filterSearchCardVBox.setPrefWidth(newWidth);
+
+        // Set constraints on the filterSearchCardVBox within its parent container
+        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+
+        // Calculate the new width for each column
+        double columnWidth = newWidth / 2;
+
+        // Set the preferred and max width for each card in the TilePane
+        for (Node node : cardImageView.getChildren()) {
+            if (node instanceof VBox) {
+                VBox cardUI = (VBox) node;
+                cardUI.setPrefWidth(columnWidth);
+                cardUI.setMaxWidth(columnWidth);
+            }
+        }
     }
 
 
@@ -230,18 +265,12 @@ public class EditingPageController {
 
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
-        cardImageView.getItems().clear();
-        // only displays cards of the new search
+        cardImageView.getChildren().clear();
+
         for (Card card : searchResults) {
-            //System.out.println("Printing New Card");
-            System.out.println(card.getCode());
-            System.out.println(card.getTitle());
             VBox thumbnail = new CardUI(card);
-            cardImageView.getItems().add(thumbnail);
+            cardImageView.getChildren().add(thumbnail);
         }
-
-        System.out.println(cardImageView);
-
     }
 
     ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -312,6 +341,33 @@ public class EditingPageController {
         alert.setTitle("Warning");
         alert.setHeaderText(null);
         alert.setContentText("You must save the lesson plan before attempting to print.");
+        alert.showAndWait();
+    }
+    @FXML
+    private void showInstructionsPopUp() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText(null);
+
+        // Create a TextArea for more space
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+
+        // Set your detailed instructions here
+        textArea.setText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+
+        // Create a GridPane to allow TextArea to expand
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(textArea, 0, 0);
+
+        // Set the expanded content to the Alert
+        alert.getDialogPane().setExpandableContent(expContent);
+
         alert.showAndWait();
     }
     @FXML
