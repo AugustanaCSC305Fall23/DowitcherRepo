@@ -105,7 +105,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;
+    private TitledPane levelFilterTitledPane;  
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -136,13 +136,34 @@ public class EditingPageController {
 
     @FXML
     public void initialize() {
+        /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
         searchFunction = new SearchFunction(App.cardLibrary);
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
             }
         });
+
+        ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
+        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction.initializeSearchField(filterSearchField, cardImageView);
+
+        filterSearch = new FilterSearch(List.of(
+                // ... (Existing checkboxes)
+        ), CardLibrary.cardList, cardImageView);
+        filterSearchField.setOnKeyPressed(evt -> {
+            if (evt.getCode() == KeyCode.ENTER) {
+                performTextSearch();
+            }
+        });
+        filterSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            performTextSearch();
+        });
+
+
         //System.out.println(App.currentLessonPlan.toString());
+        /////////////////////////////////////////////////////////////
+
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -204,6 +225,14 @@ public class EditingPageController {
             createNewLessonPlanTab();
         });
     }
+
+    @FXML
+    private void performTextSearch() {
+        String query = filterSearchField.getText();
+        List<Card> searchResults = searchFunction.performSearch(query);
+        updateCardImageView(searchResults);
+    }
+
 
     @FXML
     public static void switchToEditingPage() throws IOException {

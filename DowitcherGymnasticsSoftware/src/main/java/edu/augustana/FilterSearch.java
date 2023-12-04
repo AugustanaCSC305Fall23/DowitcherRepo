@@ -10,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
+import static edu.augustana.CardLibrary.cardMap;
+
 public class FilterSearch {
     private final List<CheckBox> categoryCheckboxes;
     private final List<Card> allCards;
@@ -94,21 +96,38 @@ public class FilterSearch {
     }
 
 
+//    public void clearFilter() {
+//        // Clear checkboxes and update cardImageView
+//        for (CheckBox checkbox : categoryCheckboxes) {
+//            checkbox.setSelected(false);
+//        }
+//        applyFilter();
+//        cardImageView.getChildren().clear();
+//        for (Card card : allCards) {
+//            VBox cardThumbnail = generateCardThumbnail(card);
+//            cardImageView.getChildren().add(cardThumbnail);
+//        }
+//    }
+
     public void clearFilter() {
         // Clear checkboxes and update cardImageView
         for (CheckBox checkbox : categoryCheckboxes) {
             checkbox.setSelected(false);
         }
+
         applyFilter();
         cardImageView.getChildren().clear();
-        for (Card card : allCards) {
+
+        // Iterate through the values in the cardMap
+        for (Card card : cardMap.values()) {
             VBox cardThumbnail = generateCardThumbnail(card);
             cardImageView.getChildren().add(cardThumbnail);
         }
     }
 
+
     private VBox generateCardThumbnail(Card card) {
-        return new CardUI(card);  
+        return new CardUI(card);
     }
 
 
