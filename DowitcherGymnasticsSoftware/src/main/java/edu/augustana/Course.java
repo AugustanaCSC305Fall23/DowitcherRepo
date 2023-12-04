@@ -77,21 +77,21 @@ public class Course {
                 }
             }
         }
-        System.out.printf("Loaded course: %s\n", course.getCourseName());
-        System.out.println("Course Lesson Plans:");
-        for (Object key : course.getLessonPlanMap().keySet()) {
-            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
-            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
-            System.out.println("Lesson Plan Event Containers:");
-            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
-                System.out.printf("Event Container: %s\n", eventContainer.getType());
-                System.out.println("Event Container Cards:");
-                for (String cardCode : eventContainer.getCards()) {
-                    System.out.printf("Card Code: %s\n", cardCode);
-                }
-            }
-        }
+//        System.out.printf("Loaded course: %s\n", course.getCourseName());
+//        System.out.println("Course Lesson Plans:");
+//        for (Object key : course.getLessonPlanMap().keySet()) {
+//            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
+//            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
+//            System.out.println("Lesson Plan Event Containers:");
+//            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+//                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
+//                System.out.printf("Event Container: %s\n", eventContainer.getType());
+//                System.out.println("Event Container Cards:");
+//                for (String cardCode : eventContainer.getCards()) {
+//                    System.out.printf("Card Code: %s\n", cardCode);
+//                }
+//            }
+//        }
         return course;
     }
 }

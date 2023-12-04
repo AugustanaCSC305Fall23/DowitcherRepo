@@ -34,7 +34,6 @@ public class CardUI extends VBox{
         if (!card.getTitle().equalsIgnoreCase("blankcard")) {
             this.addCardZoomAndOutline();
             this.addCardDragDrop();
-//            this.addEquipmentText();
             this.addOnDoubleClicked();
         }
     }

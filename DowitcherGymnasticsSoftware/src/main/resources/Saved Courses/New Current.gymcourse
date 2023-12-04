@@ -1,0 +1,247 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "eventMap": {
+        "Beam": {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        },
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "My Lesson Plan",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ]
+    },
+    {
+      "eventMap": {
+        "Floor": {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        "Horizontal Bar": {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      },
+      "title": "Your Lesson Plan",
+      "eventList": [
+        {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      ]
+    }
+  ],
+  "lessonPlanMap": {
+    "My Lesson Plan": {
+      "eventMap": {
+        "Beam": {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        },
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "My Lesson Plan",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ]
+    },
+    "New Lesson Plan": {
+      "eventMap": {
+        "Beam": {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        },
+        "Uneven Bars": {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        }
+      },
+      "title": "My Lesson Plan",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ]
+    },
+    "New Lesson Plan1": {
+      "eventMap": {
+        "Floor": {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        "Horizontal Bar": {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      },
+      "title": "Your Lesson Plan",
+      "eventList": [
+        {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      ]
+    },
+    "Your Lesson Plan": {
+      "eventMap": {
+        "Floor": {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        "Horizontal Bar": {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      },
+      "title": "Your Lesson Plan",
+      "eventList": [
+        {
+          "title": "Floor",
+          "cards": [
+            "FS4",
+            "ER1",
+            "H13 "
+          ],
+          "type": "Floor"
+        },
+        {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        }
+      ]
+    }
+  }
+}

@@ -1,18 +1,15 @@
 package edu.augustana.ui;
 
-import edu.augustana.Card;
-import edu.augustana.CardLibrary;
-import edu.augustana.EventContainer;
-import edu.augustana.LessonPlan;
+import edu.augustana.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
+import java.util.*;
 
 public class LessonPlanUI extends ScrollPane {
+
+    private static Map<String, LessonPlanUI> lessonPlanMap = new HashMap<>();
     private LessonPlan lessonPlan;
 
     private VBox lessonPlanVBox;
@@ -24,6 +21,8 @@ public class LessonPlanUI extends ScrollPane {
     private List<EventContainerUI> eventContainerUIList;
 
     private Label lessonPlanTitleLabel;
+
+    private LessonTab inLessonTab;
 
     public LessonPlanUI(LessonPlan lessonPlan) {
         this.lessonPlan = lessonPlan;
@@ -40,6 +39,7 @@ public class LessonPlanUI extends ScrollPane {
         lessonPlanTitleLabel.setStyle("-fx-font-size: 24;" + "-fx-font-weight: bold;");
         lessonPlanVBox.getChildren().addAll(lessonPlanTitleLabel, eventComboBox, addEventButton);
         this.setContent(lessonPlanVBox);
+        lessonPlanMap.put(lessonPlan.getTitle(), this);
     }
 
     public LessonPlan getLessonPlan() {
@@ -103,13 +103,39 @@ public class LessonPlanUI extends ScrollPane {
         lessonPlanVBox.getChildren().add(0, renameHBox);
         renameButton.setOnAction(e -> {
             String newTitle = renameTextField.getText();
-            if (newTitle != null) {
+            if (newTitle != null && !newTitle.equals("")) {
+                App.getCurrentCourse().getLessonPlanMap().remove(lessonPlan.getTitle());
+                System.out.println("OLD KEYS:");
+                for (Object lPKey : App.getCurrentCourse().getLessonPlanMap().keySet()) {
+                    String keyText = (String) lPKey;
+                    System.out.println(keyText);
+                }
+                System.out.println("Done");
+                App.getCurrentCourse().getLessonPlanMap().keySet().remove(lessonPlan.getTitle());
+                System.out.println("NEW KEYS");
+                for (Object lPKey : App.getCurrentCourse().getLessonPlanMap().keySet()) {
+                    String keyText = (String) lPKey;
+                    System.out.println(keyText);
+                }
+                System.out.println("Done");
+                App.getCurrentCourse().getLessonPlanMap().put(newTitle, lessonPlan);
+
+                lessonPlanMap.remove(lessonPlan.getTitle());
+                lessonPlanMap.put(newTitle, this);
                 lessonPlan.renamePlan(newTitle);
+                inLessonTab.setTitle(newTitle);
+                this.setId(newTitle);
                 lessonPlanTitleLabel.setText(newTitle);
+
 
             }
             lessonPlanVBox.getChildren().remove(0);
             lessonPlanVBox.getChildren().add(0, lessonPlanTitleLabel);
+//            System.out.println("NEW TITLES:");
+//            for (String lPKey : lessonPlanMap.keySet()) {
+//                System.out.println(lessonPlanMap.get(lPKey).getTitle());
+//            }
+//            System.out.println("");
 
         });
         return renameTextField.getText();
@@ -127,5 +153,13 @@ public class LessonPlanUI extends ScrollPane {
         eventContainerUIList.add(eventContainerUI);
         lessonPlanVBox.getChildren().add(eventContainerUI);
 
+    }
+
+    public static Map getLessonPlanUIMap() {
+        return lessonPlanMap;
+    }
+
+    public void setInLessonTab(LessonTab lessonTab) {
+        this.inLessonTab = lessonTab;
     }
 }
