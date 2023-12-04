@@ -34,7 +34,7 @@ public class CardUI extends VBox{
         if (!card.getTitle().equalsIgnoreCase("blankcard")) {
             this.addCardZoomAndOutline();
             this.addCardDragDrop();
-            this.addEquipmentText();
+//            this.addEquipmentText();
             this.addOnDoubleClicked();
         }
     }
@@ -137,15 +137,7 @@ public class CardUI extends VBox{
     public void removeOnDoubleClick() {
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
-                    if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
-                        eventContainerUI.removeCard(this);
-                        if (eventContainerUI.getCardUIList().isEmpty()) {
-                            eventContainerUI.addBlankCard();
-                        }
-                        return;
-                    }
-                }
+                inEventContainerUI.removeCard(this);
             }
         });
     }

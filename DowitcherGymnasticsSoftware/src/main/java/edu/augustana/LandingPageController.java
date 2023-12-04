@@ -25,6 +25,7 @@ public class LandingPageController {
     @FXML
     private void switchToEditingPage() throws IOException {
         App.currentCourse = createCourse();
+        App.currentCourseFile = null;
 //        App.currentLessonPlan= createLessonPlan();
 //        App.currentCourse.addLessonPlan(App.currentLessonPlan);
         App.switchToEditingPage();
