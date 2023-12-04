@@ -105,7 +105,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;  
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
