@@ -1,0 +1,20 @@
+{
+  "eventMap": {
+    "Beam": {
+      "title": "New Beam Event",
+      "cards": [
+        "BB11"
+      ],
+      "type": "Beam"
+    },
+    "Uneven Bars": {
+      "title": "New Uneven Bars Event",
+      "cards": [
+        "B41A",
+        "B47"
+      ],
+      "type": "Uneven Bars"
+    }
+  },
+  "title": "New Lesson Plan"
+}

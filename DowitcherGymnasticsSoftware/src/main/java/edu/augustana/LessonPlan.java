@@ -76,4 +76,7 @@ public class LessonPlan {
 
     }
 
+    public String toString() {
+    	return this.title;
+    }
 }

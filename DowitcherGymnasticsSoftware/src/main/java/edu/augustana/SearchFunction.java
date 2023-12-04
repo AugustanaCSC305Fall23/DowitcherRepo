@@ -34,7 +34,7 @@ public class SearchFunction {
             }
         }
 
-        return searchResults; 
+        return searchResults;
     }
 
 }

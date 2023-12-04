@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * This class is used to create a card object that contains all the information about a Gymnastic card.
+ */
 public class Card {
     private String code;
     private String event;
@@ -34,6 +37,7 @@ public class Card {
         this("", "", "", "", "", "", "", "", null, null, null);
         this.image = "Blank Card.png";
         this.packFolder = "Misc Images";
+        this.title = "blankcard";
     }
 
     public String getCode() {
@@ -49,7 +53,7 @@ public class Card {
         return title;
     }
     public String getPath() { //Returns the path to the image
-        return String.format("%s/%s", packFolder, image);
+        return String.format("Card Packs/%s/%s", packFolder, image);
     }
     public String getGender() {
         return gender;
@@ -65,6 +69,14 @@ public class Card {
     }
     public String[] getKeywords() {
         return keywords;
+    }
+
+    public void setPath(String path) {
+        this.image = path;
+    }
+
+    public void setPackFolder(String packFolder) {
+        this.packFolder = packFolder;
     }
 
     public String toString() {

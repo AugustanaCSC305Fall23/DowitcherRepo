@@ -1,7 +1,6 @@
 package edu.augustana;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -19,7 +18,11 @@ public class CardGraphic {
     public static final int CARD_THUMBNAIL_HEIGHT = 200;
 
     public static final int MAX_CARDS_PER_EVENT = 8;
-    static Map map = new HashMap();
+    static Map eventMap = new HashMap();
+
+    static TreeMap<String, TreeMap<String, VBox>> lessonPlanToEventMap = new TreeMap<>();
+
+    static TreeMap<String, VBox> currentLessonPlanVBoxMap = new TreeMap<>();
 
     public static VBox generateCardThumbnail(Card card) { //Creates a thumbnail of the card within an HBox
         VBox cardVBox = new VBox();
@@ -70,7 +73,7 @@ public class CardGraphic {
     }
 
     public static VBox createCardWithAllFeatures(Card card) {//Creates a card with all features
-        return addCardDragDrop(addCardOutline(addCardZoom(generateCardThumbnail(card))));
+        return addCardDragDrop(addCardZoom(generateCardThumbnail(card)));
     }
 
     public static VBox addEquipmentText(VBox cardVBox, Card card) {
@@ -107,6 +110,7 @@ public class CardGraphic {
 
     public static VBox generateEventContainerGraphic(EventContainer eventContainer) {
         VBox eventContainerGraphicVBox = new VBox();
+        eventContainerGraphicVBox.setId(eventContainer.getType());
         TilePane tilePane = new TilePane();
         eventContainerGraphicVBox.setId(eventContainer.getType());
         Label typeLabel = new Label(String.format("%s", eventContainer.getType()));
@@ -131,12 +135,20 @@ public class CardGraphic {
             }
             e.consume();
         });
-        map.put(eventContainer.getType(), eventContainerGraphicVBox);
+        TreeMap<String, VBox> eventContainerMap = new TreeMap<>();
+        eventContainerMap.put(eventContainer.getType(), eventContainerGraphicVBox);
+        lessonPlanToEventMap.put(App.currentLessonPlan.getTitle(), eventContainerMap);
+
         return eventContainerGraphicVBox;
     }
 
     public static VBox addCardToEventContainerGraphic(VBox eventContainerGraphic, Card card) {
-        TilePane tilePane = (TilePane) eventContainerGraphic.getChildren().get(1);
+        Map map = lessonPlanToEventMap.get(App.currentLessonPlan.getTitle());
+        VBox currentLessonPlanVBox = currentLessonPlanVBoxMap.get(App.currentLessonPlan.getTitle());
+        VBox currentEventContainerGraphic = (VBox) map.get(eventContainerGraphic.getId());
+//        VBox currentEventContainerGraphic = (VBox) eventContainerGraphic.getChildren().get(3);
+
+        TilePane tilePane = (TilePane) currentEventContainerGraphic.getChildren().get(1);
         tilePane.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         tilePane.setMaxWidth(CARD_THUMBNAIL_WIDTH*5);
         VBox cardContainer = createCardWithAllFeatures(card);
@@ -150,10 +162,33 @@ public class CardGraphic {
             tilePane.getChildren().add(tilePane.getChildren().size(), cardContainer);
         }
         System.out.println(tilePane.getChildren().size());
+        System.out.println(card.getTitle() + " Should be added");
         return eventContainerGraphic;
     }
 
     public static VBox getEventContainer(String type){
-        return (VBox) map.get(type);
+        return (VBox) eventMap.get(type);
+    }
+
+    public static ScrollPane generateLessonPlanPane(LessonPlan lessonPlan) {
+        ScrollPane lessonPlanScrollPane = new ScrollPane();
+        lessonPlanScrollPane.setId(lessonPlan.getTitle());
+        lessonPlanScrollPane.setFitToWidth(true);
+        lessonPlanScrollPane.setFitToHeight(true);
+        VBox lessonPlanVBox = new VBox();
+        Label lessonPlanTitle = new Label(lessonPlan.getTitle());
+        lessonPlanTitle.setStyle("-fx-font-size: 18;");
+        ComboBox<String> lessonPlanComboBox = new ComboBox<>();
+        lessonPlanComboBox.getItems().addAll("Beam", "Floor", "Horizontal Bar",
+                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
+        Button addEventContainerButton = new Button("Add");
+        addEventContainerButton.setOnAction(actionEvent -> {
+            VBox newEventContainer = generateEventContainerGraphic(new EventContainer(lessonPlanComboBox.getValue()));
+            lessonPlanVBox.getChildren().add(newEventContainer);
+        });
+        lessonPlanScrollPane.setContent(lessonPlanVBox);
+        lessonPlanVBox.getChildren().addAll(lessonPlanTitle, lessonPlanComboBox, addEventContainerButton);
+        currentLessonPlanVBoxMap.put(lessonPlan.getTitle(), lessonPlanVBox);
+        return lessonPlanScrollPane;
     }
 }

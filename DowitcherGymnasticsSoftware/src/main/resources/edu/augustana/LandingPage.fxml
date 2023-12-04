@@ -48,13 +48,18 @@
       </VBox>
    </top>
    <center>
-      <TilePane fx:id="lessonPlansTilePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TilePane fx:id="coursesTilePane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToCreatePopup" text="Create or Import">
-               <TilePane.margin>
-                  <Insets left="20.0" />
-               </TilePane.margin>
-            </Button>
+            <VBox TilePane.alignment="TOP_CENTER">
+               <children>
+                  <Button fx:id="createNewCourseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToEditingPage" text="Create New Course" />
+                  <Button fx:id="openCourseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Open a Course">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </TilePane>
    </center>

@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import edu.augustana.ui.LessonPlanUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +10,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import static edu.augustana.App.stage;
-
 /**
  * JavaFX App
  */
@@ -19,8 +18,12 @@ public class App extends Application {
     public static Stage stage;
 
     static LessonPlan currentLessonPlan;
-    static File currentLessonPlanFile;
 
+    static LessonPlanUI currentLessonPlanUI;
+
+    static Course currentCourse;
+
+    static File currentCourseFile;
     static CardLibrary cardLibrary;
 
 
@@ -32,9 +35,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
         stage.show();
-        cardLibrary = new CardLibrary();
-        cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
-        cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
+        CardLibrary cardLibrary = new CardLibrary();
+        cardLibrary.readInCards("src/main/resources/Card Packs");
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -65,20 +67,28 @@ public class App extends Application {
     public static void switchToCreateImportPage(){
         switchToView("CreateImportPage.fxml");
     }
-    public static void loadCurrentLessonPlanFromFile(File lessonPlanFile) throws IOException {
-        currentLessonPlan = LessonPlan.loadFromFile(lessonPlanFile);
-        currentLessonPlanFile = lessonPlanFile;
+    public static void loadCurrentCourseFromFile(File courseFile) throws IOException {
+        currentCourse = Course.loadFromFile(courseFile);
+        currentCourseFile = courseFile;
     }
-    public static void saveCurrentLessonPlanToFile(File chosenFile) throws IOException {
-        currentLessonPlan.saveToFile(chosenFile);
-        currentLessonPlanFile = chosenFile;
+    public static void saveCurrentCourseToFile(File chosenFile) throws IOException {
+        currentCourse.saveToFile(chosenFile);
+        currentCourseFile = chosenFile;
     }
 
-    public static File getCurrentLessonPlanFile() {
-        return currentLessonPlanFile;
+    public static Course getCurrentCourse() {
+        return currentCourse;
+    }
+
+    public static File getCurrentCourseFile() {
+        return currentCourseFile;
     }
     public static LessonPlan getCurrentLessonPlan() {
         return currentLessonPlan;
+    }
+
+    public static LessonPlanUI getCurrentLessonPlanUI() {
+        return currentLessonPlanUI;
     }
 
     public static void switchToPrintPage(){switchToView("PrintPage.fxml");}

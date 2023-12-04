@@ -3,6 +3,9 @@ package edu.augustana;
 import java.io.IOException;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import edu.augustana.ui.CardUI;
+import edu.augustana.ui.EventContainerUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -63,13 +66,17 @@ public class PrintpageController {
         System.out.println(map.toString());
         for (Object key : map.keySet()) {
             EventContainer eventContainer = (EventContainer) map.get(key);
-            VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
+            EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
-            }
-            printLessonPlanVBox.getChildren().add(vbox);
+            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4);
+            eventContainerUI.drawCardInEventContainerUI();
+//            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+//                System.out.println("THE CARD THAT SHOULD BE ADDED: " + eventContainer.getCards().get(cardIndex));
+//                Card card = CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
+////                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
+////                eventContainerUI.drawCardInEventContainerUI();
+//            }
+            printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);
         return printLessonPlanVBox;

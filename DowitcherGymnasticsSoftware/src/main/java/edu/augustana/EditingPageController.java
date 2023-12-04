@@ -5,18 +5,21 @@ import java.util.*;
 import java.io.IOException;
 import com.google.gson.Gson;
 
+import edu.augustana.ui.CardUI;
+import edu.augustana.ui.EventContainerUI;
+import edu.augustana.ui.LessonPlanUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
 
-import javafx.scene.image.Image;
+
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -60,7 +63,14 @@ public class EditingPageController {
     @FXML
     private CheckBox femaleCheckBox;
 
+    @FXML
+    private TabPane lessonPlanTabs;
 
+    @FXML
+    private Tab newTabButton;
+
+    @FXML
+    private Tab currentTab;
 
 
 
@@ -73,7 +83,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private ListView<VBox> cardImageView;
+    private TilePane cardImageView;
 
     @FXML
     private Button clearFilterButton;
@@ -91,11 +101,8 @@ public class EditingPageController {
     @FXML
     private TitledPane genderFilterTitledPane;
 
-    @FXML
-    private Label lessonPlanTitle;
 
-    @FXML
-    private VBox lessonPlanVBox;
+
 
     @FXML
     private TitledPane levelFilterTitledPane;
@@ -113,6 +120,11 @@ public class EditingPageController {
     private MenuBar menuBar;
     @FXML
     private Menu fileMenu;
+    @FXML
+    private Button expandButton;
+    @FXML
+    private VBox filterSearchCardVBox;
+
 
     private SearchFunction searchFunction;
 
@@ -130,7 +142,7 @@ public class EditingPageController {
                 cardSearchFunction();
             }
         });
-        System.out.println(App.currentLessonPlan.toString());
+        //System.out.println(App.currentLessonPlan.toString());
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -152,17 +164,17 @@ public class EditingPageController {
         fileMenu.getItems().addAll(homeItem, printItem);
 
         loadCards();
-        addEventChoices();
-        lessonPlanTitle.setText(App.currentLessonPlan.getTitle());
-        // constantly checking for double-clicks on cards
         cardImageView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked");
-                addByDoubleClick();
+//                addByDoubleClick();
             }
         });
-        if (App.currentLessonPlanFile != null) {
-            openLessonPlanWithFile(App.currentLessonPlanFile);
+        if (lessonPlanTabs.getTabs().size() == 1) {
+            createNewLessonPlanTab();
+        }
+        if (App.currentCourseFile != null) {
+            openLessonPlanWithFile(App.currentCourseFile);
         }
 
         //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -188,6 +200,9 @@ public class EditingPageController {
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
 
         ///////////////////////////////////////////////////////////
+        newTabButton.setOnSelectionChanged(event -> {
+            createNewLessonPlanTab();
+        });
     }
 
     @FXML
@@ -202,18 +217,39 @@ public class EditingPageController {
 
     @FXML
     private void loadCards() {
-        for (int cardNum = 0; cardNum < CardLibrary.cardList.size(); cardNum++) {
-            VBox thumbnail = CardGraphic.createCardWithAllFeatures(CardLibrary.cardList.get(cardNum));
-            cardImageView.getItems().add(thumbnail);
+        for (Object cardKey : CardLibrary.cardMap.keySet()) {
+            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
+            cardImageView.getChildren().add(cardUI);
         }
-//        for (Object cardKey : CardLibrary.cardMap.keySet()) {
-//            HBox thumbnail = CardGraphic.generateCardThumbnail((Card) CardLibrary.cardMap.get(cardKey));
-//            cardImageView.getItems().add(thumbnail);
-//        }
     }
 
-    private void expandCardImageView() {
+    //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
+    //when the user clicks on the expand button
+    @FXML
+    private void expandFilterSearchCardVBox() {
+        int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        cardImageView.setPrefColumns(newColumnCount);
+        // Calculate the new width for the filterSearchCardVBox
+        double originalWidth = filterSearchCardVBox.getPrefWidth();
+        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
 
+        // Set the new width for the filterSearchCardVBox
+        filterSearchCardVBox.setPrefWidth(newWidth);
+
+        // Set constraints on the filterSearchCardVBox within its parent container
+        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+
+        // Calculate the new width for each column
+        double columnWidth = newWidth / 2;
+
+        // Set the preferred and max width for each card in the TilePane
+        for (Node node : cardImageView.getChildren()) {
+            if (node instanceof VBox) {
+                VBox cardUI = (VBox) node;
+                cardUI.setPrefWidth(columnWidth);
+                cardUI.setMaxWidth(columnWidth);
+            }
+        }
     }
 
 
@@ -229,18 +265,12 @@ public class EditingPageController {
 
     @FXML
     private void updateCardImageView(List<Card> searchResults) {
-        cardImageView.getItems().clear();
-        // only displays cards of the new search
+        cardImageView.getChildren().clear();
+
         for (Card card : searchResults) {
-            //System.out.println("Printing New Card");
-            System.out.println(card.getCode());
-            System.out.println(card.getTitle());
-            VBox thumbnail = CardGraphic.createCardWithAllFeatures(card);
-            cardImageView.getItems().add(thumbnail);
+            VBox thumbnail = new CardUI(card);
+            cardImageView.getChildren().add(thumbnail);
         }
-
-        System.out.println(cardImageView);
-
     }
 
     ////////////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
@@ -265,63 +295,6 @@ public class EditingPageController {
 
     ////////////////////////////////////////////////////////////////////
 
-
-
-
-    @FXML
-    private void addEventByButton() {
-        addEvent(eventChoiceButton.getValue().toString());
-    }
-    @FXML
-    private void addEvent(String event) {
-        // creates new eventContainer
-        EventContainer container = new EventContainer(event);
-        App.currentLessonPlan.addEventContainer(container);
-        lessonPlanVBox.getChildren().add(3, CardGraphic.generateEventContainerGraphic(container));
-    }
-
-    private void addEventChoices() {
-        eventChoiceButton.getItems().addAll("Beam", "Floor", "Horizontal Bar",
-                "Parallel Bars","Pommel Horse","Still Rings", "Tramp", "Uneven Bars","Vault");
-    }
-
-    private void addByDoubleClick() {
-        System.out.println("Double clicked");
-        VBox selectedCard = cardImageView.getSelectionModel().getSelectedItem();
-        String cardCode = selectedCard.getId().substring(0, selectedCard.getId().indexOf("-"));
-        String cardEvent = selectedCard.getId().substring(selectedCard.getId().indexOf("-") + 1);
-        //System.out.println(cardEvent + "+" + cardCode);
-        //System.out.println(selectedCard.getId());
-        boolean containerExists = false;
-        boolean containerFull = false;
-        System.out.println(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-        for (int cardNums = 0; cardNums < cardImageView.getItems().size(); cardNums++) {
-            //System.out.println(cardImageView.getItems().get(cardNums).toString());
-            //System.out.println("   - " + cardImageView.getItems().indexOf(selectedCard) + " - " + CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-        }
-
-        for (Object key : App.currentLessonPlan.getEventMap().keySet()) {
-            EventContainer container = (EventContainer) App.currentLessonPlan.getEventMap().get(key);
-            if (container.getCards().size() >= 8) {
-                containerFull = true;
-            }
-            if (container.getType().equalsIgnoreCase(cardEvent) && !containerFull) {
-                containerExists = true;
-                container.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-                //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-                CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(container.getType()), (Card) CardLibrary.cardMap.get(cardCode));
-            }
-        }
-        if (!containerExists && !containerFull) {
-            addEvent(cardEvent);
-            EventContainer newContainer = (EventContainer) App.currentLessonPlan.getEventMap().get(cardEvent);
-            newContainer.addCard(CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)).getCode());
-            //CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), CardLibrary.cardList.get(cardImageView.getItems().indexOf(selectedCard)));
-            CardGraphic.addCardToEventContainerGraphic(CardGraphic.getEventContainer(newContainer.getType()), (Card) CardLibrary.cardMap.get(cardCode));
-        }
-        App.currentLessonPlan.printTree();
-    }
-
     @FXML
     private void openLessonPlan() {
         FileChooser fileChooser = new FileChooser();
@@ -337,23 +310,13 @@ public class EditingPageController {
     private void openLessonPlanWithFile(File file) {
         if (file != null) {
             try {
-                App.loadCurrentLessonPlanFromFile(file);
-                for (int i = 3; i < lessonPlanVBox.getChildren().size(); i++) {
-                    lessonPlanVBox.getChildren().remove(i);
+                lessonPlanTabs.getTabs().clear();
+                App.loadCurrentCourseFromFile(file);
+                for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
+                    new LessonPlanUI(lessonPlan);
+                    lessonPlanTabs.getTabs().add(new Tab(lessonPlan.getTitle()));
                 }
-                LessonPlan loadedPlan = App.getCurrentLessonPlan();
-                lessonPlanTitle.setText(loadedPlan.getTitle());
-                Map map = App.getCurrentLessonPlan().getEventMap();
-                System.out.println(map.toString());
-                for (Object key : map.keySet()) {
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
-                    VBox vbox = CardGraphic.generateEventContainerGraphic(eventContainer);
-                    for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                        Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                        CardGraphic.addCardToEventContainerGraphic(vbox, card);
-                    }
-                    lessonPlanVBox.getChildren().add(vbox);
-                }
+
             } catch (IOException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error loading lesson plan file: " + file).show();
             }
@@ -370,71 +333,65 @@ public class EditingPageController {
     @FXML
     private void save(ActionEvent event) {
         isLessonPlanSaved = true;
-        if (App.getCurrentLessonPlanFile() == null) {
+        if (App.getCurrentCourseFile() == null) {
             saveAs(event);
         } else {
-            saveCurrentLessonPlanToFile(App.getCurrentLessonPlanFile());
+            saveCurrentCourseToFile(App.getCurrentCourseFile());
         }
      }
 
      @FXML
     private void saveAs(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Lesson Plan");
-        fileChooser.setInitialDirectory(new File("src/main/resources/Saved Lesson Plans"));
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Lesson Plans (*.gymlessonplan", "*.gymlessonplan");
+        fileChooser.setTitle("Save Course");
+        fileChooser.setInitialDirectory(new File("src/main/resources/Saved Courses"));
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
-        saveCurrentLessonPlanToFile(chosenFile);
+        saveCurrentCourseToFile(chosenFile);
     }
     @FXML
-    private void saveCurrentLessonPlanToFile(File chosenFile) {
+    private void saveCurrentCourseToFile(File chosenFile) {
         if (chosenFile != null) {
             try {
-                App.saveCurrentLessonPlanToFile(chosenFile);
+                App.saveCurrentCourseToFile(chosenFile);
             } catch (IOException ex) {
-                new Alert(Alert.AlertType.ERROR, "Error saving lesson plan file: " + chosenFile).show();
+                new Alert(Alert.AlertType.ERROR, "Error saving course file: " + chosenFile).show();
             }
         }
     }
 
 
     @FXML
-    private void changeLessonPlanName() {
-        String name = renameLabel(lessonPlanTitle, lessonPlanVBox);
-        App.currentLessonPlan.renamePlan(name);
+    private void setCurrentLessonPlanTab() {
+        currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
+        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+
+        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
+        System.out.println(App.currentLessonPlan.toString());
     }
 
-    @FXML
-    private String renameLabel(Label label, VBox vbox) {
-        vbox.getChildren().remove(0);
-        TextField renameField = new TextField();
-        HBox renameBox = new HBox();
-        renameBox.alignmentProperty().setValue(Pos.CENTER);
-        renameField.setText(label.getText());
-        Button renameButton = new Button("Rename");
-        renameBox.getChildren().addAll(renameField, renameButton);
-        renameBox.setSpacing(10);
-        vbox.getChildren().add(0, renameBox);
-        String newLabelName = "";
-        renameButton.setOnAction(event -> {
-            label.setText(renameField.getText());
-            vbox.getChildren().remove(0);
-            vbox.getChildren().add(0, label);
-        });
-        renameField.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                label.setText(renameField.getText());
-                vbox.getChildren().remove(0);
-                vbox.getChildren().add(0, label);
+    private void createNewLessonPlanTab() {
+        if (newTabButton.isSelected()) {
+            String lessonPlanName = "New Lesson Plan";
+            while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+                lessonPlanName = lessonPlanName + "1";
             }
-        });
-        if (renameField.getText().equalsIgnoreCase("")) {
-            label.setText("Untitled");
-            renameField.setText("Untitled");
+            LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
+            App.currentCourse.addLessonPlan(newLessonPlan);
+            LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
+            App.currentLessonPlanUI = newLessonPlanUI;
+            Tab newTab = new Tab(lessonPlanName);
+            newTab.setOnSelectionChanged(event -> {
+                setCurrentLessonPlanTab();
+            });
+            newTab.setContent(newLessonPlanUI);
+            lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size() - 1, newTab);
+            lessonPlanTabs.getSelectionModel().select(newTab);
         }
-        return renameField.getText();
     }
+
+
 }
 
