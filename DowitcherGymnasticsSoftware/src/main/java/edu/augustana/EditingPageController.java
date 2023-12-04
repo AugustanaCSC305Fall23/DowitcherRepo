@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
+import edu.augustana.ui.LessonTab;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -17,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
@@ -70,7 +70,7 @@ public class EditingPageController {
     private Tab newTabButton;
 
     @FXML
-    private Tab currentTab;
+    private LessonTab currentTab;
 
 
 
@@ -105,7 +105,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;
+    private TitledPane levelFilterTitledPane;  
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -136,13 +136,34 @@ public class EditingPageController {
 
     @FXML
     public void initialize() {
+        /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
         searchFunction = new SearchFunction(App.cardLibrary);
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
             }
         });
+
+        ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
+        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction.initializeSearchField(filterSearchField, cardImageView);
+
+        filterSearch = new FilterSearch(List.of(
+                // ... (Existing checkboxes)
+        ), CardLibrary.cardList, cardImageView);
+        filterSearchField.setOnKeyPressed(evt -> {
+            if (evt.getCode() == KeyCode.ENTER) {
+                performTextSearch();
+            }
+        });
+        filterSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            performTextSearch();
+        });
+
+
         //System.out.println(App.currentLessonPlan.toString());
+        /////////////////////////////////////////////////////////////
+
         MenuItem homeItem = new MenuItem("Home");
         MenuItem printItem = new MenuItem("Print");
 
@@ -204,6 +225,14 @@ public class EditingPageController {
             createNewLessonPlanTab();
         });
     }
+
+    @FXML
+    private void performTextSearch() {
+        String query = filterSearchField.getText();
+        List<Card> searchResults = searchFunction.performSearch(query);
+        updateCardImageView(searchResults);
+    }
+
 
     @FXML
     public static void switchToEditingPage() throws IOException {
@@ -296,7 +325,7 @@ public class EditingPageController {
     ////////////////////////////////////////////////////////////////////
 
     @FXML
-    private void openLessonPlan() {
+    private void openCourse() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
@@ -313,7 +342,8 @@ public class EditingPageController {
             for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
                 App.currentLessonPlan = lessonPlan;
                 App.currentLessonPlanUI = new LessonPlanUI(lessonPlan);
-                Tab lessonPlanTab = new Tab(lessonPlan.getTitle());
+                LessonTab lessonPlanTab = new LessonTab(lessonPlan);
+                App.currentLessonPlanUI.setInLessonTab(lessonPlanTab);
                 lessonPlanTab.setContent(App.currentLessonPlanUI);
                 lessonPlanTab.setOnSelectionChanged(event -> {
                     setCurrentLessonPlanTab();
@@ -323,11 +353,16 @@ public class EditingPageController {
                     EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
+                    Stack<CardUI> cardUIStack = new Stack<>();
                         for (int cardIndex = eventContainer.getCards().size() -1; cardIndex >= 0; cardIndex--) {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                             eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
                             CardUI cardUI = new CardUI(card);
-                            eventContainerUI.addCard(cardUI);
+//                            eventContainerUI.addCard(cardUI);
+                            cardUIStack.push(cardUI);
+                        }
+                        while (!cardUIStack.isEmpty()) {
+                            eventContainerUI.addCard(cardUIStack.pop());
                         }
                 }
 
@@ -405,15 +440,30 @@ public class EditingPageController {
 
     @FXML
     private void setCurrentLessonPlanTab() {
-        currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
-        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+        Tab currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
 
-        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
-        System.out.println(App.currentLessonPlan.toString());
+//        System.out.println("THIS IS THE CURRENT TAB: " + currentTab.getText());
+//        System.out.println("STARTING LESSONPLANUI PRINTING");
+        for (Object lessonPlanUIKey : LessonPlanUI.getLessonPlanUIMap().keySet()) {
+            System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
+        }
+//        System.out.println("ENGINFASDADAD");
+        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+        App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
+
+//        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
+//        System.out.println(App.currentLessonPlan.toString());
+//        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
     private void createNewLessonPlanTab() {
         if (newTabButton.isSelected()) {
+            System.out.println("Printing out the lesson plan map");
+            for (Object lpKey : App.currentCourse.getLessonPlanMap().keySet()) {
+                String lpName = (String) lpKey;
+                System.out.println(lpName);
+            }
+            System.out.println("Done");
             String lessonPlanName = "New Lesson Plan";
             while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
                 lessonPlanName = lessonPlanName + "1";
@@ -422,7 +472,8 @@ public class EditingPageController {
             App.currentCourse.addLessonPlan(newLessonPlan);
             LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
             App.currentLessonPlanUI = newLessonPlanUI;
-            Tab newTab = new Tab(lessonPlanName);
+            LessonTab newTab = new LessonTab(newLessonPlan);
+            newLessonPlanUI.setInLessonTab(newTab);
             newTab.setOnSelectionChanged(event -> {
                 setCurrentLessonPlanTab();
             });
