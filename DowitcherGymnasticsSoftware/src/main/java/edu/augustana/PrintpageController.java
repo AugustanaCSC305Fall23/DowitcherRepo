@@ -68,15 +68,18 @@ public class PrintpageController {
             EventContainer eventContainer = (EventContainer) map.get(key);
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-
-            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4);
-            eventContainerUI.drawCardInEventContainerUI();
+            System.out.println(eventContainerUI.getCardUIList().size());
+            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
+            int cardCount = eventContainerUI.drawCardInEventContainerUI();
+            if(cardCount > 4){
+                eventCount++;
+            }
 
             printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);
         if(eventCount > 4) {
-            scrollpane.setPrefHeight(1120);
+            scrollpane.setPrefHeight(1125);
         }else{
             scrollpane.setPrefHeight(290*eventCount);
         }

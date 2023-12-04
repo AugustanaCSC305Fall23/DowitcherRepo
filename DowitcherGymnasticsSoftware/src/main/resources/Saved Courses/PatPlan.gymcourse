@@ -7,7 +7,10 @@
           "title": "Beam",
           "cards": [
             "BB11",
-            "BB19"
+            "BB19",
+            "BL5",
+            "BS9",
+            "C3"
           ],
           "type": "Beam"
         },
@@ -15,7 +18,10 @@
           "title": "Uneven Bars",
           "cards": [
             "B41A",
-            "B47"
+            "B47",
+            "BB19",
+            "BL5",
+            "BB11"
           ],
           "type": "Uneven Bars"
         }
@@ -30,7 +36,10 @@
           "title": "Beam",
           "cards": [
             "BB11",
-            "BB19"
+            "BB19",
+            "BL5",
+            "BS9",
+            "C3"
           ],
           "type": "Beam"
         },
@@ -38,7 +47,10 @@
           "title": "Uneven Bars",
           "cards": [
             "B41A",
-            "B47"
+            "B47",
+            "BB19",
+            "BL5",
+            "BB11"
           ],
           "type": "Uneven Bars"
         }
