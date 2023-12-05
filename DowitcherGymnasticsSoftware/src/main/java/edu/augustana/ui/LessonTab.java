@@ -37,4 +37,12 @@ public class LessonTab extends Tab {
     public String getTitle() {
         return this.getText();
     }
+
+    public static List getLessonTabList() {
+    	return lessonTabList;
+    }
+
+    public static Map getLessonTabMap() {
+    	return lessonTabMap;
+    }
 }
