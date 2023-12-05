@@ -84,7 +84,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private TilePane cardImageView;
+    private TilePane cardImageView; 
 
     @FXML
     private Button clearFilterButton;
@@ -138,7 +138,7 @@ public class EditingPageController {
     @FXML
     public void initialize() {
         /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
@@ -146,7 +146,7 @@ public class EditingPageController {
         });
 
         ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
         filterSearch = new FilterSearch(List.of(
