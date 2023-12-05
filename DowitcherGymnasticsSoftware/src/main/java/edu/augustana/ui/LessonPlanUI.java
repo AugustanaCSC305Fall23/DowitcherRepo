@@ -109,7 +109,7 @@ public class LessonPlanUI extends ScrollPane {
         lessonPlanVBox.getChildren().add(0, renameHBox);
         renameButton.setOnAction(e -> {
             String newTitle = renameTextField.getText();
-            if (newTitle != null && !newTitle.equals("")) {
+            if (newTitle != null && !newTitle.equals("") && !lessonPlanMap.containsKey(newTitle)) {
                 App.getCurrentCourse().getLessonPlanMap().remove(lessonPlan.getTitle());
                 System.out.println("OLD KEYS:");
                 for (Object lPKey : App.getCurrentCourse().getLessonPlanMap().keySet()) {

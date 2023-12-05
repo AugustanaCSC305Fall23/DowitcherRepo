@@ -68,27 +68,6 @@ public class LessonPlan {
     	return "";
     }
 
-    public static LessonPlan loadFromFile(File logFile) throws IOException {
-        Gson gson = new Gson();
-        FileReader reader = new FileReader(logFile);
-        LessonPlan lessonPlan = gson.fromJson(reader, LessonPlan.class);
-        Map map = lessonPlan.getEventMap();
-        for (Object key : map.keySet()) {
-            EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(map.get(key)), EventContainer.class);
-            lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
-        }
-        return lessonPlan;
-    }
-    public void saveToFile(File logFile) throws IOException {
-        System.out.println("Saving to file: " + logFile);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String serializedLessonPlan = gson.toJson(this);
-        PrintWriter writer = new PrintWriter(new FileWriter(logFile));
-        writer.println(serializedLessonPlan);
-        writer.close();
-
-    }
-
     public String toString() {
     	return this.title;
     }

@@ -340,7 +340,6 @@ public class EditingPageController {
     @FXML
     private void openCourseWithFile(File file) {
         if (file != null) {
-            //                App.loadCurrentCourseFromFile(file);
             for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
                 App.currentLessonPlan = lessonPlan;
                 App.currentLessonPlanUI = new LessonPlanUI(lessonPlan);
@@ -351,8 +350,10 @@ public class EditingPageController {
                     setCurrentLessonPlanTab();
                 });
                 lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size()-1, lessonPlanTab);
-                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+//                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+                for (int index = 0; index < lessonPlan.getEventList().size(); index++) {
+//                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventList().get(index)), EventContainer.class);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
                     Stack<CardUI> cardUIStack = new Stack<>();
