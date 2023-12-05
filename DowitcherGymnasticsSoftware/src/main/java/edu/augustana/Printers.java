@@ -27,7 +27,7 @@ public class Printers {
             printerJob.printPage(scrollpane);
         }else{
             while (startY < contentHeight) {
-                double endY = Math.min(startY + 800, contentHeight);
+                double endY = Math.min(startY + 1600, contentHeight);
                 scrollpane.setVvalue(startY / contentHeight);
                 printerJob.getJobSettings().setPageLayout(pageLayout);
                 if (printerJob.printPage(scrollpane)) {
