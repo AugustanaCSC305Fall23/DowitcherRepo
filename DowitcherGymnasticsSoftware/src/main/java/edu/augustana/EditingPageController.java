@@ -278,9 +278,9 @@ public class EditingPageController {
         for (Node node : cardImageView.getChildren()) {
             if (node instanceof VBox) {
                 VBox cardUI = (VBox) node;
-                cardUI.setPrefWidth(columnWidth);
+                cardUI.setPrefWidth(columnWidth - 10);
                 //cardUI.setMinWidth(columnWidth);
-                cardUI.setMaxWidth(columnWidth);
+                cardUI.setMaxWidth(columnWidth - 10);
             }
         }
     }
