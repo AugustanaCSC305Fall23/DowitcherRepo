@@ -127,7 +127,7 @@ public class FilterSearch {
 
 
     private VBox generateCardThumbnail(Card card) {
-        return new CardUI(card); 
+        return new CardUI(card);
     }
 
 

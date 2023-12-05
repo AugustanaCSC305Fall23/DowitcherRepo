@@ -254,7 +254,7 @@ public class EditingPageController {
 
     //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
     //when the user clicks on the expand button
-    @FXML
+    @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
         cardImageView.setPrefColumns(newColumnCount);
