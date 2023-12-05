@@ -84,7 +84,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private TilePane cardImageView;
+    private TilePane cardImageView; 
 
     @FXML
     private Button clearFilterButton;
@@ -106,7 +106,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;  
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -138,7 +138,7 @@ public class EditingPageController {
     @FXML
     public void initialize() {
         /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
@@ -146,7 +146,7 @@ public class EditingPageController {
         });
 
         ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
         filterSearch = new FilterSearch(List.of(
@@ -256,7 +256,7 @@ public class EditingPageController {
 
     //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
     //when the user clicks on the expand button
-    @FXML
+    @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
         cardImageView.setPrefColumns(newColumnCount);
