@@ -24,6 +24,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
+import static java.lang.Character.getNumericValue;
 
 
 public class EditingPageController {
@@ -177,6 +178,7 @@ public class EditingPageController {
         });
         printItem.setOnAction(evt -> {
             if (isLessonPlanSaved) {
+                save(evt);
                 App.switchToPrintPage();
             } else {
                 showLessonPlanNotSavedWarning();
@@ -264,9 +266,10 @@ public class EditingPageController {
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
-
+        filterSearchCardVBox.setMinWidth(newWidth);
+        filterSearchCardVBox.setMaxWidth(newWidth);
         // Set constraints on the filterSearchCardVBox within its parent container
-        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+        //VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
 
         // Calculate the new width for each column
         double columnWidth = newWidth / 2;
@@ -276,6 +279,7 @@ public class EditingPageController {
             if (node instanceof VBox) {
                 VBox cardUI = (VBox) node;
                 cardUI.setPrefWidth(columnWidth);
+                //cardUI.setMinWidth(columnWidth);
                 cardUI.setMaxWidth(columnWidth);
             }
         }
@@ -338,7 +342,6 @@ public class EditingPageController {
     @FXML
     private void openCourseWithFile(File file) {
         if (file != null) {
-            //                App.loadCurrentCourseFromFile(file);
             for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
                 App.currentLessonPlan = lessonPlan;
                 App.currentLessonPlanUI = new LessonPlanUI(lessonPlan);
@@ -349,8 +352,10 @@ public class EditingPageController {
                     setCurrentLessonPlanTab();
                 });
                 lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size()-1, lessonPlanTab);
-                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+//                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+                for (int index = 0; index < lessonPlan.getEventList().size(); index++) {
+//                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
+                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventList().get(index)), EventContainer.class);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
                     Stack<CardUI> cardUIStack = new Stack<>();
@@ -465,8 +470,14 @@ public class EditingPageController {
             }
             System.out.println("Done");
             String lessonPlanName = "New Lesson Plan";
-            while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+            if (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
                 lessonPlanName = lessonPlanName + "1";
+                while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
+                    char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
+                    int charInt = getNumericValue(lastChar);
+                    charInt++;
+                    lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+                }
             }
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
             App.currentCourse.addLessonPlan(newLessonPlan);
