@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.Region?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <top>
       <MenuBar fx:id="menuBar" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -48,13 +49,13 @@
       </MenuBar>
    </top>
    <left>
-      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="600.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="600.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
             <Accordion>
               <panes>
                   <TitledPane fx:id="eventFilterTitledPane" animated="false" text="Event">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane minHeight="200.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <CheckBox fx:id="beamCheckbox" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" text="Beam" />
                               <CheckBox fx:id="floorCheckbox" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="Floor" />
@@ -70,7 +71,7 @@
                   </TitledPane>
                 <TitledPane fx:id="levelFilterTitledPane" animated="false" text="Level">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="200.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <CheckBox fx:id="levelBCheckBox" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" text="B" />
                               <CheckBox fx:id="levelABCheckBox" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" text="AB" />
@@ -82,7 +83,7 @@
                 </TitledPane>
                 <TitledPane fx:id="genderFilterTitledPane" animated="false" text="Gender">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="200.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <CheckBox fx:id="maleCheckBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" text="Male" />
                               <CheckBox fx:id="femaleCheckBox" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="Female" />

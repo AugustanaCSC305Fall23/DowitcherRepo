@@ -264,9 +264,10 @@ public class EditingPageController {
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
-
+        filterSearchCardVBox.setMinWidth(newWidth);
+        filterSearchCardVBox.setMaxWidth(newWidth);
         // Set constraints on the filterSearchCardVBox within its parent container
-        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+        //VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
 
         // Calculate the new width for each column
         double columnWidth = newWidth / 2;
@@ -276,6 +277,7 @@ public class EditingPageController {
             if (node instanceof VBox) {
                 VBox cardUI = (VBox) node;
                 cardUI.setPrefWidth(columnWidth);
+                //cardUI.setMinWidth(columnWidth);
                 cardUI.setMaxWidth(columnWidth);
             }
         }
