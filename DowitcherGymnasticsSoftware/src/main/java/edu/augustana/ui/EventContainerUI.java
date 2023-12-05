@@ -69,14 +69,6 @@ public class EventContainerUI extends VBox {
                 cardTilePane.getChildren().remove(cardTilePane.lookup("#blankcard"));
             }
         }
-//        System.out.println(String.format("\nCurrent Lesson Plan: %s", App.getCurrentLessonPlan().getTitle()));
-//        for (Object eventContainerKey : App.getCurrentLessonPlan().getEventMap().keySet()) {
-//            EventContainer printableEventContainer = (EventContainer) App.getCurrentLessonPlan().getEventMap().get(eventContainerKey);
-//            System.out.println(String.format("Event Container: %s", printableEventContainer.getType()));
-//            for (String cardCode : printableEventContainer.getCards()) {
-//                System.out.println(String.format("Card Code: %s", cardCode));
-//            }
-//        }
 
     }
 
@@ -89,13 +81,7 @@ public class EventContainerUI extends VBox {
         }
     }
 
-    public List<CardUI> getCardUIList() {
-        return cardUIList;
-    }
 
-    public TilePane getCardTilePane() {
-        return cardTilePane;
-    }
 
     public TilePane addOnDragOver() {
         cardTilePane.setOnDragOver(e -> {

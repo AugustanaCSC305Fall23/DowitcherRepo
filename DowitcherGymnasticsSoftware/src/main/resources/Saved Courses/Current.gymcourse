@@ -6,18 +6,9 @@
         "Beam": {
           "title": "Beam",
           "cards": [
-            "BB11",
-            "BB19",
-            "BL5"
+            "BB11"
           ],
           "type": "Beam"
-        },
-        "Floor": {
-          "title": "Floor",
-          "cards": [
-            "BS9"
-          ],
-          "type": "Floor"
         },
         "Uneven Bars": {
           "title": "Uneven Bars",
@@ -41,18 +32,9 @@
         {
           "title": "Beam",
           "cards": [
-            "BB11",
-            "BB19",
-            "BL5"
+            "BB11"
           ],
           "type": "Beam"
-        },
-        {
-          "title": "Floor",
-          "cards": [
-            "BS9"
-          ],
-          "type": "Floor"
         }
       ]
     }
@@ -63,18 +45,9 @@
         "Beam": {
           "title": "Beam",
           "cards": [
-            "BB11",
-            "BB19",
-            "BL5"
+            "BB11"
           ],
           "type": "Beam"
-        },
-        "Floor": {
-          "title": "Floor",
-          "cards": [
-            "BS9"
-          ],
-          "type": "Floor"
         },
         "Uneven Bars": {
           "title": "Uneven Bars",
@@ -98,18 +71,9 @@
         {
           "title": "Beam",
           "cards": [
-            "BB11",
-            "BB19",
-            "BL5"
+            "BB11"
           ],
           "type": "Beam"
-        },
-        {
-          "title": "Floor",
-          "cards": [
-            "BS9"
-          ],
-          "type": "Floor"
         }
       ]
     }

@@ -68,30 +68,49 @@ public class Course {
         for (Object key : map.keySet()) {
             LessonPlan lessonPlan = new Gson().fromJson(new Gson().toJson(map.get(key)), LessonPlan.class);
             course.getLessonPlanMap().put(lessonPlan.getTitle(), lessonPlan);
+            int lessonPlanIndex = course.getLessonPlanList().indexOf(lessonPlan);
+//            System.out.println("Lesson Plan List:");
+//            for (LessonPlan lessonPlanPrintable : course.getLessonPlanList()) {
+//                System.out.println(lessonPlanPrintable.getTitle());
+//            }
+//            System.out.println("DONE");
+//            course.getLessonPlanList().set(lessonPlanIndex, lessonPlan);
             for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
                 EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
                 lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
+//                lessonPlan.getEventList().set(lessonPlan.getEventList().indexOf(eventContainer), eventContainer);
                 for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
                     Card card = (Card) new Gson().fromJson(new Gson().toJson(CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex))), Card.class);
                     eventContainer.getCards().set(cardIndex, card.getCode());
                 }
             }
         }
-//        System.out.printf("Loaded course: %s\n", course.getCourseName());
-//        System.out.println("Course Lesson Plans:");
-//        for (Object key : course.getLessonPlanMap().keySet()) {
-//            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
-//            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
-//            System.out.println("Lesson Plan Event Containers:");
-//            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-//                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
-//                System.out.printf("Event Container: %s\n", eventContainer.getType());
-//                System.out.println("Event Container Cards:");
-//                for (String cardCode : eventContainer.getCards()) {
-//                    System.out.printf("Card Code: %s\n", cardCode);
-//                }
-//            }
-//        }
+        for (LessonPlan lessonPlan : course.getLessonPlanList()) {
+            for (Object eventContainerObject : lessonPlan.getEventList()) {
+                EventContainer eventContainer = (EventContainer) new Gson().fromJson(new Gson().toJson(eventContainerObject), EventContainer.class);
+                for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+                    Card card = (Card) new Gson().fromJson(new Gson().toJson(CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex))), Card.class);
+                    eventContainer.getCards().set(cardIndex, card.getCode());
+                }
+            }
+        }
+        App.currentCourse = course;
+        System.out.printf("Loaded course: %s\n", course.getCourseName());
+        System.out.println("Course Lesson Plans:");
+        for (Object key : course.getLessonPlanMap().keySet()) {
+            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
+            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
+            System.out.println("Lesson Plan Event Containers:");
+            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
+                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
+                System.out.printf("Event Container: %s\n", eventContainer.getType());
+                System.out.println("Event Container Cards:");
+                for (String cardCode : eventContainer.getCards()) {
+                    System.out.printf("Card Code: %s\n", cardCode);
+                }
+            }
+        }
         return course;
     }
+
 }
