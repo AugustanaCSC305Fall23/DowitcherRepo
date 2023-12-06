@@ -171,6 +171,7 @@ public class EditingPageController {
 
         homeItem.setOnAction(evt -> {
             try {
+                LessonPlanUI.getLessonPlanUIMap().clear();
                 switchToHome();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -178,10 +179,11 @@ public class EditingPageController {
         });
         printItem.setOnAction(evt -> {
             if (isLessonPlanSaved) {
-                save(evt);
+                LessonPlanUI.getLessonPlanUIMap().clear();
                 App.switchToPrintPage();
             } else {
                 showLessonPlanNotSavedWarning();
+                save(evt);
             }
         }); //Printers.printLessonPlan(planeScrollPane);});
         fileMenu.getItems().addAll(homeItem, printItem);
@@ -334,6 +336,9 @@ public class EditingPageController {
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        for (int tabIndex = 0; tabIndex < lessonPlanTabs.getTabs().size() -1; tabIndex++) {
+            lessonPlanTabs.getTabs().remove(tabIndex);
+        }
         openCourseWithFile(chosenFile);
     }
 
