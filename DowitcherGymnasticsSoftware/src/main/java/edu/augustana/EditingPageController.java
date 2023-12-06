@@ -262,7 +262,7 @@ public class EditingPageController {
         cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
+        double newWidth = (originalWidth == CardUI.CARD_THUMBNAIL_WIDTH) ? CardUI.CARD_THUMBNAIL_WIDTH * 2 : CardUI.CARD_THUMBNAIL_WIDTH;
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -350,10 +350,8 @@ public class EditingPageController {
                     setCurrentLessonPlanTab();
                 });
                 lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size()-1, lessonPlanTab);
-//                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
                 for (int index = 0; index < lessonPlan.getEventList().size(); index++) {
-//                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventList().get(index)), EventContainer.class);
+                    EventContainer eventContainer = (EventContainer) lessonPlan.getEventList().get(index);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
                     Stack<CardUI> cardUIStack = new Stack<>();
@@ -361,6 +359,7 @@ public class EditingPageController {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                             eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
                             CardUI cardUI = new CardUI(card);
+                            cardUI.setInEventContainerUI(eventContainerUI);
 //                            eventContainerUI.addCard(cardUI);
                             cardUIStack.push(cardUI);
                         }
@@ -451,7 +450,7 @@ public class EditingPageController {
             System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
         }
 //        System.out.println("ENGINFASDADAD");
-        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+        App.currentLessonPlan = (LessonPlan) App.getCurrentCourse().getLessonPlan(currentTab.getText());
         App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
 
 //        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
@@ -459,22 +458,18 @@ public class EditingPageController {
 //        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
-    private void createNewLessonPlanTab() {
+    private void createNewLessonPlanTab() { //NEEDS FIXING
         if (newTabButton.isSelected()) {
-            System.out.println("Printing out the lesson plan map");
-            for (Object lpKey : App.currentCourse.getLessonPlanMap().keySet()) {
-                String lpName = (String) lpKey;
-                System.out.println(lpName);
-            }
-            System.out.println("Done");
             String lessonPlanName = "New Lesson Plan";
-            if (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
-                lessonPlanName = lessonPlanName + "1";
-                while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
-                    char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
-                    int charInt = getNumericValue(lastChar);
-                    charInt++;
-                    lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+            for (LessonPlan lessonPlanComparable : App.getCurrentCourse().getLessonPlanList()) {
+                if (lessonPlanComparable.getTitle().equals(lessonPlanName)) {
+                    lessonPlanName = lessonPlanName + "1";
+                    if (lessonPlanComparable.getTitle().equalsIgnoreCase(lessonPlanName)) {
+                        char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
+                        int charInt = getNumericValue(lastChar);
+                        charInt++;
+                        lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+                    }
                 }
             }
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);

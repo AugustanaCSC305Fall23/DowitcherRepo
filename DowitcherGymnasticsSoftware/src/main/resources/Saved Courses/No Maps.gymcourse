@@ -1,0 +1,18 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "title": "New Lesson Plan",
+      "eventList": [
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ]
+    }
+  ]
+}

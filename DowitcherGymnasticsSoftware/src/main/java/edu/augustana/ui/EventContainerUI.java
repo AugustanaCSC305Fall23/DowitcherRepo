@@ -119,8 +119,8 @@ public class EventContainerUI extends VBox {
     public void removeEventContainerFunctionality() {
         removeEventContainerUIButton.setMinHeight(eventLabel.getHeight());
         removeEventContainerUIButton.setOnAction(e -> {
+            App.getCurrentLessonPlan().getEventList().remove(App.getCurrentLessonPlan().getEventContainer(this.eventContainer.getTitle()));
             App.getCurrentLessonPlanUI().removeEventContainer(this);
-            App.getCurrentLessonPlan().getEventMap().remove(this.getEvent());
         });
     }
 
