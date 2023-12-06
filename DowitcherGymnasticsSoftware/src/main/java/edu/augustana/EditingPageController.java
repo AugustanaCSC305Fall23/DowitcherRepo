@@ -84,7 +84,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private TilePane cardImageView;
+    private TilePane cardImageView; 
 
     @FXML
     private Button clearFilterButton;
@@ -106,7 +106,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;  
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -138,7 +138,7 @@ public class EditingPageController {
     @FXML
     public void initialize() {
         /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
@@ -146,7 +146,7 @@ public class EditingPageController {
         });
 
         ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
         filterSearch = new FilterSearch(List.of(
@@ -258,7 +258,7 @@ public class EditingPageController {
 
     //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
     //when the user clicks on the expand button
-    @FXML
+    @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
         cardImageView.setPrefColumns(newColumnCount);
@@ -268,9 +268,10 @@ public class EditingPageController {
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
-
+        filterSearchCardVBox.setMinWidth(newWidth);
+        filterSearchCardVBox.setMaxWidth(newWidth);
         // Set constraints on the filterSearchCardVBox within its parent container
-        VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
+        //VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
 
         // Calculate the new width for each column
         double columnWidth = newWidth / 2;
@@ -280,6 +281,7 @@ public class EditingPageController {
             if (node instanceof VBox) {
                 VBox cardUI = (VBox) node;
                 cardUI.setPrefWidth(columnWidth);
+                //cardUI.setMinWidth(columnWidth);
                 cardUI.setMaxWidth(columnWidth);
             }
         }
