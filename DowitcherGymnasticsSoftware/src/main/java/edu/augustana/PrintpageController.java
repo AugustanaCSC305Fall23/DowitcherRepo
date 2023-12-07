@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.print.Printer;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -57,7 +59,6 @@ public class PrintpageController {
      */
     @FXML
     public Node drawLessonPlan() {
-
         Text titleLabel = new Text();
         titleLabel.setText(currentLessonPlan.getTitle());
         titleLabel.setFont(Font.font(24));
@@ -74,14 +75,13 @@ public class PrintpageController {
             if(cardCount > 4){
                 eventCount++;
             }
-
             printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);
         if(eventCount > 4) {
             scrollpane.setPrefHeight(915);
         }else{
-            scrollpane.setPrefHeight(290*eventCount);
+            scrollpane.setPrefHeight(250*eventCount);
         }
         return printLessonPlanVBox;
     }
@@ -117,11 +117,12 @@ public class PrintpageController {
 
             Text text = new Text (eventText);
             text.setFont(Font.font(16));
-            printLessonPlanVBox.getChildren().addAll( text);
+            printLessonPlanVBox.getChildren().addAll(text);
+
 
         }
         scrollpane.setPrefHeight(500);
-        scrollpane.setPrefWidth(270*5);
+        scrollpane.setPrefWidth(270*4);
         return printLessonPlanVBox;
     }
 
