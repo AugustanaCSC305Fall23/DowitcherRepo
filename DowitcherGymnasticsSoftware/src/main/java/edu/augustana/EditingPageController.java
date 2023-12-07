@@ -264,7 +264,10 @@ public class EditingPageController {
         cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = (originalWidth == CardUI.CARD_THUMBNAIL_WIDTH) ? CardUI.CARD_THUMBNAIL_WIDTH * 2 : CardUI.CARD_THUMBNAIL_WIDTH;
+        double newWidth = (originalWidth == 290) ? 565 : 290;
+//        if (newColumnCount == 1) {
+//            newWidth = CardGraphic.CARD_THUMBNAIL_WIDTH + 20;
+//        }
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -274,7 +277,7 @@ public class EditingPageController {
         //VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
 
         // Calculate the new width for each column
-        double columnWidth = newWidth / 2;
+        double columnWidth = newWidth / 2 - 10;
 
         // Set the preferred and max width for each card in the TilePane
         for (Node node : cardImageView.getChildren()) {
