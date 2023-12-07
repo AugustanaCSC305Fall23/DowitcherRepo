@@ -53,7 +53,7 @@
             <VBox TilePane.alignment="TOP_CENTER">
                <children>
                   <Button fx:id="createNewCourseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToEditingPage" text="Create New Course" />
-                  <Button fx:id="openCourseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Open a Course">
+                  <Button fx:id="openCourseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openSavedCourse" text="Open a Course">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

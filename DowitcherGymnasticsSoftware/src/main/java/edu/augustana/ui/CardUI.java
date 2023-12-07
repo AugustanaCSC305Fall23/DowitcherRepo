@@ -38,10 +38,6 @@ public class CardUI extends VBox{
         }
     }
 
-    public CardUI getCardUI() {
-        return this;
-    }
-
     public Card getCard() {
         return card;
     }
@@ -119,6 +115,7 @@ public class CardUI extends VBox{
                 for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
+//                        App.getCurrentCourse().getLessonPlanMap().put(App.getCurrentLessonPlan().getTitle(), App.getCurrentLessonPlan());
                         return;
                     }
                 }
@@ -126,6 +123,7 @@ public class CardUI extends VBox{
                 for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
+//                        App.getCurrentCourse().getLessonPlanMap().put(App.getCurrentLessonPlan().getTitle(), App.getCurrentLessonPlan());
                         return;
                     }
                 }

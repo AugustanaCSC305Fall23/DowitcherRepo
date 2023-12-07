@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -62,10 +63,10 @@ public class PrintpageController {
     @FXML
     public Node drawLessonPlan() {
         int eventCount = 0;
-        Map map = App.getCurrentLessonPlan().getEventMap();
-        System.out.println(map.toString());
-        for (Object key : map.keySet()) {
-            EventContainer eventContainer = (EventContainer) map.get(key);
+        List eventList = App.getCurrentLessonPlan().getEventList();
+        System.out.println(eventList.toString());
+        for (Object loopedEventContainer : eventList) {
+            EventContainer eventContainer = (EventContainer) loopedEventContainer;
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
             eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4);
@@ -100,10 +101,10 @@ public class PrintpageController {
         titleText.setText(currentLessonPlan.getTitle());
         titleText.setFont(Font.font(24));
         printLessonPlanVBox.getChildren().add(titleText);
-        Map map = App.getCurrentLessonPlan().getEventMap();
-        for (Object key : map.keySet()){
+        List eventList = App.getCurrentLessonPlan().getEventList();
+        for (Object loopedEventContainer : eventList){
             String eventText = currentLessonPlan.getTitle();
-            EventContainer eventContainer = (EventContainer) map.get(key);
+            EventContainer eventContainer = (EventContainer) loopedEventContainer;
             eventText = (eventContainer.getType()+"\n");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));

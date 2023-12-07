@@ -57,7 +57,7 @@ public class LessonPlanUI extends ScrollPane {
     }
 
     public void addEventContainer(EventContainerUI eventContainerUI) {
-        if (!lessonPlan.getEventMap().containsKey(eventContainerUI.getEvent())) {
+        if (!lessonPlan.getEventList().contains(eventContainerUI.getEvent())) {
             lessonPlan.addEventContainer(eventContainerUI.getEventContainer());
             eventContainerUIList.add(eventContainerUI);
             lessonPlanVBox.getChildren().add(eventContainerUI);
@@ -110,22 +110,6 @@ public class LessonPlanUI extends ScrollPane {
         renameButton.setOnAction(e -> {
             String newTitle = renameTextField.getText();
             if (newTitle != null && !newTitle.equals("") && !lessonPlanMap.containsKey(newTitle)) {
-                App.getCurrentCourse().getLessonPlanMap().remove(lessonPlan.getTitle());
-                System.out.println("OLD KEYS:");
-                for (Object lPKey : App.getCurrentCourse().getLessonPlanMap().keySet()) {
-                    String keyText = (String) lPKey;
-                    System.out.println(keyText);
-                }
-                System.out.println("Done");
-                App.getCurrentCourse().getLessonPlanMap().keySet().remove(lessonPlan.getTitle());
-                System.out.println("NEW KEYS");
-                for (Object lPKey : App.getCurrentCourse().getLessonPlanMap().keySet()) {
-                    String keyText = (String) lPKey;
-                    System.out.println(keyText);
-                }
-                System.out.println("Done");
-                App.getCurrentCourse().getLessonPlanMap().put(newTitle, lessonPlan);
-
                 lessonPlanMap.remove(lessonPlan.getTitle());
                 lessonPlanMap.put(newTitle, this);
                 lessonPlan.renamePlan(newTitle);
@@ -176,7 +160,6 @@ public class LessonPlanUI extends ScrollPane {
     }
 
     private void deleteLessonPlan() {
-        App.getCurrentCourse().getLessonPlanMap().remove(lessonPlan.getTitle());
         lessonPlanMap.remove(lessonPlan.getTitle());
         inLessonTab.getTabPane().getTabs().remove(inLessonTab);
         LessonTab.getLessonTabMap().remove(inLessonTab.getTitle());

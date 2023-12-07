@@ -1,0 +1,38 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "title": "New Lesson Plan",
+      "eventList": [
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ]
+    },
+    {
+      "title": "New Lesson Plan1",
+      "eventList": [
+        {
+          "title": "Beam",
+          "cards": [
+            "BL5"
+          ],
+          "type": "Beam"
+        },
+        {
+          "title": "Floor",
+          "cards": [
+            "BS9",
+            "C3"
+          ],
+          "type": "Floor"
+        }
+      ]
+    }
+  ]
+}
