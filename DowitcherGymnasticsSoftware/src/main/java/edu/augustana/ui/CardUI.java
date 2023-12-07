@@ -12,6 +12,9 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
+/*
+This class represents a Card object in the UI
+ */
 public class CardUI extends VBox{
 
     private Card card;
@@ -23,6 +26,10 @@ public class CardUI extends VBox{
     public static final int CARD_THUMBNAIL_WIDTH = 270;
     public static final int CARD_THUMBNAIL_HEIGHT = 200;
 
+    /*
+    Constructs a CardUI object with the given Card object
+    param: card - the Card object to be represented in the UI
+     */
     public CardUI(Card card) {
         this.card = card;
         this.setId(String.format("%s-%s", card.getCode(), card.getEvent()));
@@ -38,6 +45,9 @@ public class CardUI extends VBox{
         }
     }
 
+    /*
+    Returns the Card object associated with this CardUI object
+     */
     public Card getCard() {
         return card;
     }
@@ -145,5 +155,4 @@ public class CardUI extends VBox{
     public void setInEventContainerUI(EventContainerUI inEventContainerUI) {
         this.inEventContainerUI = inEventContainerUI;
     }
-
 }

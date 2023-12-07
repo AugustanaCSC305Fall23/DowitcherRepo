@@ -19,7 +19,6 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.Region?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.augustana.EditingPageController">
    <top>
       <MenuBar fx:id="menuBar" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -122,7 +121,7 @@
               <tabs>
                   <Tab fx:id="newTabButton" text="+">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane />
                     </content>
                   </Tab>
               </tabs>

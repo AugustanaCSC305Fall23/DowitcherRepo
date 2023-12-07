@@ -46,6 +46,7 @@ public class LessonPlanUI extends ScrollPane {
         lessonPlanVBox.getChildren().addAll(titleAndDeleteHBox, eventComboBox, addEventButton);
         this.setContent(lessonPlanVBox);
         lessonPlanMap.put(lessonPlan.getTitle(), this);
+        this.fitToWidthProperty().setValue(true);
     }
 
     public LessonPlan getLessonPlan() {
