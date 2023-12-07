@@ -15,9 +15,12 @@ public class LessonPlan {
 
     private List eventList;
 
+    private EquipmentList equipmentList;
+
     public LessonPlan(String title) {
         this.title = title;
         this.eventList = new ArrayList<EventContainer>();
+        equipmentList = new EquipmentList();
     }
 
     public void addEventContainer(EventContainer addedContainer) {
@@ -50,6 +53,10 @@ public class LessonPlan {
 
     public String getTitle() {
         return title;
+    }
+
+    public EquipmentList getEquipmentList() {
+        return equipmentList;
     }
 
 

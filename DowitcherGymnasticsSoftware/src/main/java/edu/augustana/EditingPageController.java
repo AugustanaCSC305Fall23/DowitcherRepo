@@ -334,7 +334,7 @@ public class EditingPageController {
     private void openCourse() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
@@ -429,7 +429,7 @@ public class EditingPageController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Course");
         fileChooser.setInitialDirectory(new File("src/main/resources/Saved Courses"));
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);

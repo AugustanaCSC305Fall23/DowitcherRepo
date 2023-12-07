@@ -54,7 +54,7 @@ public class LandingPageController {
     private void openSavedCourse() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = coursesTilePane.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
