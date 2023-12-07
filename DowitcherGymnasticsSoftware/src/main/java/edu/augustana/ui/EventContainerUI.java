@@ -32,8 +32,7 @@ public class EventContainerUI extends VBox {
         cardUIList = new ArrayList<>();
         this.setId(String.format("%s", eventContainer.getType()));
         this.cardTilePane = new TilePane();
-//        this.cardTilePane.setMaxWidth(CardUI.CARD_THUMBNAIL_WIDTH * 4 + CardUI.CARD_THUMBNAIL_WIDTH / 4);
-        this.cardTilePane.setMaxWidth(USE_COMPUTED_SIZE);
+        this.fillWidthProperty().setValue(true);
         this.setMaxWidth(USE_COMPUTED_SIZE);
         HBox eventHBox = new HBox();
         eventLabel = new Label(eventContainer.getType());
@@ -46,6 +45,7 @@ public class EventContainerUI extends VBox {
         this.addOnDragOver();
         this.addOnDragDropped();
         addBlankCard();
+//        this.setWidth(USE_COMPUTED_SIZE);
     }
 
     public EventContainer getEventContainer() {
