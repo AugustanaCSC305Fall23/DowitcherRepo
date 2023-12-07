@@ -161,15 +161,18 @@ public class EventContainerUI extends VBox {
     /**
      * Draws the cards associated with this EventContainerUI object in its TilePane object
      */
-    public void drawCardInEventContainerUI() {
+    public int drawCardInEventContainerUI() {
         cardTilePane.getChildren().clear();
+        int count = 0;
         for (String cardID : eventContainer.getCards()) {
+            count++;
             CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardID));
             cardUI.addCardZoomAndOutline();
             cardUI.removeOnDoubleClick();
             cardUI.removeDragDrop();
             cardTilePane.getChildren().add(cardUI);
         }
+        return count;
     }
 
 }

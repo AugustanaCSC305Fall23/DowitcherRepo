@@ -10,7 +10,7 @@ public class Printers {
      * @param scrollpane
      * @param printer
      */
-    public static void print(ScrollPane scrollpane, Printer printer) {
+    public static void print(ScrollPane scrollpane, Printer printer, int eventCount) {
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
         printerJob.setPrinter(printer);
@@ -19,14 +19,26 @@ public class Printers {
 
         Scale scale = scale(scrollpane, printerJob, pageLayout);
         scrollpane.getTransforms().add(scale);
-
-
-        if (success) {
+        double contentHeight = scrollpane.getContent().getLayoutBounds().getHeight();
+        System.out.println("Height" + contentHeight);
+        System.out.println(eventCount);
+        double startY = 0;
+        if (eventCount <= 4){
             printerJob.getJobSettings().setPageLayout(pageLayout);
             printerJob.printPage(scrollpane);
-            printerJob.endJob();
-
+        }else{
+            while (startY < contentHeight) {
+                double endY = Math.min(startY + 1600, contentHeight);
+                scrollpane.setVvalue(startY / contentHeight);
+                printerJob.getJobSettings().setPageLayout(pageLayout);
+                if (printerJob.printPage(scrollpane)) {
+                    startY = endY;
+                } else {
+                    break;
+                }
+            }
         }
+        printerJob.endJob();
         scrollpane.getTransforms().remove(scale);
     }
 

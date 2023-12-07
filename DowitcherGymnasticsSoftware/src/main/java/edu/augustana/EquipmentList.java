@@ -30,10 +30,10 @@ public class EquipmentList {
                 }
             }
         }
-        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
-            String equipment = (String) equipmentObject;
-            System.out.println(equipment);
-        }
+//        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
+//            String equipment = (String) equipmentObject;
+//            System.out.println(equipment);
+//        }
     }
 
     /**
@@ -50,10 +50,10 @@ public class EquipmentList {
                 equipmentAmountMap.remove(equipment);
             }
         }
-        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
-            String equipment = (String) equipmentObject;
-            System.out.println(equipment);
-        }
+//        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
+//            String equipment = (String) equipmentObject;
+//            System.out.println(equipment);
+//        }
     }
 
     /**

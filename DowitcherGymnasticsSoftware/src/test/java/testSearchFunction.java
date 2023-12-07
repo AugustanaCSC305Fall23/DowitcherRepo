@@ -15,8 +15,7 @@ public class testSearchFunction {
     //this method will be used in the testPerformSearch method and should have all the cards inside by default
     private SearchFunction makeSampleSearch() {
         CardLibrary cardLibrary = new CardLibrary();
-        cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
-        cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
+        cardLibrary.readInCards("src/main/resources/Card Packs");
         List<Card> cards = cardList;
         return new SearchFunction();
     }
@@ -28,11 +27,11 @@ public class testSearchFunction {
     @Test
     void testPerformSearch() {
         SearchFunction test = makeSampleSearch();
-        assertEquals(38, test.performSearch("").size());
+        assertEquals(36, test.performSearch("").size());
         System.out.println(test.performSearch("").size());
         assertEquals(2, test.performSearch("beam").size());
         System.out.println(test.performSearch("beam").size());
-        assertEquals(7, test.performSearch("handstand").size());
+        assertEquals(6, test.performSearch("handstand").size());
         System.out.println(test.performSearch("handstand").size());
 
     }
