@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.print.Printer;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -29,8 +31,8 @@ public class PrintpageController {
     private ComboBox<Printer> printerChooser;
     @FXML
     private VBox printLessonPlanVBox;
-    @FXML
-    private Label lessonPlanLabel;
+
+    private int eventCount = 0;
     /**
      *
      */
@@ -39,15 +41,11 @@ public class PrintpageController {
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setMinWidth(1000);
-
-        //stage.setMaximized(true);
+        scrollpane.setPrefWidth(270*4);
         ObservableList<Printer> printerNames = FXCollections.observableArrayList();
         ObservableSet<Printer> printers = Printer.getAllPrinters();
         printerNames.addAll(printers);
         printerChooser.setItems(printerNames);
-
-
-
     }
     /**
      *
@@ -62,24 +60,32 @@ public class PrintpageController {
      */
     @FXML
     public Node drawLessonPlan() {
-        int eventCount = 0;
+        Text titleLabel = new Text();
+        titleLabel.setText(currentLessonPlan.getTitle());
+        titleLabel.setFont(Font.font(24));
+        printLessonPlanVBox.getChildren().add(titleLabel);
+
         List eventList = App.getCurrentLessonPlan().getEventList();
         System.out.println(eventList.toString());
         for (Object loopedEventContainer : eventList) {
             EventContainer eventContainer = (EventContainer) loopedEventContainer;
+
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4);
-            eventContainerUI.drawCardInEventContainerUI();
-//            for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-//                System.out.println("THE CARD THAT SHOULD BE ADDED: " + eventContainer.getCards().get(cardIndex));
-//                Card card = CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-////                CardGraphic.addCardToEventContainerGraphic(vbox, card).setMinWidth(270*5);
-////                eventContainerUI.drawCardInEventContainerUI();
-//            }
+
+            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
+            int cardCount = eventContainerUI.drawCardInEventContainerUI();
+            if(cardCount > 4){
+                eventCount++;
+            }
             printLessonPlanVBox.getChildren().add(eventContainerUI);
         }
         System.out.println("Events: " + eventCount);
+        if(eventCount > 4) {
+            scrollpane.setPrefHeight(950);
+        }else{
+            scrollpane.setPrefHeight(250*eventCount);
+        }
         return printLessonPlanVBox;
     }
 
@@ -108,15 +114,18 @@ public class PrintpageController {
             eventText = (eventContainer.getType()+"\n");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
-                eventText = eventText + card.getTitle() + ", ";
+                eventText = eventText + card.getCode() + " " + card.getTitle() + ", ";
 
             }
 
             Text text = new Text (eventText);
             text.setFont(Font.font(16));
-            printLessonPlanVBox.getChildren().addAll( text);
+            printLessonPlanVBox.getChildren().addAll(text);
+
 
         }
+        scrollpane.setPrefHeight(500);
+        scrollpane.setPrefWidth(270*4);
         return printLessonPlanVBox;
     }
 
@@ -139,7 +148,7 @@ public class PrintpageController {
             new Alert(Alert.AlertType.WARNING, "Select a printer first!").show();
 
         }else{
-            Printers.print(scrollpane, pickedPrinter);
+            Printers.print(scrollpane, pickedPrinter, eventCount);
         }
     }
 

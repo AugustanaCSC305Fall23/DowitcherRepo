@@ -1,0 +1,98 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "title": "New Lesson Plan",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19",
+            "BL5"
+          ],
+          "type": "Beam"
+        },
+        {
+          "title": "Floor",
+          "cards": [
+            "BS9",
+            "C3",
+            "ER1",
+            "F2",
+            "FS4",
+            "H10A",
+            "H13 ",
+            "H5"
+          ],
+          "type": "Floor"
+        },
+        {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB8",
+            "HB20"
+          ],
+          "type": "Horizontal Bar"
+        },
+        {
+          "title": "Strength",
+          "cards": [
+            "M1"
+          ],
+          "type": "Strength"
+        },
+        {
+          "title": "Parallel Bars",
+          "cards": [
+            "PB22",
+            "PB5A"
+          ],
+          "type": "Parallel Bars"
+        },
+        {
+          "title": "Pommel Horse",
+          "cards": [
+            "PH3",
+            "PH13"
+          ],
+          "type": "Pommel Horse"
+        }
+      ],
+      "equipmentList": {
+        "equipmentAmountMap": {
+          "8 incher": 1,
+          "Atheletic Band": 1,
+          "Beam": 3,
+          "Floor Beam Resi": 1,
+          "Foam Block": 3,
+          "High Bar": 1,
+          "Low Bar": 2,
+          "Low Bar/High Bar": 1,
+          "Mailbox": 1,
+          "Mushroom": 1,
+          "Pacman/Wall": 1,
+          "Pacman/tall block/resi": 1,
+          "Panel Mat": 2,
+          "Panel Mat/Resi": 1,
+          "Parallel Bars": 2,
+          "Pit Pillow/Pit/Wedge": 1,
+          "Pommel Horse without handles": 1,
+          "Soft Mat": 1,
+          "Tumble Track": 1,
+          "Wedge Mat": 1,
+          "Wedge/Tall Panel Mat": 1,
+          "slider": 1
+        }
+      }
+    }
+  ]
+}
