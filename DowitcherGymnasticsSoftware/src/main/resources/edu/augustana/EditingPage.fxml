@@ -49,7 +49,7 @@
       </MenuBar>
    </top>
    <left>
-      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="600.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+      <VBox fx:id="filterSearchCardVBox" maxHeight="1.7976931348623157E308" maxWidth="565.0" minHeight="0.0" minWidth="300.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
             <Accordion>
               <panes>
@@ -107,7 +107,7 @@
             <TextField fx:id="filterSearchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cardSearchFunction" />
              <ScrollPane fx:id="cardScrollPane" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                 <content>
-                    <TilePane fx:id="cardImageView" hgap="0" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" prefColumns="2" vgap="0" VBox.vgrow="ALWAYS" />
+                    <TilePane fx:id="cardImageView" maxHeight="1.7976931348623157E308" minHeight="384.0" minWidth="165.0" prefColumns="2" vgap="0" VBox.vgrow="ALWAYS" />
                 </content>
              </ScrollPane>
          </children>
