@@ -54,7 +54,7 @@ public class FilterSearch {
                     }
                 }
             }
-        }
+        } 
 
         // If no checkbox is selected, display all cards
         if (!anyCheckboxSelected) {
@@ -66,7 +66,7 @@ public class FilterSearch {
                 filteredCards.add(card);
             }
         }
-    }   
+    }
 
     public void clearFilter() {
         // Clear checkboxes and update cardImageView
