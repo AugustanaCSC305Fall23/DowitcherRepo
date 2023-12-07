@@ -38,10 +38,6 @@ public class CardUI extends VBox{
         }
     }
 
-    public CardUI getCardUI() {
-        return this;
-    }
-
     public Card getCard() {
         return card;
     }
@@ -119,6 +115,7 @@ public class CardUI extends VBox{
                 for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
+                        App.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
                         return;
                     }
                 }
@@ -126,9 +123,11 @@ public class CardUI extends VBox{
                 for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
+                        App.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
                         return;
                     }
                 }
+
             }
         });
     }
@@ -137,6 +136,8 @@ public class CardUI extends VBox{
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 inEventContainerUI.removeCard(this);
+                App.getCurrentLessonPlan().getEquipmentList().removeEquipment(card.getEquipment());
+                System.out.println("Equipment List:");
             }
         });
     }

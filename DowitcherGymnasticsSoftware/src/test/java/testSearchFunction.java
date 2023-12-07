@@ -18,7 +18,7 @@ public class testSearchFunction {
         cardLibrary.readInCards("src/main/resources/csv/DEMO1.csv");
         cardLibrary.readInCards("src/main/resources/csv/DEMO2.csv");
         List<Card> cards = cardList;
-        return new SearchFunction(cardLibrary);
+        return new SearchFunction();
     }
 
 

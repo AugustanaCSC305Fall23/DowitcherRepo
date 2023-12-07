@@ -84,7 +84,7 @@ public class EditingPageController {
     private Button applyFilterButton;
 
     @FXML
-    private TilePane cardImageView;
+    private TilePane cardImageView; 
 
     @FXML
     private Button clearFilterButton;
@@ -106,7 +106,7 @@ public class EditingPageController {
 
 
     @FXML
-    private TitledPane levelFilterTitledPane;  
+    private TitledPane levelFilterTitledPane;
 
     @FXML
     private ScrollPane planeScrollPane;
@@ -138,7 +138,7 @@ public class EditingPageController {
     @FXML
     public void initialize() {
         /////////////////////////////////////////////////////////// ** SEARCH TEXT FUNCTIONALITY
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         filterSearchField.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
                 cardSearchFunction();
@@ -146,7 +146,7 @@ public class EditingPageController {
         });
 
         ///////////////////////////////////////////////////////////// ** NEW LIVE SEARCH ***
-        searchFunction = new SearchFunction(App.cardLibrary);
+        searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
         filterSearch = new FilterSearch(List.of(
@@ -171,6 +171,7 @@ public class EditingPageController {
 
         homeItem.setOnAction(evt -> {
             try {
+                LessonPlanUI.getLessonPlanUIMap().clear();
                 switchToHome();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -178,10 +179,11 @@ public class EditingPageController {
         });
         printItem.setOnAction(evt -> {
             if (isLessonPlanSaved) {
-                save(evt);
+                LessonPlanUI.getLessonPlanUIMap().clear();
                 App.switchToPrintPage();
             } else {
                 showLessonPlanNotSavedWarning();
+                save(evt);
             }
         }); //Printers.printLessonPlan(planeScrollPane);});
         fileMenu.getItems().addAll(homeItem, printItem);
@@ -256,13 +258,16 @@ public class EditingPageController {
 
     //this method will be used to expand the search bar scroll pane to show two columns of cards instead of one
     //when the user clicks on the expand button
-    @FXML
+    @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
         cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = (originalWidth == CardGraphic.CARD_THUMBNAIL_WIDTH) ? CardGraphic.CARD_THUMBNAIL_WIDTH * 2 : CardGraphic.CARD_THUMBNAIL_WIDTH;
+        double newWidth = (originalWidth == 290) ? 565 : 290;
+//        if (newColumnCount == 1) {
+//            newWidth = CardGraphic.CARD_THUMBNAIL_WIDTH + 20;
+//        }
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -272,7 +277,7 @@ public class EditingPageController {
         //VBox.setVgrow(filterSearchCardVBox, Priority.ALWAYS);
 
         // Calculate the new width for each column
-        double columnWidth = newWidth / 2;
+        double columnWidth = newWidth / 2 - 10;
 
         // Set the preferred and max width for each card in the TilePane
         for (Node node : cardImageView.getChildren()) {
@@ -332,10 +337,13 @@ public class EditingPageController {
     private void openCourse() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        for (int tabIndex = 0; tabIndex < lessonPlanTabs.getTabs().size() -1; tabIndex++) {
+            lessonPlanTabs.getTabs().remove(tabIndex);
+        }
         openCourseWithFile(chosenFile);
     }
 
@@ -352,10 +360,8 @@ public class EditingPageController {
                     setCurrentLessonPlanTab();
                 });
                 lessonPlanTabs.getTabs().add(lessonPlanTabs.getTabs().size()-1, lessonPlanTab);
-//                for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
                 for (int index = 0; index < lessonPlan.getEventList().size(); index++) {
-//                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
-                    EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventList().get(index)), EventContainer.class);
+                    EventContainer eventContainer = (EventContainer) lessonPlan.getEventList().get(index);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
                     Stack<CardUI> cardUIStack = new Stack<>();
@@ -363,6 +369,7 @@ public class EditingPageController {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                             eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
                             CardUI cardUI = new CardUI(card);
+                            cardUI.setInEventContainerUI(eventContainerUI);
 //                            eventContainerUI.addCard(cardUI);
                             cardUIStack.push(cardUI);
                         }
@@ -425,7 +432,7 @@ public class EditingPageController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Course");
         fileChooser.setInitialDirectory(new File("src/main/resources/Saved Courses"));
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse", "*.gymcourse");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = cardImageView.getScene().getWindow();
         File chosenFile = fileChooser.showSaveDialog(mainWindow);
@@ -453,7 +460,7 @@ public class EditingPageController {
             System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
         }
 //        System.out.println("ENGINFASDADAD");
-        App.currentLessonPlan = (LessonPlan) App.currentCourse.getLessonPlanMap().get(currentTab.getText());
+        App.currentLessonPlan = (LessonPlan) App.getCurrentCourse().getLessonPlan(currentTab.getText());
         App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
 
 //        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
@@ -461,22 +468,18 @@ public class EditingPageController {
 //        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
-    private void createNewLessonPlanTab() {
+    private void createNewLessonPlanTab() { //NEEDS FIXING
         if (newTabButton.isSelected()) {
-            System.out.println("Printing out the lesson plan map");
-            for (Object lpKey : App.currentCourse.getLessonPlanMap().keySet()) {
-                String lpName = (String) lpKey;
-                System.out.println(lpName);
-            }
-            System.out.println("Done");
             String lessonPlanName = "New Lesson Plan";
-            if (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
-                lessonPlanName = lessonPlanName + "1";
-                while (App.currentCourse.getLessonPlanMap().containsKey(lessonPlanName)) {
-                    char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
-                    int charInt = getNumericValue(lastChar);
-                    charInt++;
-                    lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+            for (LessonPlan lessonPlanComparable : App.getCurrentCourse().getLessonPlanList()) {
+                if (lessonPlanComparable.getTitle().equals(lessonPlanName)) {
+                    lessonPlanName = lessonPlanName + "1";
+                    if (lessonPlanComparable.getTitle().equalsIgnoreCase(lessonPlanName)) {
+                        char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
+                        int charInt = getNumericValue(lastChar);
+                        charInt++;
+                        lessonPlanName = lessonPlanName.substring(0, lessonPlanName.length() - 1) + charInt;
+                    }
                 }
             }
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);

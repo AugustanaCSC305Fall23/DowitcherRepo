@@ -1,6 +1,7 @@
 package edu.augustana;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -63,13 +64,15 @@ public class PrintpageController {
         titleLabel.setText(currentLessonPlan.getTitle());
         titleLabel.setFont(Font.font(24));
         printLessonPlanVBox.getChildren().add(titleLabel);
-        Map map = App.getCurrentLessonPlan().getEventMap();
-        System.out.println(map.toString());
-        for (Object key : map.keySet()) {
-            EventContainer eventContainer = (EventContainer) map.get(key);
+
+        List eventList = App.getCurrentLessonPlan().getEventList();
+        System.out.println(eventList.toString());
+        for (Object loopedEventContainer : eventList) {
+            EventContainer eventContainer = (EventContainer) loopedEventContainer;
+
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
-            System.out.println(eventContainerUI.getCardUIList().size());
+
             eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
             int cardCount = eventContainerUI.drawCardInEventContainerUI();
             if(cardCount > 4){
@@ -79,7 +82,7 @@ public class PrintpageController {
         }
         System.out.println("Events: " + eventCount);
         if(eventCount > 4) {
-            scrollpane.setPrefHeight(915);
+            scrollpane.setPrefHeight(950);
         }else{
             scrollpane.setPrefHeight(250*eventCount);
         }
@@ -104,10 +107,10 @@ public class PrintpageController {
         titleText.setText(currentLessonPlan.getTitle());
         titleText.setFont(Font.font(24));
         printLessonPlanVBox.getChildren().add(titleText);
-        Map map = App.getCurrentLessonPlan().getEventMap();
-        for (Object key : map.keySet()){
+        List eventList = App.getCurrentLessonPlan().getEventList();
+        for (Object loopedEventContainer : eventList){
             String eventText = currentLessonPlan.getTitle();
-            EventContainer eventContainer = (EventContainer) map.get(key);
+            EventContainer eventContainer = (EventContainer) loopedEventContainer;
             eventText = (eventContainer.getType()+"\n");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
                 Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));

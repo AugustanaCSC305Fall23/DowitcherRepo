@@ -16,12 +16,10 @@ public class Course {
     private String courseName;
     private List<LessonPlan> lessonPlanList;
 
-    private Map<String, LessonPlan> lessonPlanMap;
 
     public Course(String courseName, List<LessonPlan> lessonPlanList) {
         this.courseName = courseName;
         this.lessonPlanList = lessonPlanList;
-        this.lessonPlanMap = new TreeMap<>();
     }
 
     public Course (String courseName) {
@@ -34,7 +32,7 @@ public class Course {
 
     public void addLessonPlan(LessonPlan lessonPlan) {
         lessonPlanList.add(lessonPlan);
-        lessonPlanMap.put(lessonPlan.getTitle(), lessonPlan);
+//        lessonPlanMap.put(lessonPlan.getTitle(), lessonPlan);
     }
 
 
@@ -47,9 +45,15 @@ public class Course {
         return lessonPlanList;
     }
 
-    public Map getLessonPlanMap() {
-    	return lessonPlanMap;
+    public LessonPlan getLessonPlan(String lessonPlanTitle) {
+    	for (LessonPlan lessonPlan : lessonPlanList) {
+    		if (lessonPlan.getTitle().equals(lessonPlanTitle)) {
+    			return lessonPlan;
+    		}
+    	}
+    	return null;
     }
+
 
     public void saveToFile(File logFile) throws IOException {
         System.out.println("Saving to file: " + logFile);
@@ -64,34 +68,19 @@ public class Course {
         Gson gson = new Gson();
         FileReader reader = new FileReader(logFile);
         Course course = gson.fromJson(reader, Course.class);
-        Map map = course.getLessonPlanMap();
-        for (Object key : map.keySet()) {
-            LessonPlan lessonPlan = new Gson().fromJson(new Gson().toJson(map.get(key)), LessonPlan.class);
-            course.getLessonPlanMap().put(lessonPlan.getTitle(), lessonPlan);
-            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-                EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(lessonPlan.getEventMap().get(eventContainerKey)), EventContainer.class);
-                lessonPlan.getEventMap().put(eventContainer.getType(), eventContainer);
-                for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
-                    Card card = (Card) new Gson().fromJson(new Gson().toJson(CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex))), Card.class);
-                    eventContainer.getCards().set(cardIndex, card.getCode());
-                }
+        for (LessonPlan lessonPlan : course.getLessonPlanList()) {
+            for (Object eventContainerObject : lessonPlan.getEventList()) {
+                EventContainer eventContainer = new Gson().fromJson(new Gson().toJson(eventContainerObject), EventContainer.class);
+                int eventIndex = lessonPlan.getEventList().indexOf(eventContainerObject);
+                lessonPlan.getEventList().set(eventIndex, eventContainer);
+//                for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++) {
+//                    Card card = new Gson().fromJson(new Gson().toJson(CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex))), Card.class);
+//                    eventContainer.getCards().set(cardIndex, card.getCode());
+//                }
+
             }
         }
-//        System.out.printf("Loaded course: %s\n", course.getCourseName());
-//        System.out.println("Course Lesson Plans:");
-//        for (Object key : course.getLessonPlanMap().keySet()) {
-//            LessonPlan lessonPlan = (LessonPlan) course.getLessonPlanMap().get(key);
-//            System.out.printf("Lesson Plan: %s\n", lessonPlan.getTitle());
-//            System.out.println("Lesson Plan Event Containers:");
-//            for (Object eventContainerKey : lessonPlan.getEventMap().keySet()) {
-//                EventContainer eventContainer = (EventContainer) lessonPlan.getEventMap().get(eventContainerKey);
-//                System.out.printf("Event Container: %s\n", eventContainer.getType());
-//                System.out.println("Event Container Cards:");
-//                for (String cardCode : eventContainer.getCards()) {
-//                    System.out.printf("Card Code: %s\n", cardCode);
-//                }
-//            }
-//        }
         return course;
     }
+
 }

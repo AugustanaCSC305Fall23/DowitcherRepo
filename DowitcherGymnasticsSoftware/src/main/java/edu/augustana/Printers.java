@@ -20,7 +20,8 @@ public class Printers {
         Scale scale = scale(scrollpane, printerJob, pageLayout);
         scrollpane.getTransforms().add(scale);
         double contentHeight = scrollpane.getContent().getLayoutBounds().getHeight();
-
+        System.out.println("Height" + contentHeight);
+        System.out.println(eventCount);
         double startY = 0;
         if (eventCount <= 4){
             printerJob.getJobSettings().setPageLayout(pageLayout);

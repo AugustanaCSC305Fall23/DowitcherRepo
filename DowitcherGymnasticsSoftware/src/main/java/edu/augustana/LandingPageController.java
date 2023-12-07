@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -17,6 +19,8 @@ import java.text.SimpleDateFormat;
 public class LandingPageController {
     @FXML
     private TilePane coursesTilePane;
+    @FXML
+    private Button openCourseButton;
 
     @FXML
     public void initialize() throws IOException {
@@ -46,8 +50,16 @@ public class LandingPageController {
 
     }
 
-    private void openSavedCourse() {
-
+    @FXML
+    private void openSavedCourse() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Course File");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
+        fileChooser.getExtensionFilters().add(filter);
+        Window mainWindow = coursesTilePane.getScene().getWindow();
+        File chosenFile = fileChooser.showOpenDialog(mainWindow);
+        App.loadCurrentCourseFromFile(chosenFile);
+        App.switchToEditingPage();
     }
     @FXML
     private void loadSavedCourses() throws IOException {
