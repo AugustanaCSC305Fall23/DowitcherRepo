@@ -50,11 +50,11 @@ public class FilterSearch {
                             cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
                             cardImageView.getChildren().add(cardThumbnail);
                             filteredCards.add(card);
-                        }
+                        }   
                     }
                 }
             }
-        } 
+        }
 
         // If no checkbox is selected, display all cards
         if (!anyCheckboxSelected) {
