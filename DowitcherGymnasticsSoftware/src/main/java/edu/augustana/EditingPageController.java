@@ -63,6 +63,8 @@ public class EditingPageController {
     private CheckBox maleCheckBox;
     @FXML
     private CheckBox femaleCheckBox;
+    @FXML
+    private CheckBox bothCheckBox;
 
     @FXML
     private TabPane lessonPlanTabs;
@@ -149,7 +151,7 @@ public class EditingPageController {
         searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
-        filterSearch = new FilterSearch(List.of(
+        filterSearch = new FilterSearch(List.of(  
                 // ... (Existing checkboxes)
         ), CardLibrary.cardList, cardImageView);
         filterSearchField.setOnKeyPressed(evt -> {
@@ -219,7 +221,8 @@ public class EditingPageController {
                 levelACheckBox,
                 levelAllCheckBox,
                 maleCheckBox,
-                femaleCheckBox
+                femaleCheckBox,
+                bothCheckBox
         ), CardLibrary.cardList, cardImageView);
 
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);

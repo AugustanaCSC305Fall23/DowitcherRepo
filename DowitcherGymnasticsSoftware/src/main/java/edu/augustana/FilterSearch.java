@@ -50,7 +50,7 @@ public class FilterSearch {
                             cardThumbnail.setId(card.getCode() + "-" + card.getEvent());
                             cardImageView.getChildren().add(cardThumbnail);
                             filteredCards.add(card);
-                        }   
+                        }
                     }
                 }
             }
@@ -83,24 +83,6 @@ public class FilterSearch {
             cardImageView.getChildren().add(cardThumbnail);
         }
     }
-
-
-
-//    public void clearFilter() {
-//        // Clear checkboxes and update cardImageView
-//        for (CheckBox checkbox : categoryCheckboxes) {
-//            checkbox.setSelected(false);
-//        }
-//        applyFilter();
-//        cardImageView.getChildren().clear();
-//
-//        // Iterate through the values in the cardMap
-//        for (Card card : cardMap.values()) {
-//            VBox cardThumbnail = generateCardThumbnail(card);
-//            cardImageView.getChildren().add(cardThumbnail);
-//        }
-//    }
-
 
     private VBox generateCardThumbnail(Card card) {
         return new CardUI(card);
