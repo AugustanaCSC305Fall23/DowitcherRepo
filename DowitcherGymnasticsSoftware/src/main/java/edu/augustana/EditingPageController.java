@@ -237,15 +237,7 @@ public class EditingPageController {
         courseLabel.setText(App.currentCourse.getCourseName());
         courseLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
-                dialog.setTitle("Course Name");
-                dialog.setHeaderText("Enter a new course name");
-                dialog.setContentText("Course Name:");
-                Optional<String> result = dialog.showAndWait();
-                if (result.isPresent()) {
-                    App.currentCourse.renameCourse(result.get());
-                    courseLabel.setText(App.currentCourse.getCourseName());
-                }
+                renameCourseLabel();
             }
         });
         if (App.getCurrentCourseFile() == null) {
@@ -523,6 +515,18 @@ public class EditingPageController {
         }
     }
 
+    @FXML
+    private void renameCourseLabel() {
+            TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
+            dialog.setTitle("Course Name");
+            dialog.setHeaderText("Enter a new course name");
+            dialog.setContentText("Course Name:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent() && !result.get().equalsIgnoreCase("")) {
+                App.currentCourse.renameCourse(result.get());
+                courseLabel.setText(App.currentCourse.getCourseName());
+            }
+    }
 
 }
 

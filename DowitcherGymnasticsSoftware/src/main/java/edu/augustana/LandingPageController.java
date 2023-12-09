@@ -103,4 +103,23 @@ public class LandingPageController {
             }
         }
     }
+
+    @FXML
+    public void openAboutPopup() {
+        Alert aboutAlert = new Alert(Alert.AlertType.INFORMATION);
+        aboutAlert.setTitle("About");
+        aboutAlert.setHeaderText("Dowitcher Gymnastics Software");
+        aboutAlert.setContentText("Developed by:\n" +
+                "Luke Heinrichs\n" +
+                "Sean Abracia-Wendel\n" +
+                "Patrick Mayer\n" +
+                "Moises Salinas\n" +"" +
+                "\n" +
+                "Supervised Supervisor:\n" +
+                "Dr. Forrest Stonedahl\n"  +
+                "\n" +
+                "Product Designer: \n" +
+                "Samantha Keehn");
+        aboutAlert.showAndWait();
+    }
 }
