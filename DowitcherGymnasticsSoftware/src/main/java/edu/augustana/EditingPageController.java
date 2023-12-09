@@ -248,6 +248,9 @@ public class EditingPageController {
                 }
             }
         });
+        if (App.getCurrentCourseFile() == null) {
+            showInstructionsPopUp();
+        }
     }
 
     @FXML
@@ -414,23 +417,26 @@ public class EditingPageController {
     private void showInstructionsPopUp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Help");
-        alert.setHeaderText(null);
+        alert.setHeaderText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
+                "Double click a Lesson Plan or Course name to rename it\n");
 
         // Create a TextArea for more space
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
+//        TextArea textArea = new TextArea();
+//        textArea.setEditable(false);
+//        textArea.setWrapText(true);
+//        textArea.setMaxWidth(Double.MAX_VALUE);
+//        textArea.setMaxHeight(Double.MAX_VALUE);
 
         // Set your detailed instructions here
-        textArea.setText("Double click to add and remove cards to events\n"
-                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+//        textArea.setText("Double click to add and remove cards to events\n"
+//                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
+//                "Double click a Lesson Plan or Course name to rename it\n" );
 
         // Create a GridPane to allow TextArea to expand
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
+//        expContent.add(textArea, 0, 0);
 
         // Set the expanded content to the Alert
         alert.getDialogPane().setExpandableContent(expContent);
