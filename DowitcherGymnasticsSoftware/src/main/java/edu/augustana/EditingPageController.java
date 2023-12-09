@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -21,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -132,6 +135,9 @@ public class EditingPageController {
 
     private FilterSearch filterSearch;
 
+    @FXML
+    private Label courseLabel;
+
     private boolean isLessonPlanSaved = false;
 
 
@@ -227,6 +233,20 @@ public class EditingPageController {
         ///////////////////////////////////////////////////////////
         newTabButton.setOnSelectionChanged(event -> {
             createNewLessonPlanTab();
+        });
+        courseLabel.setText(App.currentCourse.getCourseName());
+        courseLabel.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
+                dialog.setTitle("Course Name");
+                dialog.setHeaderText("Enter a new course name");
+                dialog.setContentText("Course Name:");
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    App.currentCourse.renameCourse(result.get());
+                    courseLabel.setText(App.currentCourse.getCourseName());
+                }
+            }
         });
     }
 

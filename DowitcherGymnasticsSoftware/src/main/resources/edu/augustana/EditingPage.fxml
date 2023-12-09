@@ -128,7 +128,7 @@
             </TabPane>
          </center>
          <top>
-            <Label text="COURSE NAME" BorderPane.alignment="CENTER" />
+            <Label fx:id="courseLabel" text="COURSE NAME" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
    </center>
