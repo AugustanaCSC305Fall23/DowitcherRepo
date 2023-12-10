@@ -73,7 +73,7 @@ public class PrintpageController {
             EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
             eventCount++;
 
-            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*5);
+            eventContainerUI.setMinWidth(CardUI.CARD_THUMBNAIL_WIDTH*4+20);
             int cardCount = eventContainerUI.drawCardInEventContainerUI();
             if(cardCount > 4){
                 eventCount++;

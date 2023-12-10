@@ -27,9 +27,13 @@ public class Printers {
             printerJob.getJobSettings().setPageLayout(pageLayout);
             printerJob.printPage(scrollpane);
         }else{
+            double printableHeight = pageLayout.getPrintableHeight();
             while (startY < contentHeight) {
-                double endY = Math.min(startY + 1600, contentHeight);
+                double endY = Math.min(startY + 950, contentHeight);
                 scrollpane.setVvalue(startY / contentHeight);
+                double visibleHeight = endY - startY;
+                scrollpane.setPrefViewportHeight(visibleHeight);
+
                 printerJob.getJobSettings().setPageLayout(pageLayout);
                 if (printerJob.printPage(scrollpane)) {
                     startY = endY;
@@ -37,6 +41,24 @@ public class Printers {
                     break;
                 }
             }
+            /*double printableHeight = pageLayout.getPrintableHeight();
+            int totalPages = (int) Math.ceil(contentHeight / printableHeight);
+
+            for (int i = 0; i < totalPages; i++) {
+                double startY = i * printableHeight;
+                double endY = Math.min(startY + printableHeight, contentHeight);
+
+                adjustViewport(scrollpane, startY, endY, contentHeight);
+
+                if (printerJob.printPage(scrollpane)) {
+                    if (i < totalPages - 1) {
+                        printerJob.endJob();
+                        printerJob = PrinterJob.createPrinterJob();
+                    }
+                } else {
+                    break; // Printing was canceled or failed
+                }
+            }*/
         }
         printerJob.endJob();
         scrollpane.getTransforms().remove(scale);
