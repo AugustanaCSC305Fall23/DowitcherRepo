@@ -29,7 +29,6 @@ import javafx.stage.Window;
 
 import static java.lang.Character.getNumericValue;
 
-
 public class EditingPageController {
 
     @FXML
@@ -66,9 +65,8 @@ public class EditingPageController {
     private CheckBox maleCheckBox;
     @FXML
     private CheckBox femaleCheckBox;
-
     @FXML
-    private TabPane lessonPlanTabs;
+    private TabPane lessonPlanTabs;  
 
     @FXML
     private Tab newTabButton;
