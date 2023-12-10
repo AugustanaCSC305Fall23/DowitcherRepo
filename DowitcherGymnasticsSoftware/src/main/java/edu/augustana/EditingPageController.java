@@ -201,6 +201,7 @@ public class EditingPageController {
         if (lessonPlanTabs.getTabs().size() == 1) {
             createNewLessonPlanTab();
         }
+        expandFilterSearchCardVBox();
 
         //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
         filterSearch = new FilterSearch(List.of(
@@ -261,13 +262,15 @@ public class EditingPageController {
     @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        if (newColumnCount == 1) {
+            expandButton.setText("Expand");
+        } else {
+            expandButton.setText("Collapse");
+        }
         cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = (originalWidth == 290) ? 565 : 290;
-//        if (newColumnCount == 1) {
-//            newWidth = CardGraphic.CARD_THUMBNAIL_WIDTH + 20;
-//        }
+        double newWidth = (originalWidth == CardUI.CARD_THUMBNAIL_WIDTH + 20) ? CardUI.CARD_THUMBNAIL_WIDTH * 2 + 25 : CardUI.CARD_THUMBNAIL_WIDTH + 20;
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -393,27 +396,29 @@ public class EditingPageController {
     @FXML
     private void showInstructionsPopUp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Help");
+        alert.setTitle("Instructions");
         alert.setHeaderText(null);
 
         // Create a TextArea for more space
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
+//        TextArea textArea = new TextArea();
+//        textArea.setEditable(false);
+//        textArea.setWrapText(true);
+//        textArea.setMaxWidth(Double.MAX_VALUE);
+//        textArea.setMaxHeight(Double.MAX_VALUE);
+
 
         // Set your detailed instructions here
-        textArea.setText("Double click to add and remove cards to events\n"
-                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+        alert.setContentText("Double click to add and remove cards to events.\n"
+                + "Drag-and-drop allows cards from a certain\nevent to be added to a different event.\n"
+                + "Double click on the lesson plan to rename it.\n");
 
         // Create a GridPane to allow TextArea to expand
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
+//        GridPane expContent = new GridPane();
+//        expContent.setMaxWidth(Double.MAX_VALUE);
+//        expContent.add(textArea, 0, 0);
 
         // Set the expanded content to the Alert
-        alert.getDialogPane().setExpandableContent(expContent);
+//        alert.getDialogPane().setExpandableContent(expContent);
 
         alert.showAndWait();
     }
