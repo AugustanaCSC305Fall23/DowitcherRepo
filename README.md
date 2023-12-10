@@ -9,12 +9,17 @@ New Features
 - Editing Page
 - Printing Page
 - Save/Load
+- About/Instructions
 
 Bug Fixes
+- 
 - 
 
 Improvements
 - 
+- Includes Courses instead of only Lesson Plans
+- Drag-and-Drop
+- Live searching
 
 Issues/Bugs
 - 
