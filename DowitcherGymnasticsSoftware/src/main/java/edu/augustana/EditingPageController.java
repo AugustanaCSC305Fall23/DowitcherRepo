@@ -352,7 +352,7 @@ public class EditingPageController {
     ////////////////////////////////////////////////////////////////////
 
     @FXML
-    private void openCourse() {
+    private void openCourse() {//Method is used to open a course file
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
@@ -382,13 +382,12 @@ public class EditingPageController {
                     EventContainer eventContainer = (EventContainer) lessonPlan.getEventList().get(index);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
-                    Stack<CardUI> cardUIStack = new Stack<>();
+                    Stack<CardUI> cardUIStack = new Stack<>(); // Used to reverse the order of the cards back to the original order
                         for (int cardIndex = eventContainer.getCards().size() -1; cardIndex >= 0; cardIndex--) {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                             eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
                             CardUI cardUI = new CardUI(card);
                             cardUI.setInEventContainerUI(eventContainerUI);
-//                            eventContainerUI.addCard(cardUI);
                             cardUIStack.push(cardUI);
                         }
                         while (!cardUIStack.isEmpty()) {
@@ -415,20 +414,6 @@ public class EditingPageController {
         alert.setHeaderText("Double click to add and remove cards to events\n"
                 + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
                 "Double click a Lesson Plan or Course name to rename it\n");
-
-        // Set your detailed instructions here
-//        textArea.setText("Double click to add and remove cards to events\n"
-//                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
-//                "Double click a Lesson Plan or Course name to rename it\n" );
-
-        // Create a GridPane to allow TextArea to expand
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-//        expContent.add(textArea, 0, 0);
-
-        // Set the expanded content to the Alert
-//        alert.getDialogPane().setExpandableContent(expContent);
-
         alert.showAndWait();
     }
     @FXML
@@ -467,19 +452,11 @@ public class EditingPageController {
     @FXML
     private void setCurrentLessonPlanTab() {
         Tab currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
-
-//        System.out.println("THIS IS THE CURRENT TAB: " + currentTab.getText());
-//        System.out.println("STARTING LESSONPLANUI PRINTING");
         for (Object lessonPlanUIKey : LessonPlanUI.getLessonPlanUIMap().keySet()) {
             System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
         }
-//        System.out.println("ENGINFASDADAD");
         App.currentLessonPlan = (LessonPlan) App.getCurrentCourse().getLessonPlan(currentTab.getText());
         App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
-
-//        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
-//        System.out.println(App.currentLessonPlan.toString());
-//        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
     private void createNewLessonPlanTab() {
@@ -490,7 +467,7 @@ public class EditingPageController {
                 lessonPlanTitles.add(lessonPlanComparable.getTitle());
             }
             if (lessonPlanTitles.contains(lessonPlanName)) {
-                lessonPlanName = lessonPlanName + " 1";
+                lessonPlanName = lessonPlanName + "1";
                 for (String lessonPlanTitle : lessonPlanTitles) {
                     if (lessonPlanTitle.equalsIgnoreCase(lessonPlanName)) {
                         char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
