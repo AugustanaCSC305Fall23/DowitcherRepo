@@ -26,7 +26,6 @@ import javafx.stage.Window;
 
 import static java.lang.Character.getNumericValue;
 
-
 public class EditingPageController {
 
     @FXML
@@ -64,10 +63,7 @@ public class EditingPageController {
     @FXML
     private CheckBox femaleCheckBox;
     @FXML
-    private CheckBox bothCheckBox;
-
-    @FXML
-    private TabPane lessonPlanTabs;
+    private TabPane lessonPlanTabs;  
 
     @FXML
     private Tab newTabButton;
@@ -151,7 +147,7 @@ public class EditingPageController {
         searchFunction = new SearchFunction();
         searchFunction.initializeSearchField(filterSearchField, cardImageView);
 
-        filterSearch = new FilterSearch(List.of(  
+        filterSearch = new FilterSearch(List.of(
                 // ... (Existing checkboxes)
         ), CardLibrary.cardList, cardImageView);
         filterSearchField.setOnKeyPressed(evt -> {
@@ -221,8 +217,7 @@ public class EditingPageController {
                 levelACheckBox,
                 levelAllCheckBox,
                 maleCheckBox,
-                femaleCheckBox,
-                bothCheckBox
+                femaleCheckBox
         ), CardLibrary.cardList, cardImageView);
 
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);
