@@ -119,11 +119,14 @@ public class LandingPageController {
                 "Patrick Mayer\n" +
                 "Moises Salinas\n" +"" +
                 "\n" +
-                "Supervised Supervisor:\n" +
+                "Project Supervisor:\n" +
                 "Dr. Forrest Stonedahl\n"  +
                 "\n" +
                 "Product Designer: \n" +
-                "Samantha Keehn");
+                "Samantha Keehn\n" +
+                "\n" +
+                "Special Thanks to:\n" +
+                "AtlantaFX for their free CSS themes: https://github.com/mkpaz/atlantafx");
         aboutAlert.showAndWait();
     }
 
