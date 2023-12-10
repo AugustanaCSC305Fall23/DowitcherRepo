@@ -73,6 +73,11 @@ public class Card {
     public String getPath() { //Returns the path to the image
         return String.format("Card Packs/%s/%s", packFolder, image);
     }
+
+    public String getThumbnailPath() { //Returns the path to the thumbnail
+        System.out.println(String.format("Card Packs/%s/thumbs/%s.jpg", packFolder, image.substring(0, image.length() - 4)));
+        return String.format("Card Packs/%s/thumbs/%s.jpg", packFolder, image.substring(0, image.length() - 4));
+    }
     public String getGender() {
         return gender;
     }

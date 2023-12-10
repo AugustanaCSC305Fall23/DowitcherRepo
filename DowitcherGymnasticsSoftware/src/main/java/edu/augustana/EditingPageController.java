@@ -266,7 +266,7 @@ public class EditingPageController {
     @FXML
     private void loadCards() {
         for (Object cardKey : CardLibrary.cardMap.keySet()) {
-            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
+            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey), true);
             cardImageView.getChildren().add(cardUI);
         }
     }
