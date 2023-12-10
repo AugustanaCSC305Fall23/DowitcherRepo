@@ -486,13 +486,17 @@ public class EditingPageController {
 //        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
-    private void createNewLessonPlanTab() { //NEEDS FIXING
+    private void createNewLessonPlanTab() {
         if (newTabButton.isSelected()) {
             String lessonPlanName = "New Lesson Plan";
-            for (LessonPlan lessonPlanComparable : App.getCurrentCourse().getLessonPlanList()) {
-                if (lessonPlanComparable.getTitle().equals(lessonPlanName)) {
-                    lessonPlanName = lessonPlanName + "1";
-                    if (lessonPlanComparable.getTitle().equalsIgnoreCase(lessonPlanName)) {
+            Set<String> lessonPlanTitles = new HashSet<String>();
+            for (LessonPlan lessonPlanComparable : App.currentCourse.getLessonPlanList()) {
+                lessonPlanTitles.add(lessonPlanComparable.getTitle());
+            }
+            if (lessonPlanTitles.contains(lessonPlanName)) {
+                lessonPlanName = lessonPlanName + " 1";
+                for (String lessonPlanTitle : lessonPlanTitles) {
+                    if (lessonPlanTitle.equalsIgnoreCase(lessonPlanName)) {
                         char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
                         int charInt = getNumericValue(lastChar);
                         charInt++;
@@ -500,6 +504,10 @@ public class EditingPageController {
                     }
                 }
             }
+
+
+
+
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
             App.currentCourse.addLessonPlan(newLessonPlan);
             LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
