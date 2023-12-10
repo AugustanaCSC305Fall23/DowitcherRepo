@@ -19,6 +19,21 @@ public class Card {
     private String[] level;
     private String[] equipment;
     private String[] keywords;
+
+    /**
+     * Constructor for Card object
+     * @param code - code of the card
+     * @param event - event of the card
+     * @param category - category of the card
+     * @param title - title of the card
+     * @param packFolder - pack folder of the card
+     * @param image - image of the card
+     * @param gender - gender of the card
+     * @param modelSex - gender of the model shown in the card
+     * @param level - levels of the card
+     * @param equipment - equipment of the card
+     * @param keywords - keywords of the card
+     */
     public Card(String code, String event, String category, String title, String packFolder, String image, String gender, String modelSex, String[] level, String[] equipment, String[] keywords) {
         this.code = code;
         this.event = event;
@@ -33,6 +48,9 @@ public class Card {
         this.keywords = keywords;
     }
 
+    /**
+     * Constructor for Blank Card object
+     */
     public Card(){
         this("", "", "", "", "", "", "", "", null, null, null);
         this.image = "Blank Card.png";

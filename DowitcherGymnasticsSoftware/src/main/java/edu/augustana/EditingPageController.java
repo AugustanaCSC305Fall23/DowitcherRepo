@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -21,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -132,6 +135,9 @@ public class EditingPageController {
 
     private FilterSearch filterSearch;
 
+    @FXML
+    private Label courseLabel;
+
     private boolean isLessonPlanSaved = false;
 
 
@@ -228,6 +234,15 @@ public class EditingPageController {
         newTabButton.setOnSelectionChanged(event -> {
             createNewLessonPlanTab();
         });
+        courseLabel.setText(App.currentCourse.getCourseName());
+        courseLabel.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                renameCourseLabel();
+            }
+        });
+        if (App.getCurrentCourseFile() == null) {
+            showInstructionsPopUp();
+        }
     }
 
     @FXML
@@ -394,23 +409,26 @@ public class EditingPageController {
     private void showInstructionsPopUp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Help");
-        alert.setHeaderText(null);
+        alert.setHeaderText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
+                "Double click a Lesson Plan or Course name to rename it\n");
 
         // Create a TextArea for more space
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
+//        TextArea textArea = new TextArea();
+//        textArea.setEditable(false);
+//        textArea.setWrapText(true);
+//        textArea.setMaxWidth(Double.MAX_VALUE);
+//        textArea.setMaxHeight(Double.MAX_VALUE);
 
         // Set your detailed instructions here
-        textArea.setText("Double click to add and remove cards to events\n"
-                + "Drag-and-drop allows cards from a certain event to be added to a different event");
+//        textArea.setText("Double click to add and remove cards to events\n"
+//                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
+//                "Double click a Lesson Plan or Course name to rename it\n" );
 
         // Create a GridPane to allow TextArea to expand
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
+//        expContent.add(textArea, 0, 0);
 
         // Set the expanded content to the Alert
         alert.getDialogPane().setExpandableContent(expContent);
@@ -497,6 +515,18 @@ public class EditingPageController {
         }
     }
 
+    @FXML
+    private void renameCourseLabel() {
+            TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
+            dialog.setTitle("Course Name");
+            dialog.setHeaderText("Enter a new course name");
+            dialog.setContentText("Course Name:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent() && !result.get().equalsIgnoreCase("")) {
+                App.currentCourse.renameCourse(result.get());
+                courseLabel.setText(App.currentCourse.getCourseName());
+            }
+    }
 
 }
 

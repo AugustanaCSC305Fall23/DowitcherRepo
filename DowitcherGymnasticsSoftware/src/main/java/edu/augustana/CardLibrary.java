@@ -13,15 +13,25 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * This class represents a CardLibrary object, which is a collection of Card objects
+ */
 public class CardLibrary {
     public static ArrayList<Card> cardList;
     public static Map<String, Card> cardMap;
 
+    /**
+     * Constructor for CardLibrary object
+     */
     public CardLibrary() {
         cardList = new ArrayList<Card>();
         cardMap = new TreeMap<String, Card>();
     }
 
+    /**
+     * Reads in cards from a CSV file
+     * @param fileName - name of the CSV file
+     */
     public void readInCards(String fileName) {
         for (File folder : new File(fileName).listFiles()) {
             System.out.println(folder.getName());
@@ -63,11 +73,20 @@ public class CardLibrary {
         }
     }
 
+    /**
+     * Adds a card to this CardLibrary object
+     * @param card - card to be added
+     */
     private void addCard(Card card) {
         cardList.add(card);
         cardMap.put(card.getCode(), card);
     }
 
+    /**
+     * Returns a card from this CardLibrary object based on the given code
+     * @param code - code of the card to be returned
+     * @return - card from this CardLibrary object based on the given code
+     */
     public Card getCardByCode(String code) {
         return (Card) cardMap.get(code);
     }

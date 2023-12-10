@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+/**
+ * This class represents an EventContainerUI object, which is a UI representation of an EventContainer object
+ */
 public class EventContainerUI extends VBox {
 
     private EventContainer eventContainer;
@@ -27,6 +29,10 @@ public class EventContainerUI extends VBox {
 
     private Label eventLabel;
 
+    /**
+     * Constructor for EventContainerUI object
+     * @param eventContainer - EventContainer object associated with this EventContainerUI object
+     */
     public EventContainerUI(EventContainer eventContainer) {
         this.eventContainer = eventContainer;
         cardUIList = new ArrayList<>();
@@ -45,17 +51,28 @@ public class EventContainerUI extends VBox {
         this.addOnDragOver();
         this.addOnDragDropped();
         addBlankCard();
-//        this.setWidth(USE_COMPUTED_SIZE);
     }
 
+    /**
+     * Getter method for EventContainer object associated with this EventContainerUI object
+     * @return - EventContainer object associated with this EventContainerUI object
+     */
     public EventContainer getEventContainer() {
         return eventContainer;
     }
 
+    /**
+     * Getter method for the type of EventContainer object associated with this EventContainerUI object
+     * @return - type of EventContainer object associated with this EventContainerUI object
+     */
     public String getEvent() {
         return eventContainer.getType();
     }
 
+    /**
+     * Adds a CardUI object to this EventContainerUI object
+     * @param cardUI - CardUI object to be added to this EventContainerUI object
+     */
     public void addCard(CardUI cardUI) {
         if (cardUIList.size() < 8 && !eventContainer.getCards().contains(cardUI.getCard().getCode()) && !cardUI.getCard().getTitle().equalsIgnoreCase("blankcard")) {
             cardUI.removeOnDoubleClick();
@@ -72,6 +89,10 @@ public class EventContainerUI extends VBox {
 
     }
 
+    /**
+     * Removes a CardUI object from this EventContainerUI object
+     * @param cardUI - CardUI object to be removed from this EventContainerUI object
+     */
     public void removeCard(CardUI cardUI) {
         eventContainer.removeCard(cardUI.getCard().getCode());
         cardUIList.remove(cardUI);
@@ -82,7 +103,10 @@ public class EventContainerUI extends VBox {
     }
 
 
-
+    /**
+     * Adds drag over functionality to this EventContainerUI object
+     * @return - this EventContainerUI object's TilePane object
+     */
     public TilePane addOnDragOver() {
         cardTilePane.setOnDragOver(e -> {
             if (e.getGestureSource() != cardTilePane && e.getDragboard().hasString()) {
@@ -93,6 +117,10 @@ public class EventContainerUI extends VBox {
         return cardTilePane;
     }
 
+    /**
+     * Adds drag and drop functionality to this EventContainerUI object
+     * @return - this EventContainerUI object's TilePane object
+     */
     public TilePane addOnDragDropped() {
         cardTilePane.setOnDragDropped(e -> {
             System.out.println("Drag dropped");
@@ -105,6 +133,9 @@ public class EventContainerUI extends VBox {
         return cardTilePane;
     }
 
+    /**
+     * Adds a blank card to this EventContainerUI object's TilePane object if it is empty
+     */
     public void addBlankCard() {
         if (cardTilePane.getChildren().isEmpty()) {
             Card blankCard = new Card();
@@ -116,6 +147,9 @@ public class EventContainerUI extends VBox {
         }
     }
 
+    /**
+     * Adds functionality to the removeEventContainerUIButton
+     */
     public void removeEventContainerFunctionality() {
         removeEventContainerUIButton.setMinHeight(eventLabel.getHeight());
         removeEventContainerUIButton.setOnAction(e -> {
@@ -124,6 +158,9 @@ public class EventContainerUI extends VBox {
         });
     }
 
+    /**
+     * Draws the cards associated with this EventContainerUI object in its TilePane object
+     */
     public int drawCardInEventContainerUI() {
         cardTilePane.getChildren().clear();
         int count = 0;
