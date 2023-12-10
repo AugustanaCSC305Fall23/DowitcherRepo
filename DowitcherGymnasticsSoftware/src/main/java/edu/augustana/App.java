@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import atlantafx.base.theme.*;
 import edu.augustana.ui.LessonPlanUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,13 +31,15 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, InterruptedException {
         stage.setMaximized(true);
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/Card Packs");
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+
     }
 
     static void setRoot(String fxml) throws IOException {
