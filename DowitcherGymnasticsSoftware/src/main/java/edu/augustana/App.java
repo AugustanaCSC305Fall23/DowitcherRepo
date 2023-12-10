@@ -64,9 +64,6 @@ public class App extends Application {
     public static void switchToEditingPage() {
         switchToView("EditingPage.fxml");
     }
-    public static void switchToCreateImportPage(){
-        switchToView("CreateImportPage.fxml");
-    }
     public static void loadCurrentCourseFromFile(File courseFile) throws IOException {
         currentCourse = Course.loadFromFile(courseFile);
         currentCourseFile = courseFile;
