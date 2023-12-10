@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -21,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -130,6 +133,9 @@ public class EditingPageController {
 
     private FilterSearch filterSearch;
 
+    @FXML
+    private Label courseLabel;
+
     private boolean isLessonPlanSaved = false;
 
 
@@ -199,6 +205,7 @@ public class EditingPageController {
         if (lessonPlanTabs.getTabs().size() == 1) {
             createNewLessonPlanTab();
         }
+        expandFilterSearchCardVBox();
 
         //////////////////////////////////////////////////////////// ** FILTER FUNCTIONALITY
         filterSearch = new FilterSearch(List.of(
@@ -226,6 +233,15 @@ public class EditingPageController {
         newTabButton.setOnSelectionChanged(event -> {
             createNewLessonPlanTab();
         });
+        courseLabel.setText(App.currentCourse.getCourseName());
+        courseLabel.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                renameCourseLabel();
+            }
+        });
+        if (App.getCurrentCourseFile() == null) {
+            showInstructionsPopUp();
+        }
     }
 
     @FXML
@@ -249,7 +265,7 @@ public class EditingPageController {
     @FXML
     private void loadCards() {
         for (Object cardKey : CardLibrary.cardMap.keySet()) {
-            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey));
+            CardUI cardUI = new CardUI((Card) CardLibrary.cardMap.get(cardKey), true);
             cardImageView.getChildren().add(cardUI);
         }
     }
@@ -259,13 +275,15 @@ public class EditingPageController {
     @FXML 
     private void expandFilterSearchCardVBox() {
         int newColumnCount = (cardImageView.getPrefColumns() == 1) ? 2 : 1;
+        if (newColumnCount == 1) {
+            expandButton.setText("Expand");
+        } else {
+            expandButton.setText("Collapse");
+        }
         cardImageView.setPrefColumns(newColumnCount);
         // Calculate the new width for the filterSearchCardVBox
         double originalWidth = filterSearchCardVBox.getPrefWidth();
-        double newWidth = (originalWidth == 290) ? 565 : 290;
-//        if (newColumnCount == 1) {
-//            newWidth = CardGraphic.CARD_THUMBNAIL_WIDTH + 20;
-//        }
+        double newWidth = (originalWidth == CardUI.CARD_THUMBNAIL_WIDTH + 20) ? CardUI.CARD_THUMBNAIL_WIDTH * 2 + 25 : CardUI.CARD_THUMBNAIL_WIDTH + 20;
 
         // Set the new width for the filterSearchCardVBox
         filterSearchCardVBox.setPrefWidth(newWidth);
@@ -332,7 +350,7 @@ public class EditingPageController {
     ////////////////////////////////////////////////////////////////////
 
     @FXML
-    private void openCourse() {
+    private void openCourse() {//Method is used to open a course file
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Course File");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Courses (*.gymcourse)", "*.gymcourse");
@@ -362,13 +380,12 @@ public class EditingPageController {
                     EventContainer eventContainer = (EventContainer) lessonPlan.getEventList().get(index);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
                     App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
-                    Stack<CardUI> cardUIStack = new Stack<>();
+                    Stack<CardUI> cardUIStack = new Stack<>(); // Used to reverse the order of the cards back to the original order
                         for (int cardIndex = eventContainer.getCards().size() -1; cardIndex >= 0; cardIndex--) {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
                             eventContainer.removeCard(eventContainer.getCards().get(cardIndex));
                             CardUI cardUI = new CardUI(card);
                             cardUI.setInEventContainerUI(eventContainerUI);
-//                            eventContainerUI.addCard(cardUI);
                             cardUIStack.push(cardUI);
                         }
                         while (!cardUIStack.isEmpty()) {
@@ -392,27 +409,9 @@ public class EditingPageController {
     private void showInstructionsPopUp() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Help");
-        alert.setHeaderText(null);
-
-        // Create a TextArea for more space
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-
-        // Set your detailed instructions here
-        textArea.setText("Double click to add and remove cards to events\n"
-                + "Drag-and-drop allows cards from a certain event to be added to a different event");
-
-        // Create a GridPane to allow TextArea to expand
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
-
-        // Set the expanded content to the Alert
-        alert.getDialogPane().setExpandableContent(expContent);
-
+        alert.setHeaderText("Double click to add and remove cards to events\n"
+                + "Drag-and-drop allows cards from a certain event to be added to a different event\n" +
+                "Double click a Lesson Plan or Course name to rename it\n");
         alert.showAndWait();
     }
     @FXML
@@ -451,28 +450,24 @@ public class EditingPageController {
     @FXML
     private void setCurrentLessonPlanTab() {
         Tab currentTab = lessonPlanTabs.getSelectionModel().getSelectedItem();
-
-//        System.out.println("THIS IS THE CURRENT TAB: " + currentTab.getText());
-//        System.out.println("STARTING LESSONPLANUI PRINTING");
         for (Object lessonPlanUIKey : LessonPlanUI.getLessonPlanUIMap().keySet()) {
             System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
         }
-//        System.out.println("ENGINFASDADAD");
         App.currentLessonPlan = (LessonPlan) App.getCurrentCourse().getLessonPlan(currentTab.getText());
         App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
-
-//        System.out.println(String.format("Current Tab = %s", currentTab.getText()));
-//        System.out.println(App.currentLessonPlan.toString());
-//        System.out.println("CURRENT LESSONPLANUI = " + App.currentLessonPlanUI);
     }
 
-    private void createNewLessonPlanTab() { //NEEDS FIXING
+    private void createNewLessonPlanTab() {
         if (newTabButton.isSelected()) {
             String lessonPlanName = "New Lesson Plan";
-            for (LessonPlan lessonPlanComparable : App.getCurrentCourse().getLessonPlanList()) {
-                if (lessonPlanComparable.getTitle().equals(lessonPlanName)) {
-                    lessonPlanName = lessonPlanName + "1";
-                    if (lessonPlanComparable.getTitle().equalsIgnoreCase(lessonPlanName)) {
+            Set<String> lessonPlanTitles = new HashSet<String>();
+            for (LessonPlan lessonPlanComparable : App.currentCourse.getLessonPlanList()) {
+                lessonPlanTitles.add(lessonPlanComparable.getTitle());
+            }
+            if (lessonPlanTitles.contains(lessonPlanName)) {
+                lessonPlanName = lessonPlanName + "1";
+                for (String lessonPlanTitle : lessonPlanTitles) {
+                    if (lessonPlanTitle.equalsIgnoreCase(lessonPlanName)) {
                         char lastChar = lessonPlanName.charAt(lessonPlanName.length() - 1);
                         int charInt = getNumericValue(lastChar);
                         charInt++;
@@ -480,6 +475,10 @@ public class EditingPageController {
                     }
                 }
             }
+
+
+
+
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
             App.currentCourse.addLessonPlan(newLessonPlan);
             LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
@@ -495,6 +494,18 @@ public class EditingPageController {
         }
     }
 
+    @FXML
+    private void renameCourseLabel() {
+            TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
+            dialog.setTitle("Course Name");
+            dialog.setHeaderText("Enter a new course name");
+            dialog.setContentText("Course Name:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent() && !result.get().equalsIgnoreCase("")) {
+                App.currentCourse.renameCourse(result.get());
+                courseLabel.setText(App.currentCourse.getCourseName());
+            }
+    }
 
 }
 

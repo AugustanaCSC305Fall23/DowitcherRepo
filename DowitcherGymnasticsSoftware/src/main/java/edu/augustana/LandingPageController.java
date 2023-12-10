@@ -2,6 +2,10 @@ package edu.augustana;
 
 import java.io.IOException;
 
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
+import atlantafx.base.theme.PrimerLight;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
@@ -102,5 +106,34 @@ public class LandingPageController {
                 }
             }
         }
+    }
+
+    @FXML
+    public void openAboutPopup() {
+        Alert aboutAlert = new Alert(Alert.AlertType.INFORMATION);
+        aboutAlert.setTitle("About");
+        aboutAlert.setHeaderText("Dowitcher Gymnastics Software");
+        aboutAlert.setContentText("Developed by:\n" +
+                "Luke Heinrichs\n" +
+                "Sean Abracia-Wendel\n" +
+                "Patrick Mayer\n" +
+                "Moises Salinas\n" +"" +
+                "\n" +
+                "Supervised Supervisor:\n" +
+                "Dr. Forrest Stonedahl\n"  +
+                "\n" +
+                "Product Designer: \n" +
+                "Samantha Keehn");
+        aboutAlert.showAndWait();
+    }
+
+    @FXML
+    private void toggleDarkMode() {
+        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    }
+
+    @FXML
+    private void toggleLightMode() {
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
     }
 }

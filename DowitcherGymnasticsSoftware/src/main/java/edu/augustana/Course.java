@@ -122,4 +122,8 @@ public class Course {
         return course;
     }
 
+    public void renameCourse(String newCourseName) {
+    	courseName = newCourseName;
+    }
+
 }

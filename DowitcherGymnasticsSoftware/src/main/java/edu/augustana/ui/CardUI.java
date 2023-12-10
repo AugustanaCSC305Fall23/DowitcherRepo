@@ -31,9 +31,18 @@ public class CardUI extends VBox{
      * @param card - Card object associated with this CardUI object
      */
     public CardUI(Card card) {
+        this(card, false);
+    }
+
+    public CardUI(Card card, Boolean useThumbnail) {
         this.card = card;
         this.setId(String.format("%s-%s", card.getCode(), card.getEvent()));
-        Image cardImage = new Image(card.getPath());
+        Image cardImage;
+        if (useThumbnail) {
+            cardImage = new Image(card.getThumbnailPath());
+        } else {
+            cardImage = new Image(card.getPath());
+        }
         ImageView cardImageView = new ImageView(cardImage);
         cardImageView.setFitHeight(CARD_THUMBNAIL_HEIGHT);
         cardImageView.setFitWidth(CARD_THUMBNAIL_WIDTH);
