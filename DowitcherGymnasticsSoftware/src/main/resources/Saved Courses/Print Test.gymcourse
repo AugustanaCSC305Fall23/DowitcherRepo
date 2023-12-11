@@ -57,6 +57,13 @@
             "PH13"
           ],
           "type": "Pommel Horse"
+        },
+        {
+          "title": "ALL",
+          "cards": [
+            "S1"
+          ],
+          "type": "ALL"
         }
       ],
       "equipmentList": {
@@ -82,6 +89,83 @@
           "Tumble Track": 1,
           "Wedge Mat": 1,
           "Wedge/Tall Panel Mat": 1,
+          "slider": 1
+        }
+      }
+    },
+    {
+      "title": "New Lesson Plan1",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B47",
+            "B41A"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB19",
+            "BB11",
+            "BL5"
+          ],
+          "type": "Beam"
+        },
+        {
+          "title": "Floor",
+          "cards": [
+            "BS9",
+            "ER1",
+            "FS4",
+            "F2"
+          ],
+          "type": "Floor"
+        },
+        {
+          "title": "Horizontal Bar",
+          "cards": [
+            "HB20",
+            "HB8",
+            "HS5"
+          ],
+          "type": "Horizontal Bar"
+        },
+        {
+          "title": "Strength",
+          "cards": [
+            "M1"
+          ],
+          "type": "Strength"
+        },
+        {
+          "title": "Parallel Bars",
+          "cards": [
+            "PB22",
+            "PB5A"
+          ],
+          "type": "Parallel Bars"
+        }
+      ],
+      "equipmentList": {
+        "equipmentAmountMap": {
+          "8 incher": 1,
+          "Atheletic Band": 1,
+          "Beam": 3,
+          "Floor Beam Resi": 1,
+          "Foam Block": 2,
+          "High Bar": 1,
+          "Low Bar": 2,
+          "Low Bar/High Bar": 1,
+          "Mailbox": 1,
+          "Pacman/Wall": 1,
+          "Panel Mat": 1,
+          "Parallel Bars": 2,
+          "Pit Pillow/Pit/Wedge": 1,
+          "Soft Mat": 1,
+          "Tumble Track": 1,
+          "Wedge Mat": 1,
           "slider": 1
         }
       }
