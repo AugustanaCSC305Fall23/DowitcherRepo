@@ -4,11 +4,14 @@ import java.io.File;
 import java.util.*;
 import java.io.IOException;
 
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
 import com.google.gson.Gson;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
 import edu.augustana.ui.LessonTab;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -600,5 +603,14 @@ public class EditingPageController {
             }
     }
 
+    @FXML
+    private void toggleDarkMode() {
+        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    }
+
+    @FXML
+    private void toggleLightMode() {
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
 }
 

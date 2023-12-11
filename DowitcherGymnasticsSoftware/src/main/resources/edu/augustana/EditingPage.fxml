@@ -35,6 +35,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#renameCourseLabel" text="Rename Course" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#toggleLightMode" text="Light Mode" />
+                  <MenuItem mnemonicParsing="false" onAction="#toggleDarkMode" text="Dark Mode" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Help">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showInstructionsPopUp" text="Instructions" />
