@@ -31,7 +31,7 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
+    public void start(Stage stage) throws IOException {
         stage.setMaximized(true);
         scene = new Scene(loadFXML("LandingPage"), 640, 480);
         stage.setScene(scene);
