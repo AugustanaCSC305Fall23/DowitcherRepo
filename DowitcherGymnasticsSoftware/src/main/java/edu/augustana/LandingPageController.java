@@ -2,6 +2,10 @@ package edu.augustana;
 
 import java.io.IOException;
 
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
+import atlantafx.base.theme.PrimerLight;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
@@ -115,11 +119,24 @@ public class LandingPageController {
                 "Patrick Mayer\n" +
                 "Moises Salinas\n" +"" +
                 "\n" +
-                "Supervised Supervisor:\n" +
+                "Project Supervisor:\n" +
                 "Dr. Forrest Stonedahl\n"  +
                 "\n" +
                 "Product Designer: \n" +
-                "Samantha Keehn");
+                "Samantha Keehn\n" +
+                "\n" +
+                "Special Thanks to:\n" +
+                "AtlantaFX for their free CSS themes: https://github.com/mkpaz/atlantafx");
         aboutAlert.showAndWait();
+    }
+
+    @FXML
+    private void toggleDarkMode() {
+        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    }
+
+    @FXML
+    private void toggleLightMode() {
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
     }
 }

@@ -1,5 +1,6 @@
 package edu.augustana;
 
+import atlantafx.base.theme.*;
 import edu.augustana.ui.LessonPlanUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +38,8 @@ public class App extends Application {
         stage.show();
         CardLibrary cardLibrary = new CardLibrary();
         cardLibrary.readInCards("src/main/resources/Card Packs");
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+
     }
 
     static void setRoot(String fxml) throws IOException {
