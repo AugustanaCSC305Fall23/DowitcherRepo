@@ -56,6 +56,7 @@ public class PrintpageController {
      */
     @FXML
     public Node drawLessonPlan() {
+        eventCount = 0;
         Text titleLabel = new Text();
         titleLabel.setText(currentLessonPlan.getTitle());
         titleLabel.setFont(Font.font(24));

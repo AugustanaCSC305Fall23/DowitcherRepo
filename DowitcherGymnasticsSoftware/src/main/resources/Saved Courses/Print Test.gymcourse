@@ -146,6 +146,20 @@
             "PB5A"
           ],
           "type": "Parallel Bars"
+        },
+        {
+          "title": "ALL",
+          "cards": [
+            "S1"
+          ],
+          "type": "ALL"
+        },
+        {
+          "title": "Tramp",
+          "cards": [
+            "T0"
+          ],
+          "type": "Tramp"
         }
       ],
       "equipmentList": {
@@ -166,7 +180,9 @@
           "Soft Mat": 1,
           "Tumble Track": 1,
           "Wedge Mat": 1,
-          "slider": 1
+          "slider": 1,
+          "Trampoline": 1,
+          "soft mat": 1
         }
       }
     }
