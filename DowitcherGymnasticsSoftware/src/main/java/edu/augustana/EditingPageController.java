@@ -32,7 +32,7 @@ import static java.lang.Character.getNumericValue;
 public class EditingPageController {
 
     @FXML
-    private CheckBox beamCheckbox;
+    private CheckBox beamCheckbox; 
 
     @FXML
     private CheckBox floorCheckbox;
@@ -65,6 +65,9 @@ public class EditingPageController {
     private CheckBox maleCheckBox;
     @FXML
     private CheckBox femaleCheckBox;
+    @FXML
+    private CheckBox neutralCheckBox;
+
     @FXML
     private TabPane lessonPlanTabs;  
 
@@ -224,7 +227,8 @@ public class EditingPageController {
                 levelACheckBox,
                 levelAllCheckBox,
                 maleCheckBox,
-                femaleCheckBox
+                femaleCheckBox,
+                neutralCheckBox
         ), CardLibrary.cardList, cardImageView);
 
       //  filterSearchField.setOnKeyPressed(this::handleSearchKeyPress);

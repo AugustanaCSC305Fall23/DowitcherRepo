@@ -81,7 +81,8 @@
                     <AnchorPane minHeight="200.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <CheckBox fx:id="maleCheckBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" text="M" />
-                              <CheckBox fx:id="femaleCheckBox" layoutX="14.0" layoutY="60.0" mnemonicParsing="false" text="F" />
+                              <CheckBox fx:id="femaleCheckBox" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" text="F" />
+                              <CheckBox fx:id="neutralCheckBox" layoutX="15.0" layoutY="100.0" mnemonicParsing="false" text="N" />
                            </children></AnchorPane>
                   </content>
                 </TitledPane>
