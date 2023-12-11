@@ -19,41 +19,55 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 
-
+/**
+ * This class is the controller for the landing page of the application.
+ * It is responsible for loading saved courses, creating new courses, and opening saved courses.
+ * It also contains the methods for switching between light and dark mode.
+ */
 public class LandingPageController {
     @FXML
     private TilePane coursesTilePane;
     @FXML
     private Button openCourseButton;
 
+    /**
+     * This method is called when the application is first opened.
+     * It loads all saved courses and displays them on the landing page.
+     * @throws IOException
+     */
     @FXML
     public void initialize() throws IOException {
         loadSavedCourses();
     }
+    /**
+     * This method is called when the user clicks the "New Course" button.
+     * It creates a new course and switches to the editing page.
+     * @throws IOException
+     */
     @FXML
     private void switchToEditingPage() throws IOException {
         App.currentCourse = createCourse();
         App.currentCourseFile = null;
-//        App.currentLessonPlan= createLessonPlan();
-//        App.currentCourse.addLessonPlan(App.currentLessonPlan);
         App.switchToEditingPage();
 
     }
 
-//    private LessonPlan createLessonPlan() {
-//        LessonPlan currentLessonPlan = new LessonPlan("New Lesson Plan");
-//        App.currentCourse.addLessonPlan(currentLessonPlan);
-//        App.currentLessonPlan = currentLessonPlan;
-//        System.out.println(String.format("%s HAS BEEN CREATED", App.currentLessonPlan.getTitle()));
-//        return currentLessonPlan;
-//    }
 
+    /**
+     * This method creates a new course with the name "New Course".
+     * @return the new course
+     */
     @FXML
     private Course createCourse() {
         return new Course("New Course");
 
     }
 
+    /**
+     * This method is called when the user clicks the "Open Course" button.
+     * It opens a file chooser and allows the user to select a saved course to open.
+     * @throws IOException
+     */
     @FXML
     private void openSavedCourse() throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -65,6 +79,11 @@ public class LandingPageController {
         App.loadCurrentCourseFromFile(chosenFile);
         App.switchToEditingPage();
     }
+    /**
+     * This method is called when the user clicks the "Load Saved Courses" button.
+     * It loads all saved courses and displays them on the landing page.
+     * @throws IOException
+     */
     @FXML
     private void loadSavedCourses() throws IOException {
         coursesTilePane.setHgap(10);
@@ -108,6 +127,10 @@ public class LandingPageController {
         }
     }
 
+    /**
+     * This method is called when the user clicks the "About" button.
+     * It opens a popup with information about the application.
+     */
     @FXML
     public void openAboutPopup() {
         Alert aboutAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -130,11 +153,19 @@ public class LandingPageController {
         aboutAlert.showAndWait();
     }
 
+    /**
+     * This method is called when the user clicks the "Dark Mode" button.
+     * It switches the application to dark mode.
+     */
     @FXML
     private void toggleDarkMode() {
         Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
     }
 
+    /**
+     * This method is called when the user clicks the "Light Mode" button.
+     * It switches the application to light mode.
+     */
     @FXML
     private void toggleLightMode() {
         Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
