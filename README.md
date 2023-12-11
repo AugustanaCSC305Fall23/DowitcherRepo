@@ -24,4 +24,4 @@ Improvements
 - Live searching
 
 Issues/Bugs
-- 
+- Problems with page break spacing
