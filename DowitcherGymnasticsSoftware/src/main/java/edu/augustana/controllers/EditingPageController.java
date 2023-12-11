@@ -1,4 +1,4 @@
-package edu.augustana; 
+package edu.augustana.controllers;
 
 import java.io.File;
 import java.util.*;
@@ -6,7 +6,13 @@ import java.io.IOException;
 
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
-import com.google.gson.Gson;
+import edu.augustana.search.FilterSearch;
+import edu.augustana.GymnasticsPlannerApp;
+import edu.augustana.search.SearchFunction;
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.CardLibrary;
+import edu.augustana.datastructure.EventContainer;
+import edu.augustana.datastructure.LessonPlan;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import edu.augustana.ui.LessonPlanUI;
@@ -17,8 +23,6 @@ import javafx.fxml.FXML;
 
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -26,7 +30,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -178,7 +181,7 @@ public class EditingPageController {
         });
 
 
-        //System.out.println(App.currentLessonPlan.toString());
+        //System.out.println(GymnasticsPlannerApp.currentLessonPlan.toString());
         /////////////////////////////////////////////////////////////
 
         MenuItem homeItem = new MenuItem("Home");
@@ -196,7 +199,7 @@ public class EditingPageController {
         printItem.setOnAction(evt -> {
             if (isLessonPlanSaved) {
                 LessonPlanUI.getLessonPlanUIMap().clear();
-                App.switchToPrintPage();
+                GymnasticsPlannerApp.switchToPrintPage();
             } else {
                 showLessonPlanNotSavedWarning();
                 save(evt);
@@ -211,8 +214,8 @@ public class EditingPageController {
 //                addByDoubleClick();
             }
         });
-        if (App.currentCourseFile != null) {
-            openCourseWithFile(App.currentCourseFile);
+        if (GymnasticsPlannerApp.getCurrentCourseFile() != null) {
+            openCourseWithFile(GymnasticsPlannerApp.getCurrentCourseFile());
         }
         if (lessonPlanTabs.getTabs().size() == 1) {
             createNewLessonPlanTab();
@@ -246,13 +249,13 @@ public class EditingPageController {
         newTabButton.setOnSelectionChanged(event -> {
             createNewLessonPlanTab();
         });
-        courseLabel.setText(App.currentCourse.getCourseName());
+        courseLabel.setText(GymnasticsPlannerApp.getCurrentCourse().getCourseName());
         courseLabel.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 renameCourseLabel();
             }
         });
-        if (App.getCurrentCourseFile() == null) {
+        if (GymnasticsPlannerApp.getCurrentCourseFile() == null) {
             showInstructionsPopUp();
         }
     }
@@ -268,12 +271,6 @@ public class EditingPageController {
         updateCardImageView(searchResults);
     }
 
-
-    @FXML
-    public static void switchToEditingPage() throws IOException {
-        App.setRoot("editingPage.fxml");
-    }
-
     /**
      * Switches the application's view to the home page.
      *
@@ -281,7 +278,7 @@ public class EditingPageController {
      */
     @FXML
     private void switchToHome() throws IOException{
-        App.setRoot("LandingPage");
+        GymnasticsPlannerApp.switchToLandingPage();
     }
 
     /**
@@ -411,12 +408,12 @@ public class EditingPageController {
     @FXML
     private void openCourseWithFile(File file) {
         if (file != null) {
-            for (LessonPlan lessonPlan : App.getCurrentCourse().getLessonPlanList()) {
-                App.currentLessonPlan = lessonPlan;
-                App.currentLessonPlanUI = new LessonPlanUI(lessonPlan);
+            for (LessonPlan lessonPlan : GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList()) {
+                GymnasticsPlannerApp.setCurrentLessonPlan(lessonPlan);
+                GymnasticsPlannerApp.setCurrentLessonPlanUI(new LessonPlanUI(lessonPlan));
                 LessonTab lessonPlanTab = new LessonTab(lessonPlan);
-                App.currentLessonPlanUI.setInLessonTab(lessonPlanTab);
-                lessonPlanTab.setContent(App.currentLessonPlanUI);
+                GymnasticsPlannerApp.getCurrentLessonPlanUI().setInLessonTab(lessonPlanTab);
+                lessonPlanTab.setContent(GymnasticsPlannerApp.getCurrentLessonPlanUI());
                 lessonPlanTab.setOnSelectionChanged(event -> {
                     setCurrentLessonPlanTab();
                 });
@@ -424,7 +421,7 @@ public class EditingPageController {
                 for (int index = 0; index < lessonPlan.getEventList().size(); index++) {
                     EventContainer eventContainer = (EventContainer) lessonPlan.getEventList().get(index);
                     EventContainerUI eventContainerUI = new EventContainerUI(eventContainer);
-                    App.currentLessonPlanUI.drawEventContainerinLessonPlanUI(eventContainerUI);
+                    GymnasticsPlannerApp.getCurrentLessonPlanUI().drawEventContainerinLessonPlanUI(eventContainerUI);
                     Stack<CardUI> cardUIStack = new Stack<>(); // Used to reverse the order of the cards back to the original order
                         for (int cardIndex = eventContainer.getCards().size() -1; cardIndex >= 0; cardIndex--) {
                             Card card = (Card) CardLibrary.cardMap.get(eventContainer.getCards().get(cardIndex));
@@ -482,10 +479,10 @@ public class EditingPageController {
     @FXML
     private void save(ActionEvent event) {
         isLessonPlanSaved = true;
-        if (App.getCurrentCourseFile() == null) {
+        if (GymnasticsPlannerApp.getCurrentCourseFile() == null) {
             saveAs(event);
         } else {
-            saveCurrentCourseToFile(App.getCurrentCourseFile());
+            saveCurrentCourseToFile(GymnasticsPlannerApp.getCurrentCourseFile());
         }
      }
 
@@ -510,7 +507,7 @@ public class EditingPageController {
 
     /**
      * Saves the current course to the specified file. If the chosenFile parameter is not null,
-     * it invokes the App.saveCurrentCourseToFile method to perform the actual saving.
+     * it invokes the GymnasticsPlannerApp.saveCurrentCourseToFile method to perform the actual saving.
      * In case of an IOException during the saving process, an error alert is displayed to the user.
      *
      * @param chosenFile The File object representing the location where the current course should be saved.
@@ -519,7 +516,7 @@ public class EditingPageController {
     private void saveCurrentCourseToFile(File chosenFile) {
         if (chosenFile != null) {
             try {
-                App.saveCurrentCourseToFile(chosenFile);
+                GymnasticsPlannerApp.saveCurrentCourseToFile(chosenFile);
             } catch (IOException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error saving course file: " + chosenFile).show();
             }
@@ -537,8 +534,8 @@ public class EditingPageController {
         for (Object lessonPlanUIKey : LessonPlanUI.getLessonPlanUIMap().keySet()) {
             System.out.println(LessonPlanUI.getLessonPlanUIMap().get(lessonPlanUIKey));
         }
-        App.currentLessonPlan = (LessonPlan) App.getCurrentCourse().getLessonPlan(currentTab.getText());
-        App.currentLessonPlanUI = (LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(App.getCurrentLessonPlan().getTitle());
+        GymnasticsPlannerApp.setCurrentLessonPlan((LessonPlan) GymnasticsPlannerApp.getCurrentCourse().getLessonPlan(currentTab.getText()));
+        GymnasticsPlannerApp.setCurrentLessonPlanUI((LessonPlanUI) LessonPlanUI.getLessonPlanUIMap().get(GymnasticsPlannerApp.getCurrentLessonPlan().getTitle()));
     }
 
     /**
@@ -551,7 +548,7 @@ public class EditingPageController {
         if (newTabButton.isSelected()) {
             String lessonPlanName = "New Lesson Plan";
             Set<String> lessonPlanTitles = new HashSet<String>();
-            for (LessonPlan lessonPlanComparable : App.currentCourse.getLessonPlanList()) {
+            for (LessonPlan lessonPlanComparable : GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList()) {
                 lessonPlanTitles.add(lessonPlanComparable.getTitle());
             }
             if (lessonPlanTitles.contains(lessonPlanName)) {
@@ -570,9 +567,9 @@ public class EditingPageController {
 
 
             LessonPlan newLessonPlan = new LessonPlan(lessonPlanName);
-            App.currentCourse.addLessonPlan(newLessonPlan);
+            GymnasticsPlannerApp.getCurrentCourse().addLessonPlan(newLessonPlan);
             LessonPlanUI newLessonPlanUI = new LessonPlanUI(newLessonPlan);
-            App.currentLessonPlanUI = newLessonPlanUI;
+            GymnasticsPlannerApp.setCurrentLessonPlanUI(newLessonPlanUI);
             LessonTab newTab = new LessonTab(newLessonPlan);
             newLessonPlanUI.setInLessonTab(newTab);
             newTab.setOnSelectionChanged(event -> {
@@ -592,14 +589,14 @@ public class EditingPageController {
      */
     @FXML
     private void renameCourseLabel() {
-            TextInputDialog dialog = new TextInputDialog(App.currentCourse.getCourseName());
+            TextInputDialog dialog = new TextInputDialog(GymnasticsPlannerApp.getCurrentCourse().getCourseName());
             dialog.setTitle("Course Name");
             dialog.setHeaderText("Enter a new course name");
             dialog.setContentText("Course Name:");
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent() && !result.get().equalsIgnoreCase("")) {
-                App.currentCourse.renameCourse(result.get());
-                courseLabel.setText(App.currentCourse.getCourseName());
+                GymnasticsPlannerApp.getCurrentCourse().renameCourse(result.get());
+                courseLabel.setText(GymnasticsPlannerApp.getCurrentCourse().getCourseName());
             }
     }
 

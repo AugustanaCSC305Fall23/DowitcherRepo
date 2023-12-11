@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.datastructure;
 import java.util.ArrayList;
 import java.util.List;
 

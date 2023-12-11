@@ -1,6 +1,9 @@
 package edu.augustana;
 
 import atlantafx.base.theme.*;
+import edu.augustana.datastructure.CardLibrary;
+import edu.augustana.datastructure.Course;
+import edu.augustana.datastructure.LessonPlan;
 import edu.augustana.ui.LessonPlanUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +15,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX GymnasticsPlannerApp
  */
-public class App extends Application {
+public class GymnasticsPlannerApp extends Application {
 
     public static Stage stage;
 
@@ -47,13 +50,13 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GymnasticsPlannerApp.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     private static void switchToView(String fxmlFileName) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlFileName));
+            FXMLLoader fxmlLoader = new FXMLLoader(GymnasticsPlannerApp.class.getResource(fxmlFileName));
             scene.setRoot(fxmlLoader.load());
         } catch (IOException ex) {
             System.err.println("Can't find FXML file " + fxmlFileName);
@@ -89,6 +92,22 @@ public class App extends Application {
 
     public static LessonPlanUI getCurrentLessonPlanUI() {
         return currentLessonPlanUI;
+    }
+
+    public static void setCurrentLessonPlan(LessonPlan lessonPlan) {
+        currentLessonPlan = lessonPlan;
+    }
+
+    public static void setCurrentLessonPlanUI(LessonPlanUI lessonPlanUI) {
+        currentLessonPlanUI = lessonPlanUI;
+    }
+
+    public static void setCurrentCourse(Course course) {
+        currentCourse = course;
+    }
+
+    public static void setCurrentCourseFile(File courseFile) {
+        currentCourseFile = courseFile;
     }
 
     public static void switchToPrintPage(){switchToView("PrintPage.fxml");}

@@ -1,8 +1,8 @@
 package edu.augustana.ui;
 
-import edu.augustana.App;
-import edu.augustana.Card;
-import edu.augustana.EventContainer;
+import edu.augustana.GymnasticsPlannerApp;
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.EventContainer;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -146,18 +146,18 @@ public class CardUI extends VBox{
                 newCardUI.addCardZoomAndOutline();
                 newCardUI.removeOnDoubleClick();
                 newCardUI.removeDragDrop();
-                for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
+                for (EventContainerUI eventContainerUI : GymnasticsPlannerApp.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
-                        App.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
+                        GymnasticsPlannerApp.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
                         return;
                     }
                 }
-                App.getCurrentLessonPlanUI().addEventContainer(new EventContainerUI(new EventContainer(card.getEvent())));
-                for (EventContainerUI eventContainerUI : App.getCurrentLessonPlanUI().getEventContainerUIList()) {
+                GymnasticsPlannerApp.getCurrentLessonPlanUI().addEventContainer(new EventContainerUI(new EventContainer(card.getEvent())));
+                for (EventContainerUI eventContainerUI : GymnasticsPlannerApp.getCurrentLessonPlanUI().getEventContainerUIList()) {
                     if (eventContainerUI.getEvent().equalsIgnoreCase(card.getEvent())) {
                         eventContainerUI.addCard(newCardUI);
-                        App.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
+                        GymnasticsPlannerApp.getCurrentLessonPlan().getEquipmentList().addEquipment(card.getEquipment());
                         return;
                     }
                 }
@@ -173,7 +173,7 @@ public class CardUI extends VBox{
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 inEventContainerUI.removeCard(this);
-                App.getCurrentLessonPlan().getEquipmentList().removeEquipment(card.getEquipment());
+                GymnasticsPlannerApp.getCurrentLessonPlan().getEquipmentList().removeEquipment(card.getEquipment());
                 System.out.println("Equipment List:");
             }
         });

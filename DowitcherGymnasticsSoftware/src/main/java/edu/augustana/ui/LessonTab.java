@@ -1,6 +1,6 @@
 package edu.augustana.ui;
 
-import edu.augustana.LessonPlan;
+import edu.augustana.datastructure.LessonPlan;
 import javafx.scene.control.Tab;
 
 import java.util.ArrayList;

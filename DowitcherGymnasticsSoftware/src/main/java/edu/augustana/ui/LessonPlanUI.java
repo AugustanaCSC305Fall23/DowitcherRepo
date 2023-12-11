@@ -1,6 +1,10 @@
 package edu.augustana.ui;
 
 import edu.augustana.*;
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.CardLibrary;
+import edu.augustana.datastructure.EventContainer;
+import edu.augustana.datastructure.LessonPlan;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -228,6 +232,6 @@ public class LessonPlanUI extends ScrollPane {
         inLessonTab.getTabPane().getTabs().remove(inLessonTab);
         LessonTab.getLessonTabMap().remove(inLessonTab.getTitle());
         LessonTab.getLessonTabList().remove(inLessonTab);
-        App.getCurrentCourse().getLessonPlanList().remove(lessonPlan);
+        GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList().remove(lessonPlan);
     }
 }

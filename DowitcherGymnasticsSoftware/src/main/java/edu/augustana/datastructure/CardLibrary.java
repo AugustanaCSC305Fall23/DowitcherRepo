@@ -1,9 +1,10 @@
-package edu.augustana;
+package edu.augustana.datastructure;
 
 import com.opencsv.CSVIterator;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import edu.augustana.datastructure.Card;
 
 import java.io.File;
 import java.io.FileNotFoundException;

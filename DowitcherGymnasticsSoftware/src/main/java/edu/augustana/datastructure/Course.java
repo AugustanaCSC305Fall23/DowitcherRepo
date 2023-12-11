@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.datastructure;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * This class represents a Course object, which is a collection of LessonPlan objects

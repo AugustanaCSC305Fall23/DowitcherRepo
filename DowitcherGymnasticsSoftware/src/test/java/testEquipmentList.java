@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.augustana.EquipmentList;
+import edu.augustana.datastructure.EquipmentList;
 import org.junit.jupiter.api.Test;
 
 public class testEquipmentList {

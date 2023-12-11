@@ -1,9 +1,9 @@
 package edu.augustana.ui;
 
-import edu.augustana.App;
-import edu.augustana.Card;
-import edu.augustana.CardLibrary;
-import edu.augustana.EventContainer;
+import edu.augustana.GymnasticsPlannerApp;
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.CardLibrary;
+import edu.augustana.datastructure.EventContainer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -153,8 +153,8 @@ public class EventContainerUI extends VBox {
     public void removeEventContainerFunctionality() {
         removeEventContainerUIButton.setMinHeight(eventLabel.getHeight());
         removeEventContainerUIButton.setOnAction(e -> {
-            App.getCurrentLessonPlan().getEventList().remove(App.getCurrentLessonPlan().getEventContainer(this.eventContainer.getTitle()));
-            App.getCurrentLessonPlanUI().removeEventContainer(this);
+            GymnasticsPlannerApp.getCurrentLessonPlan().getEventList().remove(GymnasticsPlannerApp.getCurrentLessonPlan().getEventContainer(this.eventContainer.getTitle()));
+            GymnasticsPlannerApp.getCurrentLessonPlanUI().removeEventContainer(this);
         });
     }
 

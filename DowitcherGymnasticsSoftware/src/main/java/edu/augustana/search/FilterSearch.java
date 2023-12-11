@@ -1,15 +1,16 @@
-package edu.augustana;
+package edu.augustana.search;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.augustana.datastructure.Card;
 import edu.augustana.ui.CardUI;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
-import static edu.augustana.CardLibrary.cardMap;
+import static edu.augustana.datastructure.CardLibrary.cardMap;
 
 
 /**

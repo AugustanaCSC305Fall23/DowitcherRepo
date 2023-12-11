@@ -1,5 +1,6 @@
-package edu.augustana;
+package edu.augustana.printing;
 
+import edu.augustana.GymnasticsPlannerApp;
 import javafx.print.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.transform.Scale;
@@ -17,7 +18,7 @@ public class Printers {
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
         printerJob.setPrinter(printer);
 
-        boolean success = printerJob.showPrintDialog(App.stage);
+        boolean success = printerJob.showPrintDialog(GymnasticsPlannerApp.stage);
         //Scale ScrollPane to fit on paper
         Scale scale = scale(scrollpane, printerJob, pageLayout);
         scrollpane.getTransforms().add(scale);

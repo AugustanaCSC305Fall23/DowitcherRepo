@@ -1,10 +1,11 @@
-package edu.augustana;
+package edu.augustana.controllers;
 
 import java.io.IOException;
 
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
-import atlantafx.base.theme.PrimerLight;
+import edu.augustana.GymnasticsPlannerApp;
+import edu.augustana.datastructure.Course;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -46,9 +47,9 @@ public class LandingPageController {
      */
     @FXML
     private void switchToEditingPage() throws IOException {
-        App.currentCourse = createCourse();
-        App.currentCourseFile = null;
-        App.switchToEditingPage();
+        GymnasticsPlannerApp.setCurrentCourse(createCourse());
+        GymnasticsPlannerApp.setCurrentCourseFile(null);
+        GymnasticsPlannerApp.switchToEditingPage();
 
     }
 
@@ -76,8 +77,8 @@ public class LandingPageController {
         fileChooser.getExtensionFilters().add(filter);
         Window mainWindow = coursesTilePane.getScene().getWindow();
         File chosenFile = fileChooser.showOpenDialog(mainWindow);
-        App.loadCurrentCourseFromFile(chosenFile);
-        App.switchToEditingPage();
+        GymnasticsPlannerApp.loadCurrentCourseFromFile(chosenFile);
+        GymnasticsPlannerApp.switchToEditingPage();
     }
     /**
      * This method is called when the user clicks the "Load Saved Courses" button.
@@ -112,8 +113,8 @@ public class LandingPageController {
                     });
                     savedCourseVBox.setOnMouseClicked(e -> {
                         try {
-                            App.loadCurrentCourseFromFile(file);
-                            App.switchToEditingPage();
+                            GymnasticsPlannerApp.loadCurrentCourseFromFile(file);
+                            GymnasticsPlannerApp.switchToEditingPage();
                             //EditingPageController.openLessonPlanWithFile(file);
                         } catch (Exception exception) {
                             exception.printStackTrace();

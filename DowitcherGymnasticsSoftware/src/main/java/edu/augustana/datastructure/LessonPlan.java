@@ -1,14 +1,10 @@
-package edu.augustana;
+package edu.augustana.datastructure;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import edu.augustana.GymnasticsPlannerApp;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * This class represents a LessonPlan object, which is a collection of EventContainer objects
@@ -44,9 +40,9 @@ public class LessonPlan {
      * @param name - new name for this LessonPlan object
      */
     public void renamePlan(String name) {
-        int index = App.getCurrentCourse().getLessonPlanList().indexOf(this);
-        App.getCurrentCourse().getLessonPlanList().remove(index);
-        App.getCurrentCourse().getLessonPlanList().add(index, this);
+        int index = GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList().indexOf(this);
+        GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList().remove(index);
+        GymnasticsPlannerApp.getCurrentCourse().getLessonPlanList().add(index, this);
         this.title = name;
     }
 

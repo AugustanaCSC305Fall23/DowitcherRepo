@@ -1,5 +1,7 @@
-package edu.augustana;
+package edu.augustana.search;
 
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.CardLibrary;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
 

@@ -1,7 +1,13 @@
-package edu.augustana;
+package edu.augustana.controllers;
 
 import java.io.IOException;
 import java.util.List;
+
+import edu.augustana.GymnasticsPlannerApp;
+import edu.augustana.printing.Printers;
+import edu.augustana.datastructure.Card;
+import edu.augustana.datastructure.CardLibrary;
+import edu.augustana.datastructure.EventContainer;
 import edu.augustana.ui.CardUI;
 import edu.augustana.ui.EventContainerUI;
 import javafx.collections.FXCollections;
@@ -15,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import static edu.augustana.App.currentLessonPlan;
 
 public class PrintpageController {
     @FXML
@@ -58,11 +63,11 @@ public class PrintpageController {
     public Node drawLessonPlan() {
         eventCount = 0;
         Text titleLabel = new Text();
-        titleLabel.setText(currentLessonPlan.getTitle());
+        titleLabel.setText(GymnasticsPlannerApp.getCurrentLessonPlan().getTitle());
         titleLabel.setFont(Font.font(24));
         printLessonPlanVBox.getChildren().add(titleLabel);
 
-        List eventList = App.getCurrentLessonPlan().getEventList();
+        List eventList = GymnasticsPlannerApp.getCurrentLessonPlan().getEventList();
         System.out.println(eventList.toString());
         for (Object loopedEventContainer : eventList) {
             EventContainer eventContainer = (EventContainer) loopedEventContainer;
@@ -101,13 +106,13 @@ public class PrintpageController {
     public Node typeLessonPlan() {
         //Sets title
         Text titleText = new Text ();
-        titleText.setText(currentLessonPlan.getTitle());
+        titleText.setText(GymnasticsPlannerApp.getCurrentLessonPlan().getTitle());
         titleText.setFont(Font.font(24));
         printLessonPlanVBox.getChildren().add(titleText);
 
-        List eventList = App.getCurrentLessonPlan().getEventList();
+        List eventList = GymnasticsPlannerApp.getCurrentLessonPlan().getEventList();
         for (Object loopedEventContainer : eventList){
-            String eventText = currentLessonPlan.getTitle();
+            String eventText = GymnasticsPlannerApp.getCurrentLessonPlan().getTitle();
             EventContainer eventContainer = (EventContainer) loopedEventContainer;
             eventText = (eventContainer.getType()+"\n");
             for (int cardIndex = 0; cardIndex < eventContainer.getCards().size(); cardIndex++){
@@ -136,7 +141,7 @@ public class PrintpageController {
      */
     @FXML
     private void switchToEditing() throws IOException {
-        App.setRoot("EditingPage");
+        GymnasticsPlannerApp.switchToEditingPage();
     }
 
     /**Gets the selected printer and passes it along with the ScrollPane and Event Count

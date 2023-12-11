@@ -1,10 +1,10 @@
-import static edu.augustana.CardLibrary.cardList;
+import static edu.augustana.datastructure.CardLibrary.cardList;
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.augustana.Card;
-import edu.augustana.SearchFunction;
+import edu.augustana.datastructure.Card;
+import edu.augustana.search.SearchFunction;
 import org.junit.jupiter.api.Test;
-import edu.augustana.CardLibrary;
+import edu.augustana.datastructure.CardLibrary;
 
 import java.util.List;
 

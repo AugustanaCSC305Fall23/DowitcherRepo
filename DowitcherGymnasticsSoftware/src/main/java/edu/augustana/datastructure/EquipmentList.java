@@ -1,4 +1,4 @@
-package edu.augustana;
+package edu.augustana.datastructure;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class EquipmentList {
                 }
             }
         }
-//        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
+//        for (Object equipmentObject : GymnasticsPlannerApp.getCurrentLessonPlan().getEquipmentList().getList()) {
 //            String equipment = (String) equipmentObject;
 //            System.out.println(equipment);
 //        }
@@ -50,7 +50,7 @@ public class EquipmentList {
                 equipmentAmountMap.remove(equipment);
             }
         }
-//        for (Object equipmentObject : App.getCurrentLessonPlan().getEquipmentList().getList()) {
+//        for (Object equipmentObject : GymnasticsPlannerApp.getCurrentLessonPlan().getEquipmentList().getList()) {
 //            String equipment = (String) equipmentObject;
 //            System.out.println(equipment);
 //        }
