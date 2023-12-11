@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"edu.augustana","l":"edu.augustana"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"edu.augustana","l":"edu.augustana"},{"m":"edu.augustana","l":"edu.augustana.controllers"},{"m":"edu.augustana","l":"edu.augustana.datastructure"},{"m":"edu.augustana","l":"edu.augustana.printing"},{"m":"edu.augustana","l":"edu.augustana.search"},{"m":"edu.augustana","l":"edu.augustana.ui"}];updateSearchResults();
