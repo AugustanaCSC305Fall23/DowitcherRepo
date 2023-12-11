@@ -1,0 +1,65 @@
+{
+  "courseName": "New Course",
+  "lessonPlanList": [
+    {
+      "title": "New Lesson Plan",
+      "eventList": [
+        {
+          "title": "Uneven Bars",
+          "cards": [
+            "B41A",
+            "B47"
+          ],
+          "type": "Uneven Bars"
+        },
+        {
+          "title": "Beam",
+          "cards": [
+            "BB11",
+            "BB19"
+          ],
+          "type": "Beam"
+        }
+      ],
+      "equipmentList": {
+        "equipmentAmountMap": {
+          "Beam": 1,
+          "Floor Beam Resi": 1,
+          "Foam Block": 1,
+          "High Bar": 1,
+          "Low Bar": 1,
+          "Pacman/Wall": 1,
+          "slider": 1
+        }
+      }
+    },
+    {
+      "title": "New Lesson Plan1",
+      "eventList": [
+        {
+          "title": "Beam",
+          "cards": [
+            "BL5"
+          ],
+          "type": "Beam"
+        },
+        {
+          "title": "Floor",
+          "cards": [
+            "BS9",
+            "C3"
+          ],
+          "type": "Floor"
+        }
+      ],
+      "equipmentList": {
+        "equipmentAmountMap": {
+          "Beam": 1,
+          "Foam Block": 2,
+          "Mailbox": 1,
+          "Panel Mat": 1
+        }
+      }
+    }
+  ]
+}
